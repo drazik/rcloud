@@ -3,7 +3,7 @@
 
 namespace RCloud\Bundle\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,7 +35,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,7 +52,7 @@ class User extends BaseUser
     {
         $this->scripts[] = $scripts;
         $scripts->setOwner($this);
-    
+
         return $this;
     }
 
@@ -69,7 +69,7 @@ class User extends BaseUser
     /**
      * Get scripts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getScripts()
     {

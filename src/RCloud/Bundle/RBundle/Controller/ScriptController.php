@@ -39,6 +39,8 @@ class ScriptController extends Controller
 
         $directory = opendir($personalDir);
         $graphes = array();
+
+        // Si d'anciennes images existent encore, on les supprime
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
                 unlink($personalDir . '/' . $file);

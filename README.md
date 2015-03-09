@@ -76,7 +76,7 @@ Voilà, je pense que c'est tout ce qu'il y a à savoir sur ce qui existe. Il fau
 D'abord pour récupérer le projet, il faut installer git. Le [tuto d'openclassrooms](http://openclassrooms.com/courses/gerer-son-code-avec-git-et-github) est assez clair et complet sur [cette partie](http://openclassrooms.com/courses/gerer-son-code-avec-git-et-github/installer-git).
 
 Ensuite, il faut aller sur [la page du projet sur Github](https://github.com/drazik/rcloud), récupérer l'URL permettant de cloner le repository (à droite), et de taper la commande suivante :
-, v
+
     git clone https://github.com/drazik/rcloud.git
 
 Choisissez HTTPS ou SSH, comme vous voulez. Mais il faut savoir qu'en clonant avec l'URL en HTTPS, à chaque fois que vous pousserez des modifications vers Github, celui-ci vous demandera votre login et votre mot de passe. Ce qui ne sera pas le cas avec SSH, mais l'utilisation de SSH nécessite [quelques manipulations](https://help.github.com/articles/generating-ssh-keys/). Personnellement, je pense que ça vaut le coup de configurer le tout avec SSH.

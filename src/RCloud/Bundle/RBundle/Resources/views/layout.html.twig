@@ -1,0 +1,18 @@
+{# src/RCloud/Bundle/RBundle/Resources/views/layout.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <nav class="line navbar">
+        <span class="inbl" id="logo"></span>
+        <ul class="menu unstyled inbl line">
+            {% block navbarItems %}
+                <li class="inbl">
+                    <button class="menu-item inbl" id="new-tab">Bienvenue, {{ app.user.username }}.</button>
+                </li>
+            {% endblock %}
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+{% endblock %}

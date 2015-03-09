@@ -1,0 +1,75 @@
+{% extends 'RCloudRBundle::layout.html.twig' %}
+
+{% block title %}Vos scripts{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
+{% endblock %}
+
+{% block navbarItems %}
+<li class="inbl">
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <ul class="unstyled">
+        {% for script in scripts %}
+            <li class="script">
+                {{ script.name }}
+                <span class="script-actions">
+                    <a href="#" title="Editer {{ script.name }}"><i class="fa fa-edit"></i></a>
+                    <a href="#" title="Partager {{ script.name }}"><i class="fa fa-share-square-o"></i></a>
+                    <a class="remove-script" href="#" title="Supprimer {{ script.name }}" data-script-id="{{ script.id }}"><i class="fa fa-trash-o"></i></a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/jquery.noty.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/layouts/bottom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/themes/default.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $('.remove-script').click(function(event) {
+            event.preventDefault();
+            $this = $(this);
+            $scripts = $('.script');
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('script_remove_ajax') }}",
+                data: {
+                    scriptId: $this.attr('data-script-id')
+                },
+                beforeSend: function(jqXHR, settings) {
+                    // $result.html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="Loading..." title="Loading...">');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // $result.html(textStatus);
+                },
+                success: function(data, textStatus, jqXHR) {
+                    if (data.success) {
+                        var $element = $this.parent().parent();
+                        $element.fadeOut(function(){
+                            $element.remove();
+                        });
+                    } else {
+                        var notification = noty({
+                            text: data.message,
+                            layout: 'bottom',
+                            type: 'error'
+                        });
+                    }
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{# src/RCloud/Bundle/UserBundle/Resources/views/layout.html.twig #}
+
+{% extends 'RCloudRBundle::layout.html.twig' %}
+
+{% block title %}User profile{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block navbarItems %}
+<li class="inbl">
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
+</li>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        {% for key, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ key }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block fos_user_content %}{% endblock %}
+    </div>
+{% endblock %}

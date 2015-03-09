@@ -70,3 +70,21 @@ Par exemple, l'entité `User` hérite de l'entité générique fournie par FOSUs
 L'unique contrôleur que contient ce bundle, `DashboardController`, permet d'afficher ce que j'ai appelé le dashboard, mais qui est juste une page d'accueil qui s'affiche à l'utilisateur lorsqu'il se connecte à son compte. Cette page lui permet d'accéder à l'éditeur de code, à la liste de ses scripts, à son profil, et à un lien pour se déconnecter. Le contrôleur ne fait rien si ce n'est afficher la vue `/src/RCloud/Bundle/UserBundle/Resources/views/Dashboard/show.html.twig`.
 
 Voilà, je pense que c'est tout ce qu'il y a à savoir sur ce qui existe. Il faudra qu'on voit tout ensemble ce qu'on veut réécrire proprement. Je pense que c'est une étape très importante avant de se lancer dans la suite. Mais il ne faudra pas non plus y accorder trop de temps, car ce n'est pas le sujet principal pour notre PPD. Jollois sait que l'exécution de code R fonctionnait bien l'année dernière, il va donc plutôt attendre du boulot sur le reste pour cette fois-ci.
+
+## Récupérer le projet et l'installer en local
+
+D'abord pour récupérer le projet, il faut installer git. Le [tuto d'openclassrooms](http://openclassrooms.com/courses/gerer-son-code-avec-git-et-github) est assez clair et complet sur [cette partie](http://openclassrooms.com/courses/gerer-son-code-avec-git-et-github/installer-git).
+
+Ensuite, il faut aller sur [la page du projet sur Github](https://github.com/drazik/rcloud), récupérer l'URL permettant de cloner le repository (à droite), et de taper la commande suivante :
+, v
+    git clone https://github.com/drazik/rcloud.git
+
+Choisissez HTTPS ou SSH, comme vous voulez. Mais il faut savoir qu'en clonant avec l'URL en HTTPS, à chaque fois que vous pousserez des modifications vers Github, celui-ci vous demandera votre login et votre mot de passe. Ce qui ne sera pas le cas avec SSH, mais l'utilisation de SSH nécessite [quelques manipulations](https://help.github.com/articles/generating-ssh-keys/). Personnellement, je pense que ça vaut le coup de configurer le tout avec SSH.
+
+Vous aurez le projet dans un dossier "rcloud" à l'endroit où vous vous situerez lorsque vous aurez tapé `git clone` dans votre terminal. N'oubliez donc pas de vous déplacer à grand coups de `cd` là où vous voulez mettre le projet.
+
+Une fois les sources récupérées, il faut installer les dépendances du projet. Pour cela, il faut d'abord installer [Composer](https://getcomposer.org/doc/00-intro.md). Une fois que c'est fait, il suffit de taper `composer install` en étant à la racine du projet. Cela va installer toutes les dépendances. Il est possible que vous ayez des erreurs à cause de modules PHP qui ne sont pas activés sur votre machine. Activez juste les modules en question (il suffit souvent de décommenter une ligne dans le php.ini) et ça devrait rouler.
+
+Une fois toutes les dépendances installées, il faudra modifier le fichier `/app/config/parameters.yml`. Pour cela, demandez moi (Cyrille) de vous l'envoyer. Celui-ci contient des données sensibles (login et mot de passe de la base de données par exemple) et n'est donc pas sur Github. Remplacez purement et simplement le fichier qui existe par celui que je vous enverrai.
+
+Voilà, à ce stade vous devriez pouvoir lancer l'application dans votre navigateur. En cas de problème, ne surtout pas hésiter à le dire !

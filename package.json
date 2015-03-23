@@ -1,0 +1,22 @@
+{
+  "name": "rcloud",
+  "version": "1.0.0",
+  "description": "Plateforme collaborative de développement R.",
+  "main": "index.js",
+  "scripts": {
+    "dploy": "dploy prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drazik/rcloud.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drazik/rcloud/issues"
+  },
+  "homepage": "https://github.com/drazik/rcloud",
+  "dependencies": {
+    "dploy": "^1.2.0"
+  }
+}

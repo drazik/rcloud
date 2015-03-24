@@ -149,30 +149,28 @@ class ScriptController extends Controller
     }
 
     /**
-     * @Route("/script/remove", name="script_remove_ajax")
-     * @Method({"POST"})
+     * @Route("/script/remove/{scriptId}", name="script_remove")
+     * @Method({"GET"})
      */
-    public function removeAction(Request $request)
+    public function removeAction($scriptId)
     {
-        $scriptId = $scriptId = $request->request->get('scriptId');
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('RCloudRBundle:Script');
 
         $script = $repository->find($scriptId);
 
-        $success = array(
-            'success' => true
-        );
-
         if (null === $script) {
-            $success['success'] = false;
-            $success['message'] = 'Ce script n\'existe pas';
+            // On définit un message flash
+            $this->get('session')->getFlashBag()->add('error', 'Ce script n\'existe pas');
         } else {
             $em->remove($script);
             $em->flush();
+
+            // On définit un message flash
+            $this->get('session')->getFlashBag()->add('success', 'Script bien supprimé');
         }
 
-        return new JsonResponse($success);
+        return $this->redirect($this->generateUrl('scripts_list'));
     }
 }

@@ -133,6 +133,8 @@ class ScriptController extends Controller
 
     }
 
+
+
     /**
      * @Route("/scripts/", name="scripts_list")
      * @Method({"GET"})

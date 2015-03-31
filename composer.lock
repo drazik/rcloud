@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d6222c482262b6b69d5da20874ed5cd2",
+    "hash": "feae34dedb878e6a6a109cf2e899cbda",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -886,6 +886,59 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "kachkaev/php-r",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kachkaev/php-r.git",
+                "reference": "61ae2bb4a2a4a8b7a9ff74bd50e5dc832c2dc018"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kachkaev/php-r/zipball/61ae2bb4a2a4a8b7a9ff74bd50e5dc832c2dc018",
+                "reference": "61ae2bb4a2a4a8b7a9ff74bd50e5dc832c2dc018",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Kachkaev\\PHPR\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kachkaev",
+                    "email": "alexander@kachkaev.ru",
+                    "homepage": "http://en.kachkaev.ru/"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/kachkaev/php-r/contributors"
+                }
+            ],
+            "description": "Provides ability to run R scripts from PHP",
+            "homepage": "https://github.com/kachkaev/php-r",
+            "keywords": [
+                "Bridge",
+                "r",
+                "statistical analysis",
+                "stats"
+            ],
+            "time": "2015-03-08 11:39:04"
+        },
+        {
             "name": "kriswallsmith/assetic",
             "version": "v1.2.1",
             "source": {
@@ -1682,7 +1735,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20
+        "friendsofsymfony/user-bundle": 20,
+        "kachkaev/php-r": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -89,47 +89,48 @@ class ScriptController extends Controller
         // ));
     }
 
+
     /**
-     * @Route("/script/new/save", name="save_new_script_ajax")
+     * @Route("/script/save", name="save_script_ajax")
      * @Method({"POST"})
      */
-    public function saveNewScript(Request $request)
+    public function saveScript(Request $request)
     {
-        $scriptName = $request->request->get('scriptName');
-        $scriptContent = $request->request->get('scriptContent');
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $script = new Script();
-        $script->setName($scriptName);
-        $script->setContent($scriptContent);
-        $script->setOwner($user);
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($script);
-        $em->flush();
 
-        return new Response($script->getId());
-    }
-
-    /**
-     * @Route("script/existing/save", name="save_existing_script_ajax")
-     * @Method({"POST"})
-     */
-    public function saveExistingScript(Request $request)
-    {
         $scriptId = $request->request->get('scriptId');
         $scriptContent = $request->request->get('scriptContent');
+        $scriptName = $request->request->get('scriptName');
+        $user = $this->get('security.context')->getToken()->getUser();
 
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('RCloudRBundle:Script');
+        $response = array();
 
-        $script = $repository->find($scriptId);
+        if($scriptId == null) {
+            $script = new Script();
+            $script->setName($scriptName);
+            $script->setContent($scriptContent);
+            $script->setOwner($user);
 
-        $script->setContent($scriptContent);
+            $em->persist($script);
+
+            $response['meta']['code'] = 201;
+        }
+        else {
+            $repository = $em->getRepository('RCloudRBundle:Script');
+            $script = $repository->find($scriptId);
+
+            $script->setContent($scriptContent);
+
+            $response['meta']['code'] = 200;
+        }
 
         $em->flush();
 
-        return new Response('ok');
+        $response['data']['scriptName'] = $script->getName();
+        $response['data']['scriptId'] = $script->getId();
+
+        return new JsonResponse($response);
+
     }
 
     /**

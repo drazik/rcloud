@@ -156,7 +156,7 @@
                         success: function(data, textStatus, jqXHR) {
                             $result.html(data);
                         }
-                    }); 
+                    });
                 }
             });
 
@@ -168,7 +168,7 @@
                 if ($currentTab.attr('data-saved')) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{ path('save_existing_script_ajax') }}",
+                        url: "{{ path('save_script_ajax') }}",
                         data: {
                             scriptId: $currentTab.attr('data-saved'),
                             scriptContent: scriptContent
@@ -183,7 +183,7 @@
                         },
                         success: function(data, textStatus, jqXHR) {
                             $('.existing-script[data-id="' + $currentTab.attr('data-saved') + '"]').attr('data-content', scriptContent);
-                            
+
                             var notification = noty({
                                 text: 'Script enregistré',
                                 layout: 'bottom',
@@ -199,7 +199,7 @@
                         scriptName += '.R';
                         $.ajax({
                             type: 'POST',
-                            url: "{{ path('save_new_script_ajax') }}",
+                            url: "{{ path('save_script_ajax') }}",
                             data: {
                                 scriptName: scriptName,
                                 scriptContent: scriptContent
@@ -214,7 +214,7 @@
                             },
                             success: function(data, textStatus, jqXHR) {
                                 $currentTab.find('.tab-name').html(scriptName);
-                                $currentTab.attr('data-saved', data);
+                                $currentTab.attr('data-saved', data.data.scriptId);
 
                                 var notification = noty({
                                     text: 'Script enregistré',
@@ -223,7 +223,7 @@
                                     closeWidth: 'button'
                                 });
 
-                                $('#existing-scripts ul').append('<li class="existing-script" data-id="' + data + '" data-name="' + scriptName + '" data-content="' + scriptContent + '">' + scriptName + '</li>');
+                                $('#existing-scripts ul').append('<li class="existing-script" data-id="' + data.data.scriptId + '" data-name="' + scriptName + '" data-content="' + scriptContent + '">' + scriptName + '</li>');
                             }
                         });
                     }
@@ -251,7 +251,7 @@
 
                 $tabsList.append(newTabHTML);
                 initEditor(document.querySelector('#tab-content' + id + ' .editor'));
-                
+
                 $('#tab' + id + '-container').find('.editor').data('editor').setValue(content);
 
                 $('#tab' + id).click();

@@ -28,6 +28,8 @@
     "gulp-imagemin": "^2.2.1",
     "gulp-plumber": "^1.0.0",
     "gulp-sass": "^1.3.3",
+    "optipng": "^0.1.1",
+    "pngquant-bin": "^2.0.3",
     "require-dir": "^0.3.0"
   }
 }

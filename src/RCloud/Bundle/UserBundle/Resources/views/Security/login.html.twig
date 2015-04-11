@@ -11,7 +11,7 @@
 {% block body %}
     <div class="login-page">
         <div class="login-page-inner">
-            <img class="login-page-logo" src="{{ asset('bundles/rcloudr/images/logo.png') }}" alt="" title="">
+            <img class="login-page-logo" src="{{ asset('assets/img/logo.png') }}" alt="" title="">
             {% for key, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     <div class="alert alert-{{ key }}">

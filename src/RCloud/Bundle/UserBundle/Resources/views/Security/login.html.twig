@@ -4,16 +4,14 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Bienvenue{% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <div id="login-page">
-        <div id="to-be-centered">
-            <img class="logo" src="{{ asset('bundles/rcloudr/images/logo.png') }}" alt="" title="">
+    <div class="login-page">
+        <div class="login-page-inner">
+            <img class="login-page-logo" src="{{ asset('bundles/rcloudr/images/logo.png') }}" alt="" title="">
             {% for key, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     <div class="alert alert-{{ key }}">
@@ -26,11 +24,11 @@
                     <div class="alert alert-error">{{ error|trans }}</div>
                 {% endif %}
 
-                <form action="{{ path("fos_user_security_check") }}" method="post">
+                <form class="login-form" action="{{ path("fos_user_security_check") }}" method="post">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
                     <div class="form-group">
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
+                        <input type="mail" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
                     </div>
 
                     <div class="form-group">

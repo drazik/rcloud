@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}{% endblock %} | RCloud</title>
+        <title>{% block title %}{% endblock %}RCloud</title>
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>

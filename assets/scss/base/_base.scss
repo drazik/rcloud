@@ -1,3 +1,15 @@
 /**
  * Some stantard styles for commonly used HTML elements
  */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}

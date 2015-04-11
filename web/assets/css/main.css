@@ -150,7 +150,6 @@ figure {
  * Address differences between Firefox and other browsers.
  */
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0; }
 
@@ -264,8 +263,6 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   /* 2 */
   box-sizing: content-box; }
 
@@ -326,6 +323,13 @@ td, th {
 /**
  * Some stantard styles for commonly used HTML elements
  */
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  width: 100%; }
+
 /**
  * Typographic rules
  */
@@ -338,3 +342,63 @@ td, th {
 /**
  * All the forms styles
  */
+.button {
+  padding: 1em;
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #2980b9;
+  border-radius: 8px;
+  color: #2980b9;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center; }
+  .button:hover {
+    background-color: #2980b9;
+    color: white; }
+
+.login-page {
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/login-background.jpg);
+  background-size: cover; }
+
+.login-page-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+.login-page-logo {
+  display: block;
+  margin: 0 auto 2em; }
+
+.login-form {
+  width: 100%; }
+  .login-form .form-group input {
+    padding: 0.5em;
+    width: 100%;
+    font-size: 1.5em;
+    border: 1px solid #f0f0f0; }
+  .login-form .checkbox {
+    margin-top: 1em;
+    margin-bottom: 1em; }
+
+#username {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px; }
+
+#password {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+.button {
+  display: block;
+  width: 100%;
+  margin-top: .5em;
+  margin-bottom: .5em; }
+  .button:first-child {
+    margin-top: 0; }
+  .button:last-child {
+    margin-bottom: 0; }

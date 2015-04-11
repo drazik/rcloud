@@ -12,7 +12,10 @@
 
 {% block navbarItems %}
 <li class="inbl">
-    <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> Nouvel onglet</button>
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
+</li>
+<li class="inbl">
+    <button class="menu-item inbl" id="new-tab" ng-click="newTab()"><i class="fa fa-plus"></i> Nouvel onglet</button>
 </li>
 <li class="inbl">
     <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Exécuter</button>
@@ -22,12 +25,6 @@
 </li>
 <li class="inbl">
     <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
-</li>
-<li class="inbl">
-    <button class="menu-item inbl" id="print-graphes"><i class="fa fa-print"></i> Imprimer les graphiques</button>
-</li>
-<li class="inbl">
-    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
 </li>
 {% endblock %}
 {% block content %}
@@ -156,7 +153,7 @@
                         success: function(data, textStatus, jqXHR) {
                             $result.html(data);
                         }
-                    }); 
+                    });
                 }
             });
 
@@ -183,7 +180,7 @@
                         },
                         success: function(data, textStatus, jqXHR) {
                             $('.existing-script[data-id="' + $currentTab.attr('data-saved') + '"]').attr('data-content', scriptContent);
-                            
+
                             var notification = noty({
                                 text: 'Script enregistré',
                                 layout: 'bottom',
@@ -251,7 +248,7 @@
 
                 $tabsList.append(newTabHTML);
                 initEditor(document.querySelector('#tab-content' + id + ' .editor'));
-                
+
                 $('#tab' + id + '-container').find('.editor').data('editor').setValue(content);
 
                 $('#tab' + id).click();
@@ -277,7 +274,7 @@
         {% verbatim %}
         <li id="{{liId}}" {{#saved}}data-saved="{{saved}}"{{/saved}}>
             <input class="visually-hidden" id="{{inputId}}" type="radio" name="tabs">
-            <label for="{{inputId}}"><span class="tab-name">{{tabName}}</span><i class="fa fa-times-circle close-tab"></i></label>
+            <label for="{{inputId}}"><span class="tab-name">{{tabName}}</span><i class="fa fa-times-circle close-tab" ng-click="closeTab()"></i></label>
             <div class="tab-content line" id="{{tabContentId}}">
                 <div class="editor mod left w50"></div>
                 <div class="result mod left w50"></div>

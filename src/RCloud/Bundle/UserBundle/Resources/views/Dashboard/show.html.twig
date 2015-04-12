@@ -1,48 +1,14 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/Dashboard/show.html.twig #}
 
-{% extends 'RCloudRBundle::layout.html.twig' %}
+{% extends '::base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/dashboard.css') }}" />
-{% endblock %}
-
-{% block content %}
-    <div class="wrapper">
-        <ul id="dashboard" class="unstyled">
-            <li class="dashboard-item">
-                <a href="{{ path('show_editor') }}">
-                    <i class="fa fa-code fa-5x"></i>
-                    <span class="dashboard-item-text">Editeur de code</span>
-                </a>
-            </li>
-            <li class="dashboard-item">
-                <a href="{{ path('scripts_list') }}">
-                    <i class="fa fa-file-text fa-5x"></i>
-                    <span class="dashboard-item-text">Vos scripts</span>
-                </a>
-            </li>
-            <li class="dashboard-item">
-                <a href="{{ path('fos_user_profile_show') }}">
-                    <i class="fa fa-user fa-5x"></i>
-                    <span class="dashboard-item-text">Profil</span>
-                </a>
-            </li>
-            <li class="dashboard-item">
-                <a href="#">
-                    <i class="fa fa-gears fa-5x"></i>
-                    <span class="dashboard-item-text">Paramètres</span>
-                </a>
-            </li>
-            <li class="dashboard-item">
-                <a href="{{ path('fos_user_security_logout') }}">
-                <i class="fa fa-power-off fa-5x"></i>
-                <span class="dashboard-item-text">Déconnexion</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+{% block body %}
+    <nav class="dashboard">
+        {% for item in dashboardItems %}
+            <a class="dashboard-item" href="{{ item.href }}">
+                <i class="fa fa-{{ item.icon }}"></i>
+                {{ item.title }}
+            </a>
+        {% endfor %}
+    </nav>
 {% endblock %}

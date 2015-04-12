@@ -2,16 +2,16 @@
 
 <form class="login-form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
     <div class="form-group first">
-        {{ form_widget(form.email) }}
+        {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}}) }}
     </div>
     <div class="form-group">
-        {{ form_widget(form.username) }}
+        {{ form_widget(form.username, {'attr': {'placeholder': 'Nom d\'utilisateur'}}) }}
     </div>
     <div class="form-group">
-        {{ form_widget(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Mot de passe'}}) }}
     </div>
     <div class="form-group last">
-        {{ form_widget(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Confirmation du mot de passe'}}) }}
     </div>
     {{ form_rest(form) }}
     <div class="form-group">

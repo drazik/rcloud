@@ -1,51 +1,33 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/Security/login.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudUserBundle::layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert alert-error">{{ error|trans }}</div>
+    {% endif %}
 
-{% block body %}
-    <div class="login-page">
-        <div class="login-page-inner">
-            <img class="login-page-logo" src="{{ asset('assets/img/logo.png') }}" alt="" title="">
-            {% for key, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ key }}">
-                        {{ message|trans({}, 'FOSUserBundle') }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-            {% block fos_user_content %}
-                {% if error %}
-                    <div class="alert alert-error">{{ error|trans }}</div>
-                {% endif %}
+    <form class="login-form" action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-                <form class="login-form" action="{{ path("fos_user_security_check") }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-                    <div class="form-group first">
-                        <input type="mail" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
-                    </div>
-
-                    <div class="form-group last">
-                        <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
-                    </div>
-
-                    <div class="checkbox">
-                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="button" id="_submit" name="_submit" type="submit">{{ 'security.login.submit'|trans }}</button>
-                        <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Inscription</a>
-                    </div>
-                </form>
-            {% endblock %}
+        <div class="form-group first">
+            <input type="mail" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
         </div>
-    </div>
+
+        <div class="form-group last">
+            <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
+        </div>
+
+        <div class="checkbox">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        </div>
+
+        <div class="form-group">
+            <button class="button" id="_submit" name="_submit" type="submit">{{ 'security.login.submit'|trans }}</button>
+            <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Inscription</a>
+        </div>
+    </form>
 {% endblock %}

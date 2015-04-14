@@ -2056,6 +2056,9 @@ html, body {
 /**
  * All the forms styles
  */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
+  border-color: #2980b9; }
+
 .button {
   padding: 1em;
   background-color: transparent;
@@ -2066,7 +2069,7 @@ html, body {
   font-weight: bold;
   text-decoration: none;
   text-align: center; }
-  .button:hover {
+  .button:hover, .button:focus {
     background-color: #2980b9;
     color: white; }
 

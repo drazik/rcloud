@@ -9,7 +9,8 @@
     text-decoration: none;
     text-align: center;
 
-    &:hover {
+    &:hover,
+    &:focus {
         background-color: #2980b9;
         color: white;
     }

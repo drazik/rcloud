@@ -6,8 +6,8 @@
     <nav class="dashboard">
         {% for item in dashboardItems %}
             <a class="dashboard-item" href="{{ item.href }}">
-                <i class="fa fa-{{ item.icon }}"></i>
-                {{ item.title }}
+                <i class="dashboard-item-icon fa fa-{{ item.icon }}"></i>
+                <span class="dashboard-item-name">{{ item.title }}</span>
             </a>
         {% endfor %}
     </nav>

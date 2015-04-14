@@ -2144,7 +2144,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   text-decoration: none;
   text-align: center;
   transition: -webkit-transform 0.1s ease-in;
-  transition: transform 0.1s ease-in; }
+  transition: transform 0.1s ease-in;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1; }
   .dashboard-item:hover, .dashboard-item:focus {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); }

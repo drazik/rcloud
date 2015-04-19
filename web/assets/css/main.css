@@ -2124,8 +2124,11 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   .button:last-child {
     margin-bottom: 0; }
 
-.dashboard {
-  height: 100%;
+.dashboard-header {
+  width: 100%;
+  text-align: center; }
+
+.dashboard-menu {
   width: 100%;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2136,26 +2139,24 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  overflow-y: visible; }
 
-.dashboard-item {
+.dashboard-menu-item {
   padding: 1rem;
   color: inherit;
   text-decoration: none;
   text-align: center;
-  transition: -webkit-transform 0.1s ease-in;
-  transition: transform 0.1s ease-in;
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1; }
-  .dashboard-item:hover, .dashboard-item:focus {
-    -webkit-transform: scale(1.1);
-            transform: scale(1.1); }
+  .dashboard-menu-item:hover, .dashboard-menu-item:focus {
+    color: #2980b9; }
 
-.dashboard-item-icon {
+.dashboard-menu-item-icon {
   font-size: 3rem;
   margin-bottom: 0.5rem; }
 
-.dashboard-item-name {
+.dashboard-menu-item-name {
   display: block;
   font-size: 1.5rem; }

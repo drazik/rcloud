@@ -3,12 +3,19 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <nav class="dashboard">
-        {% for item in dashboardItems %}
-            <a class="dashboard-item" href="{{ item.href }}">
-                <i class="dashboard-item-icon fa fa-{{ item.icon }}"></i>
-                <span class="dashboard-item-name">{{ item.title }}</span>
-            </a>
-        {% endfor %}
-    </nav>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <img class="dashboard-logo" src="{{ asset('assets/img/logo.png') }}" alt="" title="" />
+        </header>
+        <div>
+            <nav class="dashboard-menu">
+                {% for item in dashboardItems %}
+                    <a class="dashboard-menu-item" href="{{ item.href }}">
+                        <i class="dashboard-menu-item-icon fa fa-{{ item.icon }}"></i>
+                        <span class="dashboard-menu-item-name">{{ item.title }}</span>
+                    </a>
+                {% endfor %}
+            </nav>
+        </div>
+    </div>
 {% endblock %}

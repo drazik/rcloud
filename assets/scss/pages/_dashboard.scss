@@ -1,32 +1,36 @@
-.dashboard {
-    height: 100%;
+.dashboard-header {
+    width: 100%;
+    text-align: center;
+}
+
+.dashboard-menu {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     overflow-x: hidden;
+    overflow-y: visible;
 }
 
-.dashboard-item {
+.dashboard-menu-item {
     padding: 1rem;
     color: inherit;
     text-decoration: none;
     text-align: center;
-    transition: transform 0.1s ease-in;
     flex: 1;
 
     &:hover,
     &:focus {
-        transform: scale(1.1);
+        color: #2980b9;
     }
 }
 
-.dashboard-item-icon {
+.dashboard-menu-item-icon {
     font-size: 3rem;
     margin-bottom: 0.5rem;
 }
 
-.dashboard-item-name {
+.dashboard-menu-item-name {
     display: block;
     font-size: 1.5rem;
 }

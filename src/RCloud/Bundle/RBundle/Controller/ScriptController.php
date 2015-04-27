@@ -25,7 +25,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        // $script = $request->request->get('script');
+        $script = $request->request->get('script');
 
         return array(
             'result' => '123'

@@ -25,7 +25,7 @@ var EditorApp = React.createClass({
 			}
 		}.bind(this);
 
-		xhr.send(null);
+		xhr.send(params);
 	},
 
 	handleSaveClick: function() {

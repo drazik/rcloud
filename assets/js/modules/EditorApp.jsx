@@ -9,15 +9,17 @@ var EditorApp = React.createClass({
 	handleRunClick: function() {
 		var xhr = new XMLHttpRequest();
 		var params = 'script=' + this.state.script;
+		var response;
 
-		xhr.open('POST', '/script/run');
+		xhr.open('POST', '/script/run', true);
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 		xhr.onreadystatechange = function() {
-			var response;
-
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
+					response = JSON.parse(xhr.responseText);
+
 					this.setState({
-						result: xhr.responseText
+						result: response.result
 					});
 				} else {
 					console.log('Error : ' + xhr.responseText);

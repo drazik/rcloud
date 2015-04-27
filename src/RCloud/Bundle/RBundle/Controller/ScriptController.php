@@ -27,9 +27,7 @@ class ScriptController extends Controller
     {
         $script = $request->request->get('script');
 
-        return array(
-            'result' => '123'
-        );
+        return new JsonResponse(array('result' => $script));
     }
 
     /**

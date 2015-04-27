@@ -2160,3 +2160,21 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .dashboard-menu-item-name {
   display: block;
   font-size: 1.5rem; }
+
+.editor-menu {
+  background-color: #3498db; }
+
+.editor-menu-item {
+  padding: 10px;
+  background-color: #3498db;
+  border-width: 0;
+  color: white; }
+  .editor-menu-item:hover, .editor-menu-item:focus {
+    background-color: #2980b9; }
+
+.ace_editor, .editor-result {
+  margin-top: 0;
+  margin-bottom: 0;
+  height: calc(100vh - 40px);
+  width: 50%;
+  float: left; }

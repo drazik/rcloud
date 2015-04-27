@@ -1,0 +1,24 @@
+.editor-menu {
+	background-color: #3498db;
+}
+
+.editor-menu-item {
+	padding: 10px;
+	background-color: #3498db;
+	border-width: 0;
+	color: white;
+
+	&:hover,
+	&:focus {
+		background-color: #2980b9;
+	}
+}
+
+.ace_editor,
+.editor-result {
+	margin-top: 0;
+	margin-bottom: 0;
+	height: calc(100vh - 40px); // ABSOLUMENT DEGUEULASSE
+	width: 50%;
+	float: left;
+}

@@ -2,13 +2,13 @@
 
 var React = require('react');
 var ace = require('brace');
-require('brace/mode/javascript');
+require('brace/mode/r');
 require('brace/theme/monokai');
 
 var Editor = React.createClass({
 	componentDidMount: function() {
 		this.editor = ace.edit('editor-field');
-		this.editor.getSession().setMode('ace/mode/javascript');
+		this.editor.getSession().setMode('ace/mode/r');
 		this.editor.setTheme('ace/theme/monokai');
 
 		this.editor.getSession().on('change', function(event) {

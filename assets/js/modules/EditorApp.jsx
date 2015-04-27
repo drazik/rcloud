@@ -8,39 +8,33 @@ var EditorResult = require('./EditorResult.jsx');
 var EditorApp = React.createClass({
 	handleRunClick: function() {
 		var xhr = new XMLHttpRequest();
+		var params = 'script=' + this.state.script;
 
-		// xhr.open('GET', 'http://localhost:8000');
-		// xhr.onreadystatechange = function() {
-		// 	var response;
+		xhr.open('POST', '/script/run');
+		xhr.onreadystatechange = function() {
+			var response;
 
-		// 	if (xhr.readyState === 4) {
-		// 		if (xhr.status === 200) {
-		// 			response = JSON.parse(xhr.responseText);
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					this.setState({
+						result: xhr.responseText
+					});
+				} else {
+					console.log('Error : ' + xhr.responseText);
+				}
+			}
+		}.bind(this);
 
-		// 			this.setState({
-		// 				result: response.result,
-		// 				graphs: result.graphs
-		// 			});
-		// 		} else {
-		// 			console.log('Error : ' + xhr.responseText);
-		// 		}
-		// 	}
-		// }.bind(this);
-
-		// xhr.send(null);
+		xhr.send(null);
 	},
 
 	handleSaveClick: function() {
 		console.log('Saving the script...');
 	},
 
-	handleShareClick: function() {
-		console.log('Saving this scripts...');
-	},
-
-	handleScriptChange: function(event) {
+	handleScriptChange: function(event, content) {
 		this.setState({
-			script: event.target.value
+			script: content
 		});
 	},
 
@@ -55,7 +49,7 @@ var EditorApp = React.createClass({
 	render: function() {
 		return (
 			<div id="editor">
-				<EditorMenu handleRunClick={this.handleRunClick} handleSaveClick={this.handleSaveClick} handleShareClick={this.handleShareClick} />
+				<EditorMenu handleRunClick={this.handleRunClick} handleSaveClick={this.handleSaveClick} />
 				<Editor script={this.state.script} onChange={this.handleScriptChange} />
 				<EditorResult result={this.state.result} graphs={this.state.graphs} />
 			</div>

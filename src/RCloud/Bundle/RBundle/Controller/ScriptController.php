@@ -25,68 +25,11 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $personalDir = 'upload/' . $user->getUsername();
-        $inputFileName = $personalDir . '/input.R';
-        $outputFileName = $personalDir . '/output.res';
-
-        // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
-        if (!is_dir($personalDir)) {
-            mkdir($personalDir);
-        }
-
-        $directory = opendir($personalDir);
-        $graphes = array();
-
-        // Si d'anciennes images existent encore, on les supprime
-        while ($file = readdir($directory)) {
-            if (substr($file, -3) == 'png') {
-                unlink($personalDir . '/' . $file);
-            }
-        }
-
-        // écriture de input.R
-        $inputFile = fopen($inputFileName, 'a');
-        fputs($inputFile, $script);
-        fclose($inputFile);
-
-        // exécution du script
-        exec('cd ' . $personalDir . ' && R CMD BATCH --save --quiet input.R output.res');
-
-        // lecture de output.res
-        $outputFile = fopen($outputFileName, 'r');
-
-        $result = '';
-
-        while ($line = fgets($outputFile)) {
-            $result .= nl2br($line);
-        }
-
-        fclose($outputFile);
-
-        unlink($inputFileName);
-        unlink($outputFileName);
-
-        // graphes
-        $directory = opendir($personalDir);
-        $graphes = array();
-        while ($file = readdir($directory)) {
-            if (substr($file, -3) == 'png') {
-                $graphes[] = $personalDir . '/' . $file;
-            }
-        }
+        // $script = $request->request->get('script');
 
         return array(
-            'result' => $result,
-            'graphes' => $graphes
+            'result' => '123'
         );
-        // TODO utiliser une JsonResponse
-        // return new JsonResponse(array(
-        //     'result' => $result,
-        //     'graphes' => $graphes
-        // ));
     }
 
     /**

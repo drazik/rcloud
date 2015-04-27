@@ -2178,3 +2178,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   height: calc(100vh - 40px);
   width: 50%;
   float: left; }
+
+.editor-result {
+  padding: 1em;
+  overflow-y: scroll;
+  font-family: monospace; }

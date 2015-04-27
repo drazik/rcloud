@@ -8,7 +8,6 @@ var EditorMenu = React.createClass({
 			<div className="editor-menu">
 				<button className="editor-menu-item" onClick={this.props.handleRunClick} type="button">Run</button>
 				<button className="editor-menu-item" onClick={this.props.handleSaveClick} type="button">Save</button>
-				<button className="editor-menu-item" onClick={this.props.handleShareClick} type="button">Share</button>
 			</div>
 		);
 	}

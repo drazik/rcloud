@@ -16,6 +16,10 @@ use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
 
+use Kachkaev\PHPR\RCore;
+use Kachkaev\PHPR\Engine\CommandLineREngine;
+use Kachkaev\PHPR\ROutputParser;
+
 class ScriptController extends Controller
 {
     /**
@@ -26,61 +30,32 @@ class ScriptController extends Controller
     public function runAction(Request $request)
     {
         $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
+        $script = $request->request->get('script');
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $personalDir = 'upload/' . $user->getUsername();
-        $inputFileName = $personalDir . '/input.R';
-        $outputFileName = $personalDir . '/output.res';
+        $r = new RCore(new CommandLineREngine('/usr/bin/R'));
+        $rProcess = $r->createInteractiveProcess();
+        $rProcess->start();
 
-        // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
-        if (!is_dir($personalDir)) {
-            mkdir($personalDir);
-        }
+        $rOutputParser = new ROutputParser();
+        // $rProcess->setErrorSensitive(true);
+        $rProcess->write($script);
+        $results = $rProcess->getAllResult(true);
+          
 
-        $directory = opendir($personalDir);
-        $graphes = array();
-
-        // Si d'anciennes images existent encore, on les supprime
-        while ($file = readdir($directory)) {
-            if (substr($file, -3) == 'png') {
-                unlink($personalDir . '/' . $file);
-            }
-        }
-
-        // écriture de input.R
-        $inputFile = fopen($inputFileName, 'a');
-        fputs($inputFile, $script);
-        fclose($inputFile);
-
-        // exécution du script
-        exec('cd ' . $personalDir . ' && R CMD BATCH --save --quiet input.R output.res');
-
-        // lecture de output.res
-        $outputFile = fopen($outputFileName, 'r');
-
-        $result = '';
-
-        while ($line = fgets($outputFile)) {
-            $result .= nl2br($line);
-        }
-
-        fclose($outputFile);
-
-        unlink($inputFileName);
-        unlink($outputFileName);
-
+        
         // graphes
-        $directory = opendir($personalDir);
+        /*$directory = opendir($personalDir);
         $graphes = array();
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
                 $graphes[] = $personalDir . '/' . $file;
             }
-        }
-
+        }*/
+        
         return array(
-            'result' => $result,
-            'graphes' => $graphes
+            'results' => $results,
+            //'graphes' => $graphes
         );
         // TODO utiliser une JsonResponse
         // return new JsonResponse(array(
@@ -176,4 +151,26 @@ class ScriptController extends Controller
 
         return $this->redirect($this->generateUrl('scripts_list'));
     }
+
+    /**
+     * @Route("/exec-script/", name="exec_script")
+     * @Method({"GET"})
+     * @Template()
+     */
+    /*public function executeScriptAction()
+    {
+
+        $r = new RCore(new CommandLineREngine('/usr/bin/R'));
+        $rProcess = $r->createInteractiveProcess();
+        $rProcess->start();
+
+        $rOutputParser = new ROutputParser();
+        $rProcess->write('21 + 21');
+        $result = $rProcess->getAllOutput();
+
+        echo $result;
+
+        exit();
+        return $this->redirect($this->generateUrl('scripts_list'));
+    }*/
 }

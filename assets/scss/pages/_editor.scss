@@ -1,12 +1,23 @@
 .editor-menu {
 	background-color: #3498db;
+	overflow: hidden;
+}
+
+.editor-menu-left {
+	float: left;
+}
+
+.editor-menu-right {
+	float: right;
 }
 
 .editor-menu-item {
+	display: inline-block;
 	padding: 10px;
 	background-color: #3498db;
 	border-width: 0;
 	color: white;
+	text-decoration: none;
 
 	&:hover,
 	&:focus {

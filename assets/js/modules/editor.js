@@ -11,6 +11,7 @@ var Editor = function Editor() {
     this.$saveButton = $('#save-button');
 
     this.initialize();
+    this.initEvents();
 };
 
 Editor.prototype.initialize = function() {
@@ -19,7 +20,8 @@ Editor.prototype.initialize = function() {
 };
 
 Editor.prototype.initEvents = function() {
-
+    this.$runButton.click(function() {});
+    this.$saveButton.click(function() {});
 };
 
 module.exports = Editor;

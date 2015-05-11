@@ -4,11 +4,8 @@
   "description": "Plateforme collaborative de développement R.",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp",
-    "styles": "gulp styles",
-    "images": "gulp images",
-    "javascripts": "gulp javascripts",
-    "watch": "gulp watch"
+    "task": "gulp",
+    "start": "gulp watch"
   },
   "repository": {
     "type": "git",

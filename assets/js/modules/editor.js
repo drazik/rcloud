@@ -8,6 +8,7 @@ require('brace/theme/monokai');
 var Editor = function Editor() {
     this.editor = ace.edit('editor-field');
     this.$runButton = $('#run-button');
+    this.$saveButton = $('#save-button');
 
     this.initialize();
 };
@@ -17,6 +18,8 @@ Editor.prototype.initialize = function() {
     this.editor.setTheme('ace/theme/monokai');
 };
 
-new Editor();
+Editor.prototype.initEvents = function() {
+
+};
 
 module.exports = Editor;

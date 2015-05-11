@@ -7,12 +7,12 @@ var buffer = require('vinyl-buffer');
 
 gulp.task('javascripts', function() {
 	var b = browserify({
-		entries: './assets/js/editorapp.js',
+		entries: './assets/js/app.js',
 		debug: true
 	});
 
 	return b.bundle()
-		.pipe(source('editorapp.js'))
+		.pipe(source('app.js'))
 		.pipe(buffer())
 		.pipe(gulp.dest('./web/assets/js'));
 });

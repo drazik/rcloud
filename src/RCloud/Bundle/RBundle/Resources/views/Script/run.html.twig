@@ -1,10 +1,12 @@
 {% for result in results %}
+	{% if not loop.first %}
 	{% for ligne in result if ligne is not empty %}
 	
 		{{ ligne }}
 		<br>
 	{% endfor %}
-{%endfor %}
+{% endif %}
+{% endfor %}
 
 {% if graphes is defined %}
 <div id="graphes">

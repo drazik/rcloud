@@ -29,10 +29,28 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
-        $script = $request->request->get('script');
+        
         $user = $this->get('security.context')->getToken()->getUser();
 
+        $personalDir = 'upload/' . $user->getUsername();
+       
+        // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
+        if (!is_dir($personalDir)) {
+            mkdir($personalDir);
+        }
+        $directory = opendir($personalDir);
+        $graphes = array();
+        // Si d'anciennes images existent encore, on les supprime
+        while ($file = readdir($directory)) {
+            if (substr($file, -3) == 'png') {
+                unlink($personalDir . '/' . $file);
+            }
+        }
+
+
+        $script  = 'setwd("'.$personalDir.'");' . "\r\n"   ;
+        $script .= 'options(device="png");' . "\r\n";
+        $script .= $request->request->get('script'). "\r\n";
         $r = new RCore(new CommandLineREngine('/usr/bin/R'));
         $rProcess = $r->createInteractiveProcess();
         $rProcess->start();
@@ -45,23 +63,17 @@ class ScriptController extends Controller
 
         
         // graphes
-        /*$directory = opendir($personalDir);
+        $directory = opendir($personalDir);
         $graphes = array();
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
-                $graphes[] = $personalDir . '/' . $file;
+                $graphes[] = $personalDir . '/' . $file . '?' . mt_rand();
             }
-        }*/
-        
+        }
         return array(
             'results' => $results,
-            //'graphes' => $graphes
+            'graphes' => $graphes
         );
-        // TODO utiliser une JsonResponse
-        // return new JsonResponse(array(
-        //     'result' => $result,
-        //     'graphes' => $graphes
-        // ));
     }
 
 

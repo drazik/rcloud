@@ -14,7 +14,11 @@
         </div>
     </div>
     <div class="editor-editor">
-        <textarea id="editor-field"></textarea>
+        <textarea id="editor-field">
+            {% if script is not null %}
+            {{ script.content }}
+            {% endif %}
+        </textarea>
     </div>
     <div class="editor-result">
         <div class="editor-result-result"></div>

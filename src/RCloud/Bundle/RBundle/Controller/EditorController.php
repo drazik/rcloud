@@ -16,19 +16,19 @@ class EditorController extends Controller
      */
     public function showAction($scriptId = null)
     {
-        // if ($scriptId) {
-        //     $user = $this->get('security.context')->getToken()->getUser();
-        //     $scripts = $user->getScripts();
+        if ($scriptId) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $scripts = $user->getScripts();
 
-        //     $script = $scripts->filter(function($entry) use ($scriptId) {
-        //         return $entry->getId() == $scriptId;
-        //     });
+            $script = $scripts->filter(function($entry) use ($scriptId) {
+                return $entry->getId() == $scriptId;
+            });
 
-        //     $script = $script->first();
-        // } else {
-        //     $script = null;
-        // }
+            $script = $script->first();
+        } else {
+            $script = null;
+        }
 
-        return array();
+        return array('script' => $script);
     }
 }

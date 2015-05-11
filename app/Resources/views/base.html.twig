@@ -7,6 +7,15 @@
             <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <script>
+            window.urls = {
+                editor: {
+                    run: '{{ path("run_script_ajax") }}',
+                    save: '{{ path("save_script_ajax") }}'
+                }
+            };
+        </script>
     </head>
     <body>
         {% block body %}{% endblock %}

@@ -4,13 +4,11 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var reactify = require('reactify');
 
 gulp.task('javascripts', function() {
 	var b = browserify({
-		entries: './assets/js/editorapp.jsx',
-		debug: true,
-		transform: [reactify]
+		entries: './assets/js/editorapp.js',
+		debug: true
 	});
 
 	return b.bundle()

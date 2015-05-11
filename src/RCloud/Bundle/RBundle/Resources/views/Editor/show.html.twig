@@ -2,6 +2,27 @@
 
 {% extends '::base.html.twig' %}
 
+{% block body %}
+<div id="editor">
+    <div class="editor-menu">
+        <div class="editor-menu-left">
+            <button class="editor-menu-item" id="run-button" type="button">Run</button>
+            <button class="editor-menu-item" id="save-button" type="button">Save</button>
+        </div>
+        <div class="editor-menu-right">
+            <a class="editor-menu-item" href="{{ path('show_dashboard') }}">Dashboard</a>
+        </div>
+    </div>
+    <div class="editor-editor">
+        <textarea id="editor-field"></textarea>
+    </div>
+    <div class="editor-result">
+        <div class="editor-result-result"></div>
+        <div class="editor-result-graphs"></div>
+    </div>
+</div>
+{% endblock %}
+
 {% block javascripts %}
 <script src="{{ asset('assets/js/editorapp.js') }}"></script>
 {% endblock %}

@@ -37,9 +37,9 @@ class ScriptController extends Controller
     public function saveScript(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $scriptId = $request->request->get('scriptId');
-        $scriptContent = $request->request->get('scriptContent');
-        $scriptName = $request->request->get('scriptName');
+        $scriptId = $request->request->get('id');
+        $scriptContent = $request->request->get('content');
+        $scriptName = $request->request->get('name');
         $user = $this->get('security.context')->getToken()->getUser();
         $response = array();
         if($scriptId == null) {

@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use RCloud\Bundle\RBundle\Entity\Script;
+
 class EditorController extends Controller
 {
     /**
@@ -16,6 +18,8 @@ class EditorController extends Controller
      */
     public function showAction($scriptId = null)
     {
+        $script = null;
+
         if ($scriptId) {
             $user = $this->get('security.context')->getToken()->getUser();
             $scripts = $user->getScripts();
@@ -25,10 +29,16 @@ class EditorController extends Controller
             });
 
             $script = $script->first();
-        } else {
-            $script = null;
         }
 
-        return array('script' => $script);
+        if ($script === null) {
+            $script = new Script();
+            $script->setName('');
+            $script->setContent('');
+        }
+
+        return array(
+            'script' => $script
+        );
     }
 }

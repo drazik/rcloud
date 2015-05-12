@@ -4,7 +4,7 @@
 
 {% block body %}
 <div id="editor">
-    <input id="editor-script" type="hidden" value="" />
+    <input id="editor-script" type="hidden" value="{{ script|serialize('json') }}" />
     <div class="editor-menu">
         <div class="editor-menu-left">
             <button class="editor-menu-item" id="run-button" type="button">Run</button>
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="editor-editor">
-        <textarea id="editor-field">{% if script is not null %}{{ script.content }}{% endif %}</textarea>
+        <textarea id="editor-field">{{ script.content }}</textarea>
     </div>
     <div class="editor-result">
         <div class="editor-result-result"></div>

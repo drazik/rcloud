@@ -29,13 +29,23 @@ Editor.prototype.initEvents = function() {
 
 Editor.prototype.run = function(event) {
     $.ajax({
-        url: window.urls.script.run,
-        type: 'POST'
-    }).done(function() {
-
-    }).fail(function() {
-
-    });
+        dataType: 'json',
+        data: {
+            script: this.editor.session.getTextRange(this.editor.getSelectionRange()) || this.editor.getValue()
+        },
+        type: 'POST',
+        url: window.urls.editor.run,
+        beforeSend: function(jqXHR, settings) {
+            this.$result.empty();
+            this.$result.append($('<img src="' + window.urls.general.images + 'ajax-loader.gif" alt="Chargement" />'));
+        }.bind(this)
+    }).done(function(data) {
+        this.$result.empty();
+        this.$result.html(data.result);
+    }.bind(this)).fail(function(jqXHR, textStatus, errorThrown) {
+        this.$result.empty();
+        this.$result.html(textStatus);
+    }.bind(this));
 };
 
 Editor.prototype.save = function(event) {

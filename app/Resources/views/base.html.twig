@@ -10,6 +10,10 @@
 
         <script>
             window.urls = {
+                general: {
+                    assets: '{{ asset("assets/") }}',
+                    images: '{{ asset("assets/img/") }}'
+                },
                 editor: {
                     run: '{{ path("run_script_ajax") }}',
                     save: '{{ path("save_script_ajax") }}'

@@ -7,8 +7,8 @@
     <li>
         {{ script.name }}
         <span class="script-actions">
-            <a href="#" title="Editer {{ script.name }}"><i class="fa fa-edit"></i></a>
-            <a class="remove-script" href="{{path('script_remove', {'scriptId': script.id} )}}" title="Supprimer {{ script.name }}" data-script-id="{{ script.id }}"><i class="fa fa-trash-o"></i></a>
+            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}"><i class="fa fa-edit"></i></a>
+            <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}"><i class="fa fa-trash-o"></i></a>
         </span>
     </li>
     {% endfor %}

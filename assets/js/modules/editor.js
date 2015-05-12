@@ -50,11 +50,13 @@ Editor.prototype.run = function(event) {
 
 Editor.prototype.save = function(event) {
     $.ajax({
+        dataType: 'json',
+        data: {},
         url: window.urls.script.save,
         type: 'POST'
-    }).done(function() {
+    }).done(function(data) {
 
-    }).fail(function() {
+    }).fail(function(jqXHR, textStatus, errorThrown) {
 
     });
 };

@@ -4,10 +4,12 @@
 
 {% block body %}
 <div id="editor">
+    <input id="editor-script" type="hidden" value="" />
     <div class="editor-menu">
         <div class="editor-menu-left">
             <button class="editor-menu-item" id="run-button" type="button">Run</button>
             <button class="editor-menu-item" id="save-button" type="button">Save</button>
+            <a class="editor-menu-item" href="{{ path('show_editor') }}" target="_blank">New</a>
         </div>
         <div class="editor-menu-right">
             <a class="editor-menu-item" href="{{ path('show_dashboard') }}">Dashboard</a>

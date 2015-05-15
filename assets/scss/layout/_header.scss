@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    height: 3rem;
+    background-color: $primary-color;
+}
+
+.header-logo {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+
+    img {
+        height: 100%;
+        width: auto;
+        vertical-align: bottom;
+    }
+}

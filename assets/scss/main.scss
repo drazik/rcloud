@@ -7,9 +7,12 @@
 @import 'base/base';
 @import 'base/typography';
 
-@import 'layout/grid';
-@import 'layout/navigation';
+@import 'layout/footer';
 @import 'layout/forms';
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/navigation';
+@import 'layout/page';
 
 @import 'components/buttons';
 

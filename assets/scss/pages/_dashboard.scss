@@ -8,8 +8,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow-x: hidden;
-    overflow-y: visible;
 }
 
 .dashboard-menu-item {
@@ -17,11 +15,10 @@
     color: inherit;
     text-decoration: none;
     text-align: center;
-    flex: 1;
 
     &:hover,
     &:focus {
-        color: #2980b9;
+        color: $primary-color;
     }
 }
 

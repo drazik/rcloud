@@ -7,12 +7,25 @@
     <input id="editor-script" type="hidden" value="{{ script|serialize('json') }}" />
     <div class="editor-menu">
         <div class="editor-menu-left">
-            <button class="editor-menu-item" id="run-button" type="button">Run</button>
-            <button class="editor-menu-item" id="save-button" type="button">Save</button>
-            <a class="editor-menu-item" href="{{ path('show_editor') }}" target="_blank">New</a>
+            <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
+            <button class="editor-menu-item" id="run-button" type="button">
+                <i class="fa fa-play"></i>
+                <span>Exécuter</span>
+            </button>
+            <button class="editor-menu-item" id="save-button" type="button">
+                <i class="fa fa-save"></i>
+                <span>Enregistrer</span>
+            </button>
+            <a class="editor-menu-item" href="{{ path('show_editor') }}" target="_blank">
+                <i class="fa fa-plus"></i>
+                <span>Nouveau</span>
+            </a>
         </div>
         <div class="editor-menu-right">
-            <a class="editor-menu-item" href="{{ path('show_dashboard') }}">Dashboard</a>
+            <a class="editor-menu-item" href="{{ path('show_dashboard') }}">
+                <i class="fa fa-home"></i>
+                <span>Accueil</span>
+            </a>
         </div>
     </div>
     <div class="editor-editor">

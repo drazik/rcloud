@@ -3,5 +3,28 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+<div class="page">
+    <header class="header">
+    {% block header %}
+        <a class="header-logo" href="{{ path('show_dashboard') }}" title="Accueil">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
+        </a>
+        <nav class="navigation">
+        {% block navigation %}{% endblock %}
+            <a class="navigation-item" href="{{ path('show_editor') }}">
+                <i class="fa fa-plus"></i>
+                <span>Nouveau</span>
+            </a>
+        </nav>
+    {% endblock %}
+    </header>
+    <div class="content">
     {% block content %}{% endblock %}
+    </div>
+    <footer class="footer">
+    {% block footer %}
+        <p>RCloud.</p>
+    {% endblock %}
+    </footer>
+</div>
 {% endblock %}

@@ -2,17 +2,37 @@
 
 {% block content %}
 {%  if scripts|length > 0 %}
-<ul>
-    {% for script in scripts %}
-    <li>
-        {{ script.name }}
-        <span class="script-actions">
-            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}"><i class="fa fa-edit"></i></a>
-            <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}"><i class="fa fa-trash-o"></i></a>
-        </span>
-    </li>
-    {% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Modification</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for script in scripts %}
+            <tr>
+                <td>
+                    {{ script.name }}
+                </td>
+                <td>
+                    {{ script.dateModification|date('d-m-Y') }}
+                </td>
+                <td>
+                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
 <p>Vous n'avez aucun script</p>
 {% endif %}

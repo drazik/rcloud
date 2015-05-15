@@ -2047,17 +2047,64 @@ html, body {
 /**
  * Typographic rules
  */
-/**
- * Grid system
- */
-/**
- * Navigation bar
- */
+.footer {
+  margin-top: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-top: 1px solid #999;
+  font-size: 0.7rem; }
+
 /**
  * All the forms styles
  */
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
-  border-color: #2980b9; }
+  border-color: #3498db; }
+
+/**
+ * Grid system
+ */
+.header {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3rem;
+  background-color: #3498db; }
+
+.header-logo {
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem; }
+  .header-logo img {
+    height: 100%;
+    width: auto;
+    vertical-align: bottom; }
+
+.navigation {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.navigation-item {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  line-height: 3rem;
+  text-decoration: none;
+  color: white; }
+  .navigation-item:hover {
+    background-color: rgba(255, 255, 255, 0.2); }
+
+.page {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
 
 .button {
   padding: 1rem;
@@ -2138,20 +2185,15 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
           justify-content: space-between;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center;
-  overflow-x: hidden;
-  overflow-y: visible; }
+          align-items: center; }
 
 .dashboard-menu-item {
   padding: 1rem;
   color: inherit;
   text-decoration: none;
-  text-align: center;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1; }
+  text-align: center; }
   .dashboard-menu-item:hover, .dashboard-menu-item:focus {
-    color: #2980b9; }
+    color: #3498db; }
 
 .dashboard-menu-item-icon {
   font-size: 3rem;
@@ -2179,7 +2221,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   color: white;
   text-decoration: none; }
   .editor-menu-item:hover, .editor-menu-item:focus {
-    background-color: #2980b9; }
+    background-color: rgba(255, 255, 255, 0.2); }
 
 .ace_editor, .editor-result {
   margin-top: 0;
@@ -2190,5 +2232,5 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
 .editor-result {
   padding: 1em;
-  overflow-y: scroll;
+  overflow-y: auto;
   font-family: monospace; }

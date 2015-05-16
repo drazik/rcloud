@@ -6,6 +6,10 @@ require('brace/mode/r');
 require('brace/theme/monokai');
 
 var Editor = function Editor() {
+    if (!document.getElementById('editor-field')) {
+        return;
+    }
+
     this.editor = ace.edit('editor-field');
     this.$container = $('#editor');
     this.$runButton = this.$container.find('#run-button');

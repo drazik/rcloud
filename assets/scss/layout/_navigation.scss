@@ -5,9 +5,11 @@
 .navigation-item {
     padding-left: 1rem;
     padding-right: 1rem;
+    border-width: 0;
     line-height: 3rem;
     text-decoration: none;
     color: white;
+    background-color: transparent;
 
     &:hover {
         background-color: rgba(white, 0.2);

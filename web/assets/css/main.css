@@ -2157,6 +2157,9 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     width: auto;
     vertical-align: bottom; }
 
+.header-right {
+  margin-left: auto; }
+
 .navigation {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2165,9 +2168,11 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .navigation-item {
   padding-left: 1rem;
   padding-right: 1rem;
+  border-width: 0;
   line-height: 3rem;
   text-decoration: none;
-  color: white; }
+  color: white;
+  background-color: transparent; }
   .navigation-item:hover {
     background-color: rgba(255, 255, 255, 0.2); }
 
@@ -2191,6 +2196,56 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   text-align: center; }
   .button:hover, .button:focus {
     background-color: #2980b9;
+    color: white; }
+
+.dropdown {
+  position: relative; }
+  .dropdown.is-open::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    border: 0.5rem solid transparent;
+    border-bottom-color: white;
+    z-index: 999; }
+  .dropdown.is-open::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    border: calc(0.5rem + 1px) solid transparent;
+    border-bottom-color: #e0e0e0;
+    z-index: 998; }
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  list-style: none;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  z-index: 997; }
+  .is-open .dropdown-list {
+    display: block; }
+
+.dropdown-item a {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.8rem; }
+  .dropdown-item a:hover {
+    background-color: #3498db;
     color: white; }
 
 .scripts-list {

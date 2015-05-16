@@ -1,19 +1,9 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/layout.html.twig #}
 
-{% extends "::base.html.twig" %}
+{% extends "RCloudRBundle::layout.html.twig" %}
 
-{% block body %}
-    <div class="login-page">
-        <div class="login-page-inner">
-            <img class="login-page-logo" src="{{ asset('assets/img/logo.png') }}" alt="" title="" />
-            {% for key, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ key }}">
-                        {{ message|trans({}, 'FOSUserBundle') }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-            {% block fos_user_content %}{% endblock fos_user_content %}
-        </div>
-    </div>
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+    {% block fos_user_content %}{% endblock fos_user_content %}
 {% endblock %}

@@ -2364,30 +2364,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   display: block;
   font-size: 1.5rem; }
 
-.editor-menu {
-  background-color: #3498db;
-  overflow: hidden; }
-
-.editor-menu-left {
-  float: left; }
-
-.editor-menu-right {
-  float: right; }
-
-.editor-menu-item {
-  display: inline-block;
-  padding: 10px;
-  background-color: #3498db;
-  border-width: 0;
-  color: white;
-  text-decoration: none; }
-  .editor-menu-item:hover, .editor-menu-item:focus {
-    background-color: rgba(255, 255, 255, 0.2); }
-
 .ace_editor, .editor-result {
   margin-top: 0;
   margin-bottom: 0;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 85px);
   width: 50%;
   float: left; }
 

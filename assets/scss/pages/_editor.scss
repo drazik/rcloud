@@ -1,35 +1,8 @@
-.editor-menu {
-	background-color: $primary-color;
-	overflow: hidden;
-}
-
-.editor-menu-left {
-	float: left;
-}
-
-.editor-menu-right {
-	float: right;
-}
-
-.editor-menu-item {
-	display: inline-block;
-	padding: 10px;
-	background-color: $primary-color;
-	border-width: 0;
-	color: white;
-	text-decoration: none;
-
-	&:hover,
-	&:focus {
-		background-color: rgba(#fff, 0.2);
-	}
-}
-
 .ace_editor,
 .editor-result {
 	margin-top: 0;
 	margin-bottom: 0;
-	height: calc(100vh - 40px); // ABSOLUMENT DEGUEULASSE
+	height: calc(100vh - 85px); // ABSOLUMENT DEGUEULASSE
 	width: 50%;
 	float: left;
 }

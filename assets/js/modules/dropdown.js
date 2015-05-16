@@ -16,7 +16,7 @@ Dropdown.prototype.toggle = function(event) {
     this.$container.toggleClass('is-open');
 };
 
-$.fn.dropdown = function (options) {
+$.fn.dropdown = function(options) {
     return this.each(function () {
         var $this = $(this);
         var data = $this.data('dropdown');

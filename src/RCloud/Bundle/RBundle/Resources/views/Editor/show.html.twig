@@ -1,33 +1,21 @@
 {# src/RCloud/Bundle/RBundle/Resources/views/Editor/showEditor.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudRBundle::layout.html.twig' %}
 
-{% block body %}
+{% block navigation %}
+    <button class="navigation-item" id="run-script" type="button">
+        <i class="fa fa-rocket"></i>
+        <span>Exécuter</span>
+    </button>
+    <button class="navigation-item" id="save-script" type="button">
+        <i class="fa fa-save"></i>
+        <span>Enregistrer</span>
+    </button>
+{% endblock %}
+
+{% block content %}
 <div id="editor">
     <input id="editor-script" type="hidden" value="{{ script|serialize('json') }}" />
-    <div class="editor-menu">
-        <div class="editor-menu-left">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
-            <button class="editor-menu-item" id="run-button" type="button">
-                <i class="fa fa-play"></i>
-                <span>Exécuter</span>
-            </button>
-            <button class="editor-menu-item" id="save-button" type="button">
-                <i class="fa fa-save"></i>
-                <span>Enregistrer</span>
-            </button>
-            <a class="editor-menu-item" href="{{ path('show_editor') }}" target="_blank">
-                <i class="fa fa-plus"></i>
-                <span>Nouveau</span>
-            </a>
-        </div>
-        <div class="editor-menu-right">
-            <a class="editor-menu-item" href="{{ path('show_dashboard') }}">
-                <i class="fa fa-home"></i>
-                <span>Accueil</span>
-            </a>
-        </div>
-    </div>
     <div class="editor-editor">
         <textarea id="editor-field">{{ script.content }}</textarea>
     </div>

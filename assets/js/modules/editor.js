@@ -12,8 +12,8 @@ var Editor = function Editor() {
 
     this.editor = ace.edit('editor-field');
     this.$container = $('#editor');
-    this.$runButton = this.$container.find('#run-button');
-    this.$saveButton = this.$container.find('#save-button');
+    this.$runButton = $('#run-script');
+    this.$saveButton = $('#save-script');
     this.$result = this.$container.find('.editor-result');
     this.$graphs = this.$container.find('.editor-graphs');
 

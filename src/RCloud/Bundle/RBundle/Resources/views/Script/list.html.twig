@@ -21,7 +21,7 @@
                             </a>
                         </td>
                         <td>
-                            {{ script.dateModification|date('d-m-Y') }}
+                            {{ script.dateModification|localizeddate('medium', 'none') }}
                         </td>
                         <td class="scripts-list-action">
                             <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">

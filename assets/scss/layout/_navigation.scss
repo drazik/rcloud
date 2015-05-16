@@ -11,7 +11,8 @@
     color: white;
     background-color: transparent;
 
-    &:hover {
+    &:hover,
+    &:focus {
         background-color: rgba(white, 0.2);
     }
 }

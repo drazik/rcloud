@@ -1,6 +1,10 @@
 .dropdown {
     position: relative;
 
+    &.is-open {
+        background-color: rgba(white, 0.3);
+    }
+
     &.is-open::before {
         content: '';
         position: absolute;
@@ -52,7 +56,8 @@
         text-decoration: none;
         font-size: 0.8rem;
 
-        &:hover {
+        &:hover,
+        &:focus {
             background-color: $primary-color;
             color: white;
         }

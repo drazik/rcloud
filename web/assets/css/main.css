@@ -2173,7 +2173,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   text-decoration: none;
   color: white;
   background-color: transparent; }
-  .navigation-item:hover {
+  .navigation-item:hover, .navigation-item:focus {
     background-color: rgba(255, 255, 255, 0.2); }
 
 .page {
@@ -2188,18 +2188,20 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .button {
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid #2980b9;
+  border: 2px solid;
   border-radius: 8px;
-  color: #2980b9;
+  color: #3498db;
   font-weight: bold;
   text-decoration: none;
   text-align: center; }
   .button:hover, .button:focus {
-    background-color: #2980b9;
+    background-color: #3498db;
     color: white; }
 
 .dropdown {
   position: relative; }
+  .dropdown.is-open {
+    background-color: rgba(255, 255, 255, 0.3); }
   .dropdown.is-open::before {
     content: '';
     position: absolute;
@@ -2244,7 +2246,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   color: inherit;
   text-decoration: none;
   font-size: 0.8rem; }
-  .dropdown-item a:hover {
+  .dropdown-item a:hover, .dropdown-item a:focus {
     background-color: #3498db;
     color: white; }
 
@@ -2271,7 +2273,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
       display: block;
       color: inherit;
       text-decoration: none; }
-      .scripts-list td a:hover {
+      .scripts-list td a:hover, .scripts-list td a:focus {
         color: #3498db; }
   .scripts-list tbody tr {
     border-top: 1px solid #e0e0e0; }

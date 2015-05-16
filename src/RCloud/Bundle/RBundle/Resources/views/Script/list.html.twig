@@ -1,39 +1,46 @@
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block content %}
-{%  if scripts|length > 0 %}
-<table>
-    <thead>
-        <tr>
-            <th>Titre</th>
-            <th>Modification</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for script in scripts %}
-            <tr>
-                <td>
-                    {{ script.name }}
-                </td>
-                <td>
-                    {{ script.dateModification|date('d-m-Y') }}
-                </td>
-                <td>
-                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Vous n'avez aucun script</p>
-{% endif %}
+<div class="row row-padded">
+    <div class="col-8">
+        {%  if scripts|length > 0 %}
+        <table class="scripts-list">
+            <thead>
+                <tr>
+                    <th class="scripts-list-header-title">Titre</th>
+                    <th class="scripts-list-header-modification">Modification</th>
+                    <th class="scripts-list-header-actions" colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for script in scripts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                {{ script.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ script.dateModification|date('d-m-Y') }}
+                        </td>
+                        <td class="scripts-list-action">
+                            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="scripts-list-action">
+                            <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Vous n'avez aucun script</p>
+        {% endif %}
+    </div>
+    <div class="col-4"></div>
+</div>
 {% endblock %}

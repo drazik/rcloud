@@ -2044,6 +2044,9 @@ html, body {
   height: 100%;
   width: 100%; }
 
+body {
+  color: #333; }
+
 /**
  * Typographic rules
  */
@@ -2060,9 +2063,80 @@ html, body {
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
   border-color: #3498db; }
 
-/**
- * Grid system
- */
+.row {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.row-padded {
+  padding: 1rem; }
+
+[class*="col"] {
+  box-sizing: border-box;
+  word-wrap: break-word; }
+
+@media screen and (min-width: 500px) {
+  .row {
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+  [class*="col"] {
+    margin-left: 1rem;
+    -webkit-flex: 12;
+        -ms-flex: 12;
+            flex: 12; }
+  [class*="col"]:first-child {
+    margin-left: 0; }
+  .col-1 {
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+  .col-2 {
+    -webkit-flex: 2;
+        -ms-flex: 2;
+            flex: 2; }
+  .col-3 {
+    -webkit-flex: 3;
+        -ms-flex: 3;
+            flex: 3; }
+  .col-4 {
+    -webkit-flex: 4;
+        -ms-flex: 4;
+            flex: 4; }
+  .col-5 {
+    -webkit-flex: 5;
+        -ms-flex: 5;
+            flex: 5; }
+  .col-6 {
+    -webkit-flex: 6;
+        -ms-flex: 6;
+            flex: 6; }
+  .col-7 {
+    -webkit-flex: 7;
+        -ms-flex: 7;
+            flex: 7; }
+  .col-8 {
+    -webkit-flex: 8;
+        -ms-flex: 8;
+            flex: 8; }
+  .col-9 {
+    -webkit-flex: 9;
+        -ms-flex: 9;
+            flex: 9; }
+  .col-10 {
+    -webkit-flex: 10;
+        -ms-flex: 10;
+            flex: 10; }
+  .col-11 {
+    -webkit-flex: 11;
+        -ms-flex: 11;
+            flex: 11; } }
+
 .header {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2118,6 +2192,38 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   .button:hover, .button:focus {
     background-color: #2980b9;
     color: white; }
+
+.scripts-list {
+  width: 100%;
+  table-layout: fixed;
+  white-space: nowrap;
+  font-size: 0.8rem; }
+  .scripts-list th {
+    padding: 0.3rem 0.6rem;
+    text-align: left; }
+    .scripts-list th.scripts-list-header-title {
+      width: 50%; }
+    .scripts-list th.scripts-list-header-modification {
+      width: 20%; }
+    .scripts-list th.scripts-list-header-actions {
+      text-align: center; }
+  .scripts-list td {
+    padding: 0.3rem 0.6rem; }
+    .scripts-list td.scripts-list-action {
+      text-align: center;
+      font-size: 1rem; }
+    .scripts-list td a {
+      display: block;
+      color: inherit;
+      text-decoration: none; }
+      .scripts-list td a:hover {
+        color: #3498db; }
+  .scripts-list tbody tr {
+    border-top: 1px solid #e0e0e0; }
+    .scripts-list tbody tr:nth-child(2n+1) {
+      background-color: rgba(224, 224, 224, 0.4); }
+    .scripts-list tbody tr:hover {
+      background-color: rgba(224, 224, 224, 0.6); }
 
 .login-page {
   width: 100%;

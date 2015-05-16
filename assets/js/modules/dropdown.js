@@ -13,8 +13,35 @@ Dropdown.prototype.initEvents = function() {
 };
 
 Dropdown.prototype.toggle = function(event) {
+    if (!this.$container.hasClass('is-open')) {
+        clearDropdowns();
+    }
+
     this.$container.toggleClass('is-open');
 };
+
+Dropdown.prototype.close = function() {
+    this.$container.removeClass('is-open');
+};
+
+function clearDropdowns(e) {
+    if (e && e.which === 3) {
+        return;
+    }
+
+    $('.dropdown').each(function() {
+        var $this = $(this);
+        var dropdown = $this.data('dropdown');
+
+        if (e && this === e.target.parentNode) {
+            return;
+        }
+
+        if (dropdown) {
+            dropdown.close();
+        }
+    });
+}
 
 $.fn.dropdown = function(options) {
     return this.each(function () {
@@ -26,3 +53,5 @@ $.fn.dropdown = function(options) {
         }
     });
 };
+
+$(document).on('click', clearDropdowns);

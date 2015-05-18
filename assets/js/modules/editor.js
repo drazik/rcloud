@@ -77,7 +77,7 @@ Editor.prototype.save = function(event) {
     }).done(function(data) {
         this.script.id = data.data.scriptId;
 
-        if (data.meta.code === '201') {
+        if (data.meta.code === 201) {
             window.history.pushState({}, '', '/editor/' + data.data.scriptId);
         }
     }.bind(this)).fail(function(jqXHR, textStatus, errorThrown) {

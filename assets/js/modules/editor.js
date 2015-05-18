@@ -40,7 +40,6 @@ Editor.prototype.initEvents = function() {
 
 Editor.prototype.run = function(event) {
     $.ajax({
-        dataType: 'json',
         data: {
             script: this.getScriptContent(true)
         },
@@ -52,7 +51,7 @@ Editor.prototype.run = function(event) {
         }.bind(this)
     }).done(function(data) {
         this.$result.empty();
-        this.$result.html(data.result);
+        this.$result.html(data);
     }.bind(this)).fail(function(jqXHR, textStatus, errorThrown) {
         this.$result.empty();
         this.$result.html(textStatus);

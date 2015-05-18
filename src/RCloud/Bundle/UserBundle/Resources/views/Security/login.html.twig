@@ -6,7 +6,7 @@
 
 {% block fos_user_content %}
     {% if error %}
-        <div class="alert alert-error">{{ error|trans }}</div>
+        <div class="alert alert-error">{{ error.message|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
 
     <form class="login-form" action="{{ path("fos_user_security_check") }}" method="post">

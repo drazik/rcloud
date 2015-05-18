@@ -1,1 +1,17 @@
-{{ result|raw }}
+{% for result in results %}
+	{% if not loop.first %}
+	{% for ligne in result if ligne is not empty %}
+
+		{{ ligne }}
+		<br>
+	{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% if graphes is defined %}
+<div id="graphes">
+{% for graph in graphes %}
+    <img src="{{ asset(graph) }}" alt="Graph {{ loop.index }}" title="Graph {{ loop.index }}">
+{% endfor %}
+</div>
+{% endif %}

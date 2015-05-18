@@ -1,0 +1,33 @@
+.dashboard-header {
+    width: 100%;
+    text-align: center;
+}
+
+.dashboard-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-menu-item {
+    padding: 1rem;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+        color: $primary-color;
+    }
+}
+
+.dashboard-menu-item-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-menu-item-name {
+    display: block;
+    font-size: 1.5rem;
+}

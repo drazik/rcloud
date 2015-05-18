@@ -3,16 +3,39 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <nav class="line navbar">
-        <span class="inbl" id="logo"></span>
-        <ul class="menu unstyled inbl line">
-            {% block navbarItems %}
-                <li class="inbl">
-                    <button class="menu-item inbl" id="new-tab">Bienvenue, {{ app.user.username }}.</button>
-                </li>
-            {% endblock %}
-        </ul>
-    </nav>
-
+<div class="page">
+    <header class="header">
+    {% block header %}
+        <a class="header-logo" href="{{ path('show_dashboard') }}" title="Accueil">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
+        </a>
+        <nav class="navigation">
+        {% block navigation %}{% endblock %}
+            <a class="navigation-item" href="{{ path('show_editor') }}" target="_blank">
+                <i class="fa fa-plus"></i>
+                <span>Nouveau</span>
+            </a>
+        </nav>
+        <div class="header-right dropdown">
+            <button class="navigation-item dropdown-toggle" type="button">
+                <i class="fa fa-user"></i>
+            </button>
+            <ul class="dropdown-list">
+                <li class="dropdown-item"><a href="{{ path('scripts_list') }}">Scripts</a></li>
+                <li class="dropdown-item"><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+                <li class="dropdown-item"><a href="#">Préférences</a></li>
+                <li class="dropdown-item"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+            </ul>
+        </div>
+    {% endblock %}
+    </header>
+    <div class="content">
     {% block content %}{% endblock %}
+    </div>
+    <footer class="footer">
+    {% block footer %}
+        <p>RCloud.</p>
+    {% endblock %}
+    </footer>
+</div>
 {% endblock %}

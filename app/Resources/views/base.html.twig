@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}{% endblock %} | RCloud</title>
+        <title>{% block title %}{% endblock %}RCloud</title>
         {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/knacss.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/main.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <script>
+            window.urls = {
+                general: {
+                    assets: '{{ asset("assets/") }}',
+                    images: '{{ asset("assets/img/") }}'
+                },
+                editor: {
+                    run: '{{ path("run_script_ajax") }}',
+                    save: '{{ path("save_script_ajax") }}'
+                }
+            };
+        </script>
     </head>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>

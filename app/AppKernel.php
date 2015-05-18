@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new RCloud\Bundle\RBundle\RCloudRBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new RCloud\Bundle\UserBundle\RCloudUserBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

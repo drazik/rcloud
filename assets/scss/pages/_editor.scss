@@ -1,0 +1,14 @@
+.ace_editor,
+.editor-result {
+	margin-top: 0;
+	margin-bottom: 0;
+	height: calc(100vh - 85px); // ABSOLUMENT DEGUEULASSE
+	width: 50%;
+	float: left;
+}
+
+.editor-result {
+	padding: 1em;
+	overflow-y: auto;
+	font-family: monospace;
+}

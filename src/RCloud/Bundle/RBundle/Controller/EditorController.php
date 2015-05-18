@@ -6,28 +6,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Symfony\Component\HttpFoundation\Response;
+
+use RCloud\Bundle\RBundle\Entity\Script;
+
 class EditorController extends Controller
 {
     /**
-     * @Route("/editor", name="show_editor")
+     * @Route("/editor/{scriptId}", name="show_editor", defaults={"scriptId": null}, requirements={"scriptId": "\d+"})
      * @Template()
      */
-    public function showAction()
+    public function showAction($scriptId = null)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $script = null;
 
-        $scripts = $user->getScripts();
+        if ($scriptId) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $scripts = $user->getScripts();
 
-        $packages = array(
-            'arules', 'biclust', 'FactoMineR',
-            'flexmix', 'klaR', 'kohonen', 'nnet',
-            'randomForest', 'Rmixmod', 'rpart',
-            'RSQLite', 'tree'
-        );
+            $script = $scripts->filter(function($entry) use ($scriptId) {
+                return $entry->getId() == $scriptId;
+            });
+
+            $script = $script->first();
+        }
+
+        if ($script === null) {
+            $script = new Script();
+            $script->setName('');
+            $script->setContent('');
+        }
 
         return array(
-            'scripts' => $scripts,
-            'packages' => $packages
+            'script' => $script
         );
     }
 }

@@ -1,56 +1,46 @@
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
-{% block title %}Vos scripts{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
-{% endblock %}
-
-{% block navbarItems %}
-<li class="inbl">
-    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
-</li>
-{% endblock %}
-
 {% block content %}
-<div class="wrapper">
-    {%  if scripts|length > 0 %}
-    <ul class="unstyled">
-        {% for script in scripts %}
-            <li class="script">
-                {{ script.name }}
-                <span class="script-actions">
-                    <a href="#" title="Editer {{ script.name }}"><i class="fa fa-edit"></i></a>
-                    <a href="#" title="Partager {{ script.name }}"><i class="fa fa-share-square-o"></i></a>
-                    <a class="remove-script" href="{{path('script_remove', {'scriptId':script.id} )}}" title="Supprimer {{ script.name }}" data-script-id="{{ script.id }}"><i class="fa fa-trash-o"></i></a>
-                </span>
-            </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p>Vous n'avez aucun script</p>
-    {% endif %}
+<div class="row row-padded">
+    <div class="col-8">
+        {%  if scripts|length > 0 %}
+        <table class="scripts-list">
+            <thead>
+                <tr>
+                    <th class="scripts-list-header-title">Titre</th>
+                    <th class="scripts-list-header-modification">Modification</th>
+                    <th class="scripts-list-header-actions" colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for script in scripts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                {{ script.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ script.dateModification|localizeddate('medium', 'none') }}
+                        </td>
+                        <td class="scripts-list-action">
+                            <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="scripts-list-action">
+                            <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Vous n'avez aucun script.</p>
+        {% endif %}
+    </div>
+    <div class="col-4"></div>
 </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/jquery.noty.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/layouts/bottom.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/themes/default.js') }}"></script>
-
-    <script type="text/javascript">
-        {% for label, flashes in app.session.flashbag.all %}
-            {% for flashMessage in flashes %}
-                var notification = noty({
-                    text: '{{ flashMessage }}',
-                    layout: 'bottom',
-                    type: '{{ label }}',
-                    closeWidth: 'button'
-                });
-            {% endfor %}
-        {% endfor %}
-
-    </script>
 {% endblock %}

@@ -1,0 +1,36 @@
+.row {
+    display: flex;
+    flex-direction: column;
+    margin-top: $row-gutter-width;
+    margin-bottom: $row-gutter-width;
+}
+
+.row-padded {
+    padding: $column-gutter-width;
+}
+
+[class*="col"] {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+@media screen and (min-width: $breakpoint) {
+    .row {
+        flex-direction: row;
+    }
+
+    [class*="col"] {
+        margin-left: $column-gutter-width;
+        flex: $columns;
+    }
+
+    [class*="col"]:first-child {
+        margin-left: 0;
+    }
+
+    @for $i from 1 through $columns - 1 {
+        .col-#{$i} {
+            flex: $i;
+        }
+    }
+}

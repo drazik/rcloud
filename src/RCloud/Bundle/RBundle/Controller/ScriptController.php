@@ -29,11 +29,10 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
-       
+
         // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
         if (!is_dir($personalDir)) {
             mkdir($personalDir);
@@ -59,9 +58,9 @@ class ScriptController extends Controller
         // $rProcess->setErrorSensitive(true);
         $rProcess->write($script);
         $results = $rProcess->getAllResult(true);
-          
 
-        
+
+
         // graphes
         $directory = opendir($personalDir);
         $graphes = array();
@@ -85,9 +84,9 @@ class ScriptController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $scriptId = $request->request->get('scriptId');
-        $scriptContent = $request->request->get('scriptContent');
-        $scriptName = $request->request->get('scriptName');
+        $scriptId = $request->request->get('id');
+        $scriptContent = $request->request->get('content');
+        $scriptName = $request->request->get('name');
         $user = $this->get('security.context')->getToken()->getUser();
 
         $response = array();
@@ -101,11 +100,9 @@ class ScriptController extends Controller
             $em->persist($script);
 
             $response['meta']['code'] = 201;
-        }
-        else {
+        } else {
             $repository = $em->getRepository('RCloudRBundle:Script');
             $script = $repository->find($scriptId);
-
             $script->setContent($scriptContent);
 
             $response['meta']['code'] = 200;
@@ -117,7 +114,6 @@ class ScriptController extends Controller
         $response['data']['scriptId'] = $script->getId();
 
         return new JsonResponse($response);
-
     }
 
 

@@ -20,6 +20,7 @@
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
+        "jms/serializer-bundle": "^0.13.0",
         "kachkaev/php-r": "1.0.*@dev"
     },
     "scripts": {

@@ -4,7 +4,8 @@
   "description": "Plateforme collaborative de développement R.",
   "main": "index.js",
   "scripts": {
-    "dploy": "dploy prod"
+    "task": "gulp",
+    "start": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,17 @@
   "homepage": "https://github.com/drazik/rcloud",
   "dependencies": {
     "dploy": "^1.2.0"
+  },
+  "devDependencies": {
+    "brace": "^0.5.1",
+    "browserify": "^9.0.8",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-sass": "^1.3.3",
+    "jquery": "^2.1.4",
+    "require-dir": "^0.3.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

@@ -1,71 +1,33 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/Security/login.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudUserBundle::layout-loggedoff.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Bienvenue{% endblock %}
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert alert-error">{{ error|trans }}</div>
+    {% endif %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/login.css') }}">
-{% endblock %}
+    <form class="login-form" action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-{% block body %}
-    <div id="login-page">
-        <div id="to-be-centered">
-            <img class="logo" src="{{ asset('bundles/rcloudr/images/logo.png') }}" alt="" title="">
-            {% for key, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ key }}">
-                        {{ message|trans({}, 'FOSUserBundle') }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-            {% block fos_user_content %}
-                {% if error %}
-                    <div class="alert alert-error">{{ error|trans }}</div>
-                {% endif %}
-
-                <form action="{{ path("fos_user_security_check") }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-                    <div class="form-group">
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
-                    </div>
-
-                    <div class="checkbox">
-                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="button" id="_submit" name="_submit" type="submit">{{ 'security.login.submit'|trans }}</button>
-                        <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Inscription</a>
-                    </div>
-                </form>
-            {% endblock %}
+        <div class="form-group first">
+            <input type="email" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required="required" />
         </div>
-    </div>
-{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-    $(document).ready(function() {
-        var $container = $('#to-be-centered');
-        var $pageHeight = $(window).outerHeight();
+        <div class="form-group last">
+            <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
+        </div>
 
-        var padding = ($pageHeight - $container.outerHeight()) / 2 - 50;
-        padding = padding > 0 ? padding : 0;
+        <div class="checkbox">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        </div>
 
-        $container.css({
-            'padding-top': padding
-        });
-    });
-    </script>
+        <div class="form-group">
+            <button class="button" id="_submit" name="_submit" type="submit">{{ 'security.login.submit'|trans }}</button>
+            <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Inscription</a>
+        </div>
+    </form>
 {% endblock %}

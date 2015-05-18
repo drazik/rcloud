@@ -1,38 +1,9 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/Registration/register.html.twig #}
 
-{% extends "::base.html.twig" %}
+{% extends 'RCloudUserBundle::layout-loggedoff.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% trans_default_domain 'FOSUserBundle' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/login.css') }}">
-{% endblock %}
-
-{% block body %}
-    <div id="login-page">
-        <div id="to-be-centered">
-            <img class="logo" src="{{ asset('bundles/rcloudr/images/logo.png') }}" alt="" title="">
-            {% block fos_user_content %}
-            {% include "FOSUserBundle:Registration:register_content.html.twig" %}
-            {% endblock fos_user_content %}
-        </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-    $(document).ready(function() {
-        var $container = $('#to-be-centered');
-        var $pageHeight = $(window).outerHeight();
-
-        var padding = ($pageHeight - $container.outerHeight()) / 2 - 50;
-        padding = padding > 0 ? padding : 0;
-
-        $container.css({
-            'padding-top': padding
-        });
-    });
-    </script>
-{% endblock %}
+{% block fos_user_content %}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}

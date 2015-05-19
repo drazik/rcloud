@@ -2,6 +2,8 @@
 
 var $ = require('jquery');
 var ace = require('brace');
+var Notification = require('./notification');
+
 require('brace/mode/r');
 require('brace/theme/monokai');
 

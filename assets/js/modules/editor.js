@@ -82,8 +82,20 @@ Editor.prototype.save = function(event) {
         if (data.meta.code === 201) {
             window.history.pushState({}, '', '/editor/' + data.data.scriptId);
         }
+
+        new Notification({
+            type: 'success',
+            message: 'Script enregistré',
+            ttl: 6000
+        });
     }.bind(this)).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
+
+        new Notification({
+            type: 'error',
+            message: 'Erreur, veuillez recommencer',
+            ttl: 6000
+        });
     }.bind(this));
 };
 

@@ -2483,3 +2483,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   padding: 1em;
   overflow-y: auto;
   font-family: monospace; }
+
+.editor-result-line pre {
+  margin-top: 0;
+  margin-bottom: 0; }

@@ -1,11 +1,7 @@
 {% for result in results %}
 	{% if loop.index > 2 %}
 	{% for ligne in result if ligne is not empty %}
-		<div>
-            <pre>
-                {{ ligne }}
-            </pre>
-        </div>
+		<div class="editor-result-line"><pre>{{ ligne }}</pre></div>
 	{% endfor %}
 {% endif %}
 {% endfor %}

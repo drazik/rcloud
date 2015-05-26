@@ -1,0 +1,9 @@
+{% extends 'RCloudRBundle::layout.html.twig' %}
+
+{% block content %}
+<ul>
+	{% for folder in folders %}
+		<li><a href="{{path("folders_list",{"id" : folder.id})}}">{{folder.name}}</a></li>
+	{% endfor %}
+</ul>
+{% endblock %}

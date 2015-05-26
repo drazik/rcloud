@@ -45,6 +45,12 @@ class DashboardController extends Controller
             'icon' => 'sign-out'
         );
 
+        $dashboardItems[] = array(
+            'title' => 'Dossiers',
+            'href' => $this->generateUrl('folders_list'),
+            'icon' => ''
+        );
+
         return array(
             'dashboardItems' => $dashboardItems
         );

@@ -23,6 +23,13 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Script", mappedBy="owner")
      */
     protected $scripts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Folder", mappedBy="owner")
+     */
+    protected $folders;
+
+
     /**
      * Constructor
      */
@@ -74,5 +81,39 @@ class User extends BaseUser
     public function getScripts()
     {
         return $this->scripts;
+    }
+
+    /**
+     * Add folder
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $folder
+     *
+     * @return User
+     */
+    public function addFolder(\RCloud\Bundle\RBundle\Entity\Folder $folder)
+    {
+        $this->folders[] = $folder;
+
+        return $this;
+    }
+
+    /**
+     * Remove folder
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $folder
+     */
+    public function removeFolder(\RCloud\Bundle\RBundle\Entity\Folder $folder)
+    {
+        $this->folders->removeElement($folder);
+    }
+
+    /**
+     * Get folders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFolders()
+    {
+        return $this->folders;
     }
 }

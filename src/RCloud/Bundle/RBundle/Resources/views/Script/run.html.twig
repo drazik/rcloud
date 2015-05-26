@@ -1,7 +1,9 @@
 {% for result in results %}
 	{% if loop.index > 2 %}
 	{% for ligne in result if ligne is not empty %}
-		<pre>{{ ligne }}</pre>
+		<pre>
+            {{ ligne }}
+        </pre>
 		<br>
 	{% endfor %}
 {% endif %}

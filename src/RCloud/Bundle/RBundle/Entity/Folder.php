@@ -51,7 +51,7 @@ class Folder
     /**
      * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder")
      */
-    private $parentFolderId;
+    private $parent;
 
 
 
@@ -64,7 +64,7 @@ class Folder
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -80,14 +80,14 @@ class Folder
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -103,14 +103,14 @@ class Folder
     public function setDateAdd($dateAdd)
     {
         $this->dateAdd = $dateAdd;
-    
+
         return $this;
     }
 
     /**
      * Get dateAdd
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateAdd()
     {
@@ -126,14 +126,14 @@ class Folder
     public function setDateModification($dateModification)
     {
         $this->dateModification = $dateModification;
-    
+
         return $this;
     }
 
     /**
      * Get dateModification
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateModification()
     {
@@ -149,14 +149,14 @@ class Folder
     public function setOwner(\RCloud\Bundle\UserBundle\Entity\User $owner)
     {
         $this->owner = $owner;
-    
+
         return $this;
     }
 
     /**
      * Get owner
      *
-     * @return \RCloud\Bundle\UserBundle\Entity\User 
+     * @return \RCloud\Bundle\UserBundle\Entity\User
      */
     public function getOwner()
     {
@@ -164,26 +164,26 @@ class Folder
     }
 
     /**
-     * Set parentFolderId
+     * Set parent
      *
-     * @param \RCloud\Bundle\RBundle\Entity\Folder $parentFolderId
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $parent
      *
      * @return Folder
      */
-    public function setParentFolderId(\RCloud\Bundle\RBundle\Entity\Folder $parentFolderId = null)
+    public function setParent(\RCloud\Bundle\RBundle\Entity\Folder $parent = null)
     {
-        $this->parentFolderId = $parentFolderId;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get parentFolderId
+     * Get parent
      *
      * @return \RCloud\Bundle\RBundle\Entity\Folder
      */
-    public function getParentFolderId()
+    public function getParent()
     {
-        return $this->parentFolderId;
+        return $this->parent;
     }
 }

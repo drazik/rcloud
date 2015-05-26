@@ -31,7 +31,7 @@ class FolderController extends Controller
 	/**
      * @Route("/folder/edit/{id}", name="folder_edit")
      */
-    public function enregistrerFolderAction($id = null){
+    public function saveAction($id = null){
         //on récupère l'entity manager
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();

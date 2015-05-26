@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FolderType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -16,10 +16,13 @@ class FolderType extends AbstractType
     {
         $builder
             ->add('name','text')
-            ->add('parentFolderId', 'entity', array(
+            ->add('parent', 'entity', array(
                   'class'    => 'RCloudRBundle:Folder',
                   'property' => 'name',
-                  'multiple' => false))
+                  'multiple' => false,
+                  'required' => false,
+                  'placeholder' => 'Aucun',
+                  'empty_data' => null))
             ->add('save', 'submit')
             ;
     }

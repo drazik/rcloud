@@ -1,0 +1,28 @@
+.folders {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+}
+
+.folder {
+    width: 20%;
+    height: 5rem;
+
+    a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        font-size: 0.8rem;
+        color: #fff;
+        text-decoration: none;
+        background-color: $primary-color;
+
+        &:hover,
+        &:focus {
+            background-color: mix(white, $primary-color, 15%);
+        }
+    }
+}

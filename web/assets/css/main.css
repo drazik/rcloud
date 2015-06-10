@@ -2250,6 +2250,32 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     background-color: #3498db;
     color: white; }
 
+.folders {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  padding-left: 0;
+  list-style: none; }
+
+.folder {
+  width: 20%;
+  height: 5rem; }
+  .folder a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #fff;
+    text-decoration: none;
+    background-color: #3498db; }
+    .folder a:hover, .folder a:focus {
+      background-color: #52a7e0; }
+
 .notification {
   position: fixed;
   bottom: 0;

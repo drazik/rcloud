@@ -20,11 +20,13 @@ class FolderController extends Controller
     public function listAction($id = null)
     {
         $user = $this->get('security.context')->getToken()->getUser();
-		$em = $this->getDoctrine()->getManager();
-        $folders = $em->getRepository('RCloudRBundle:Folder')->getFolders($user, $id);
+		$repository = $this->getDoctrine()->getManager()->getRepository('RCloudRBundle:Folder');
+        $folders = $repository->getFolders($user, $id);
+        $currentFolder = $id === null ? null : $repository->find($id);
 
         return array(
-            'folders' => $folders
+            'folders' => $folders,
+            'currentFolder' => $currentFolder
         );
     }
 

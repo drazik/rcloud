@@ -1,6 +1,21 @@
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block content %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('folders_list') }}">Vos scripts</a></li>
+    {% for item in breadcrumbItems %}
+        <li class="breadcrumb-item">
+            {% if loop.last %}
+            {{ item.name }}
+            {% else %}
+            <a href="{{ path('folders_list', {'id': item.id}) }}">
+                {{ item.name }}
+            </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
 <ul class="folders">
 	{% for folder in folders %}
 		<li class="folder">
@@ -18,7 +33,7 @@
 {% if currentFolder is not null %}
 <div class="row row-padded">
     <div class="col-8">
-        {%  if currentFolder.scripts|length > 0 %}
+        {% if currentFolder.scripts|length > 0 %}
         <table class="scripts-list">
             <thead>
                 <tr>
@@ -28,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for script in folder.scripts %}
+                {% for script in currentFolder.scripts %}
                     <tr>
                         <td>
                             <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
@@ -52,8 +67,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
-        <p>Ce dossier ne contient aucun script.</p>
         {% endif %}
     </div>
 </div>

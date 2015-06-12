@@ -24,9 +24,24 @@ class FolderController extends Controller
         $folders = $repository->getFolders($user, $id);
         $currentFolder = $id === null ? null : $repository->find($id);
 
+        $breadcrumbItems = array();
+
+        if ($currentFolder !== null) {
+            $breadcrumbItems[] = $currentFolder;
+
+            $folder = $currentFolder->getParent();
+
+            if ($folder !== null) {
+                while (($folder = $folder->getParent()) !== null) {
+                    $breadcrumbItems[] = $folder;
+                }
+            }
+        }
+
         return array(
             'folders' => $folders,
-            'currentFolder' => $currentFolder
+            'currentFolder' => $currentFolder,
+            'breadcrumbItems' => $breadcrumbItems
         );
     }
 

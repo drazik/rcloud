@@ -3,7 +3,15 @@
 {% block content %}
 <ul class="folders">
 	{% for folder in folders %}
-		<li class="folder"><a href="{{path("folders_list",{"id" : folder.id})}}">{{folder.name}}</a></li>
+		<li class="folder">
+            <a href="{{path("folders_list",{"id" : folder.id})}}">
+                <ul class="folder-infos">
+                    <li class="folder-name">{{ folder.name }}</li>
+                    <li>0 dossier(s)</li>
+                    <li>{{ folder.scripts | length }} script(s)</li>
+                </ul>
+            </a>
+        </li>
 	{% endfor %}
 </ul>
 {% endblock %}

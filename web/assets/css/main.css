@@ -2276,6 +2276,15 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     .folder a:hover, .folder a:focus {
       background-color: #52a7e0; }
 
+.folder-infos {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.folder-name {
+  font-weight: bold; }
+
 .notification {
   position: fixed;
   bottom: 0;

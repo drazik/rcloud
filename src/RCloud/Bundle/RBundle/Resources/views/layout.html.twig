@@ -22,7 +22,7 @@
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">
-                <i class="fa fa-user"></i>
+                {{ app.user.username }} <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-list">
                 <li class="dropdown-item"><a href="{{ path('scripts_list') }}">Scripts</a></li>

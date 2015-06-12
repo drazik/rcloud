@@ -57,7 +57,7 @@ class Script
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder")
+     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder", inversedBy="scripts")
      */
     private $folder;
 

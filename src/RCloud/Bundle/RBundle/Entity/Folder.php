@@ -53,6 +53,11 @@ class Folder
      */
     private $parent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Script", mappedBy="folder")
+     */
+    private $scripts;
+
 
 
     public function __construct()
@@ -185,5 +190,41 @@ class Folder
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Add script
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Script $script
+     *
+     * @return Folder
+     */
+    public function addScript(\RCloud\Bundle\RBundle\Entity\Script $script)
+    {
+        $this->scripts[] = $script;
+        $script->setFolder($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove script
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Script $script
+     */
+    public function removeScript(\RCloud\Bundle\RBundle\Entity\Script $script)
+    {
+        $this->scripts->removeElement($script);
+        $script->setFolder(null);
+    }
+
+    /**
+     * Get scripts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScripts()
+    {
+        return $this->scripts;
     }
 }

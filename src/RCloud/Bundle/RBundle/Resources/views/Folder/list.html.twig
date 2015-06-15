@@ -18,7 +18,7 @@
             {% endfor %}
         </ul>
 
-        <ul class="folders">
+        <ul class="folders" id="folders-list">
             {% for folder in folders %}
                 <li class="folder">
                     <a href="{{path("folders_list",{"id" : folder.id})}}">

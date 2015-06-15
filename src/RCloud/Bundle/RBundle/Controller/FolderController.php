@@ -83,7 +83,9 @@ class FolderController extends Controller
         return new JsonResponse(array(
             'meta' => array('code' => 201),
             'data' => array(
-                'name' => $newFolder->getName()
+                'id' => $newFolder->getId(),
+                'name' => $newFolder->getName(),
+                'href' => $this->generateUrl('folders_list', array('id' => $newFolder->getId()))
             )
         ));
     }

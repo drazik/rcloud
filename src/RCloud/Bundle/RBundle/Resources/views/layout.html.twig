@@ -21,10 +21,6 @@
                     <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
                 </ul>
             </div>
-            {#<a class="navigation-item" href="{{ path('folder_edit') }}">
-                <i class="fa fa-plus"></i>
-                <span>Nouveau dossier</span>
-            </a>#}
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">
@@ -53,7 +49,17 @@
                 <button class="modal-close" type="button"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <h1>Nouveau dossier</h1>
+                <form id="new-folder-form" method="post" action="#">
+                    <input type="text" name="name" id="new-folder-name" placeholder="Entrez le nom du dossier" required />
+
+                    {% if currentFolder is null %}
+                        {% set parentId = null %}
+                    {% else %}
+                        {% set parentId = currentFolder.id %}
+                    {% endif %}
+                    <input type="text" name="parentId" id="new-folder-parent-id" value="{{ parentId }}" />
+                    <button type="submit">Créer</button>
+                </form>
             </div>
         </div>
     </div>

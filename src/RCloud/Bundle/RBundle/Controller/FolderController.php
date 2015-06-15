@@ -13,14 +13,14 @@ use RCloud\Bundle\RBundle\Form\FolderType;
 
 class FolderController extends Controller
 {
-	/**
+    /**
      * @Route("/folders/{id}", name="folders_list")
      * @Template()
      */
     public function listAction($id = null)
     {
         $user = $this->get('security.context')->getToken()->getUser();
-		$repository = $this->getDoctrine()->getManager()->getRepository('RCloudRBundle:Folder');
+        $repository = $this->getDoctrine()->getManager()->getRepository('RCloudRBundle:Folder');
         $folders = $repository->getFolders($user, $id);
         $currentFolder = $id === null ? null : $repository->find($id);
 
@@ -32,10 +32,12 @@ class FolderController extends Controller
             $folder = $currentFolder->getParent();
 
             if ($folder !== null) {
-                while (($folder = $folder->getParent()) !== null) {
+                do {
                     $breadcrumbItems[] = $folder;
-                }
+                } while (($folder = $folder->getParent()) !== null);
             }
+
+            $breadcrumbItems = array_reverse($breadcrumbItems);
         }
 
         return array(
@@ -45,7 +47,7 @@ class FolderController extends Controller
         );
     }
 
-	/**
+    /**
      * @Route("/folder/edit/{id}", name="folder_edit")
      */
     public function saveAction($id = null){
@@ -55,8 +57,7 @@ class FolderController extends Controller
 
         if ($id == null) {
             $folder = new Folder;
-        }
-        else {
+        } else {
             $folder = $em->findOneById($id);
         }
 

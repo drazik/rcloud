@@ -11,11 +11,17 @@
         </a>
         <nav class="navigation">
         {% block navigation %}{% endblock %}
-            <a class="navigation-item" href="{{ path('show_editor') }}" target="_blank">
-                <i class="fa fa-plus"></i>
-                <span>Nouveau</span>
-            </a>
-             <a class="navigation-item" href="{{ path('folder_edit') }}">
+            <div class="dropdown">
+                <button class="navigation-item dropdown-toggle" type="button">
+                    <i class="fa fa-plus"></i>
+                    Nouveau
+                </button>
+                <ul class="dropdown-list">
+                    <li class="dropdown-item"><a href="{{ path('show_editor') }}" target="_blank">Script</a></li>
+                    <li class="dropdown-item"><button type="button">Dossier</button></li>
+                </ul>
+            </div>
+            <a class="navigation-item" href="{{ path('folder_edit') }}">
                 <i class="fa fa-plus"></i>
                 <span>Nouveau dossier</span>
             </a>

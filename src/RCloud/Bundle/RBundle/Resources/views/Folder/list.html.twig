@@ -76,3 +76,27 @@
     </div>
 </div>
 {% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    <div class="modal" id="new-folder-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" type="button"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="new-folder-form" method="post" action="#">
+                    <input type="text" name="name" id="new-folder-name" placeholder="Entrez le nom du dossier" required />
+
+                    {% if currentFolder is null %}
+                        {% set parentId = null %}
+                    {% else %}
+                        {% set parentId = currentFolder.id %}
+                    {% endif %}
+                    <input type="hidden" name="parentId" id="new-folder-parent-id" value="{{ parentId }}" />
+                    <button type="submit">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

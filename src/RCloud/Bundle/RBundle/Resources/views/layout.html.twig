@@ -18,13 +18,13 @@
                 </button>
                 <ul class="dropdown-list">
                     <li class="dropdown-item"><a href="{{ path('show_editor') }}" target="_blank">Script</a></li>
-                    <li class="dropdown-item"><button type="button">Dossier</button></li>
+                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
                 </ul>
             </div>
-            <a class="navigation-item" href="{{ path('folder_edit') }}">
+            {#<a class="navigation-item" href="{{ path('folder_edit') }}">
                 <i class="fa fa-plus"></i>
                 <span>Nouveau dossier</span>
-            </a>
+            </a>#}
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">
@@ -47,5 +47,15 @@
         <p>RCloud.</p>
     {% endblock %}
     </footer>
+    <div class="modal" id="new-folder-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" type="button"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <h1>Nouveau dossier</h1>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

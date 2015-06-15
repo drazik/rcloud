@@ -3,13 +3,15 @@
 var $ = require('jquery');
 var Editor = require('./modules/editor');
 require('./modules/dropdown');
+require('./modules/modal');
 
 $(document).ready(function() {
     new Editor();
 
     $('.dropdown').dropdown();
+    $('.modal').modal();
 
-    $('#new-folder').on('click', function() {
+    /*$('#new-folder').on('click', function() {
         $.ajax({
             data: {
                 folder: {
@@ -27,5 +29,5 @@ $(document).ready(function() {
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
         });
-    });
+    });*/
 });

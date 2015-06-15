@@ -2322,7 +2322,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   right: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6); }
-  .modal.show {
+  .modal.is-open {
     display: block; }
 
 .modal-content {

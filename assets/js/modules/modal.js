@@ -38,3 +38,18 @@ $(document).on('click', '.modal-toggle', function(event) {
     var modal = $target.data('modal');
     modal.show();
 });
+
+$(window).keydown(function(event) {
+    if (event.keyCode === 27) {
+        closeAllModals();
+    }
+});
+
+function closeAllModals() {
+    var $modals = $('.modal');
+
+    $modals.each(function(index, modal) {
+        var $modal = $(modal);
+        $modal.data('modal').close();
+    });
+}

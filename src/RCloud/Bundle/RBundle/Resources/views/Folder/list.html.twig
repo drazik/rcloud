@@ -32,11 +32,9 @@
             {% endfor %}
         </ul>
 
-        {% if currentFolder is not null %}
         <div class="row row-padded">
             <div class="col-8">
-                {% if currentFolder.scripts|length > 0 %}
-                <table class="scripts-list">
+                <table class="scripts-list" id="scripts-list">
                     <thead>
                         <tr>
                             <th class="scripts-list-header-title">Titre</th>
@@ -45,10 +43,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for script in currentFolder.scripts %}
+                        {% for script in currentScripts %}
                             <tr>
                                 <td>
-                                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}" target="_blank">
                                         {{ script.name }}
                                     </a>
                                 </td>
@@ -56,7 +54,7 @@
                                     {{ script.dateModification|localizeddate('medium', 'none') }}
                                 </td>
                                 <td class="scripts-list-action">
-                                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
+                                    <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}" target="_blank">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
@@ -69,15 +67,18 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
 
 {% block modals %}
+    {% if currentFolder is null %}
+        {% set parentId = null %}
+    {% else %}
+        {% set parentId = currentFolder.id %}
+    {% endif %}
     {{ parent() }}
     <div class="modal" id="new-folder-modal">
         <div class="modal-content">
@@ -87,13 +88,22 @@
             <div class="modal-body">
                 <form class="new-folder-form" id="new-folder-form" method="post" action="#">
                     <input type="text" name="name" id="new-folder-name" placeholder="Entrez le nom du dossier" required />
-
-                    {% if currentFolder is null %}
-                        {% set parentId = null %}
-                    {% else %}
-                        {% set parentId = currentFolder.id %}
-                    {% endif %}
                     <input type="hidden" name="parentId" id="new-folder-parent-id" value="{{ parentId }}" />
+                    <button class="button" type="submit">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="new-script-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" type="button"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form class="new-folder-form" id="new-script-form" method="post" action="#">
+                    <input type="text" name="name" id="new-script-name" placeholder="Entrez le nom du script" required />
+                    <intput type="text" name="content" id="new-script-content" value="" />
+                    <input type="hidden" name="parentId" id="new-script-parent-id" value="{{ parentId }}" />
                     <button class="button" type="submit">Créer</button>
                 </form>
             </div>

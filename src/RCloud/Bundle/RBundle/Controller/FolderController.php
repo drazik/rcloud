@@ -22,13 +22,16 @@ class FolderController extends Controller
      */
     public function listAction($id = null)
     {
+        $em = $this->getDoctrine()->getManager();
         // Récupération des Folders du user connecté
         $user = $this->get('security.context')->getToken()->getUser();
-        $repository = $this->getDoctrine()->getManager()->getRepository('RCloudRBundle:Folder');
-        $folders = $repository->getFolders($user, $id);
+        $folderRepository = $em->getRepository('RCloudRBundle:Folder');
+        $folders = $folderRepository->getFolders($user, $id);
+
+        $scriptRepository = $em->getRepository('RCloudRBundle:Script');
 
         // Le Folder courant est-il la racine (null) ou un Folder existant ?
-        $currentFolder = $id === null ? null : $repository->find($id);
+        $currentFolder = $id === null ? null : $folderRepository->find($id);
 
         // Initialisation des objets du breadcrumb
         $breadcrumbItems = array();
@@ -51,9 +54,19 @@ class FolderController extends Controller
             $breadcrumbItems = array_reverse($breadcrumbItems);
         }
 
+        if ($currentFolder === null) {
+            $currentScripts = $scriptRepository->findBy(array(
+                'folder' => null,
+                'owner' => $user
+            ));
+        } else {
+            $currentScripts = $currentFolder->getScripts();
+        }
+
         return array(
             'folders' => $folders,
             'currentFolder' => $currentFolder,
+            'currentScripts' => $currentScripts,
             'breadcrumbItems' => $breadcrumbItems
         );
     }

@@ -36,6 +36,7 @@ NewFolder.prototype.success = function(response) {
 };
 
 NewFolder.prototype.newFolder = function(folder) {
+    // Mange tes perfs.
     var $li = $('<li class="folder" />');
     var $a = $('<a href="' + folder.href + '" />');
     var $ul = $('<ul class="folder-infos" />');

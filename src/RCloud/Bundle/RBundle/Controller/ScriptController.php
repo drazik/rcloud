@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
@@ -102,17 +106,32 @@ class ScriptController extends Controller
             $script->setFolder($folder);
 
             $em->persist($script);
+            $em->flush();
 
             $response['meta']['code'] = 201;
+
+            // création de l'ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($script);
+            $acl = $aclProvider->createAcl($objectIdentity);
+
+            // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+            // donne accès au propriétaire
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
         } else {
             $repository = $em->getRepository('RCloudRBundle:Script');
             $script = $repository->find($scriptId);
             $script->setContent($scriptContent);
 
             $response['meta']['code'] = 200;
+
+            $em->flush();
         }
 
-        $em->flush();
 
         $response['data']['scriptName'] = $script->getName();
         $response['data']['scriptId'] = $script->getId();
@@ -167,24 +186,19 @@ class ScriptController extends Controller
     }
 
     /**
-     * @Route("/exec-script/", name="exec_script")
-     * @Method({"GET"})
-     * @Template()
+     * @Route("/script/share", name="script_share")
+     * @Method({"POST"})
      */
-    /*public function executeScriptAction()
+    public function shareAction(Request $request)
     {
 
-        $r = new RCore(new CommandLineREngine('/usr/bin/R'));
-        $rProcess = $r->createInteractiveProcess();
-        $rProcess->start();
+      $em = $this->getDoctrine()->getManager();
 
-        $rOutputParser = new ROutputParser();
-        $rProcess->write('21 + 21');
-        $result = $rProcess->getAllOutput();
+      $scriptId = $request->request->get('id');
+      $user = $request->request->get('user');
+      $scriptName = $request->request->get('name');
+      $permissions = $request->request->get('permissions');
 
-        echo $result;
-
-        exit();
-        return $this->redirect($this->generateUrl('scripts_list'));
-    }*/
+      return 1;
+    }
 }

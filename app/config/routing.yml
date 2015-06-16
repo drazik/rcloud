@@ -7,11 +7,6 @@ r_cloud_r:
     type:     annotation
     prefix:   /
 
-r_cloud_user:
-    resource: "@RCloudUserBundle/Controller/"
-    type: annotation
-    prefix: /user
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

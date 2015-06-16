@@ -30,6 +30,7 @@ NewScript.prototype.handleSubmit = function(event) {
 
 NewScript.prototype.success = function(response) {
     this.$modal.data('modal').close();
+    this.$modal.find('input[name="name"]').val('');
     this.newScript(response.data);
 };
 

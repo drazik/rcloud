@@ -32,6 +32,7 @@ NewFolder.prototype.handleSubmit = function(event) {
 
 NewFolder.prototype.success = function(response) {
     this.$modal.data('modal').close();
+    this.$modal.find('input[name="name"]').val('');
     this.newFolder(response.data);
 };
 

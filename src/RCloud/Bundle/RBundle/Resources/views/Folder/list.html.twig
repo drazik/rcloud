@@ -85,7 +85,7 @@
                 <button class="modal-close" type="button"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <form id="new-folder-form" method="post" action="#">
+                <form class="new-folder-form" id="new-folder-form" method="post" action="#">
                     <input type="text" name="name" id="new-folder-name" placeholder="Entrez le nom du dossier" required />
 
                     {% if currentFolder is null %}
@@ -94,7 +94,7 @@
                         {% set parentId = currentFolder.id %}
                     {% endif %}
                     <input type="hidden" name="parentId" id="new-folder-parent-id" value="{{ parentId }}" />
-                    <button type="submit">Créer</button>
+                    <button class="button" type="submit">Créer</button>
                 </form>
             </div>
         </div>

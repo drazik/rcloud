@@ -39,3 +39,12 @@
 .folder-name {
     font-weight: bold;
 }
+
+.new-folder-form {
+    input {
+        display: block;
+        width: 100%;
+        padding: 0.3rem;
+        border: 1px solid #555;
+    }
+}

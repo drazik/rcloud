@@ -6,11 +6,11 @@
 <div class="page">
     <header class="header">
     {% block header %}
-        <a class="header-logo" href="{{ path('show_dashboard') }}" title="Accueil">
+        <a class="header-logo" href="{{ path('home') }}" title="Accueil">
             <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
         </a>
         <nav class="navigation">
-        {% block navigation %}{% endblock %}
+        {% block navigation %}
             <div class="dropdown">
                 <button class="navigation-item dropdown-toggle" type="button">
                     <i class="fa fa-plus"></i>
@@ -21,6 +21,7 @@
                     <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
                 </ul>
             </div>
+        {% endblock %}
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">

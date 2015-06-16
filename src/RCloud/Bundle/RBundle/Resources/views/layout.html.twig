@@ -6,19 +6,26 @@
 <div class="page">
     <header class="header">
     {% block header %}
-        <a class="header-logo" href="{{ path('show_dashboard') }}" title="Accueil">
+        <a class="header-logo" href="{{ path('home') }}" title="Accueil">
             <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
         </a>
         <nav class="navigation">
-        {% block navigation %}{% endblock %}
-            <a class="navigation-item" href="{{ path('show_editor') }}" target="_blank">
-                <i class="fa fa-plus"></i>
-                <span>Nouveau</span>
-            </a>
+        {% block navigation %}
+            <div class="dropdown">
+                <button class="navigation-item dropdown-toggle" type="button">
+                    <i class="fa fa-plus"></i>
+                    Nouveau
+                </button>
+                <ul class="dropdown-list">
+                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-script-modal" type="button">Script</button></li>
+                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
+                </ul>
+            </div>
+        {% endblock %}
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">
-                <i class="fa fa-user"></i>
+                {{ app.user.username }} <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-list">
                 <li class="dropdown-item"><a href="{{ path('scripts_list') }}">Scripts</a></li>
@@ -37,5 +44,6 @@
         <p>RCloud.</p>
     {% endblock %}
     </footer>
+    {% block modals %}{% endblock %}
 </div>
 {% endblock %}

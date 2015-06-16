@@ -5,12 +5,12 @@ namespace RCloud\Bundle\RBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Script
+ * Folder
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RCloud\Bundle\RBundle\Repository\FolderRepository")
  */
-class Script
+class Folder
 {
     /**
      * @var integer
@@ -29,13 +29,6 @@ class Script
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text", nullable=true)
-     */
-    private $content;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_add", type="datetime")
@@ -50,16 +43,20 @@ class Script
     private $dateModification;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\UserBundle\Entity\User", inversedBy="scripts")
+     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\UserBundle\Entity\User", inversedBy="folders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $owner;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder")
+     */
+    private $parent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder", inversedBy="scripts")
+     * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Script", mappedBy="folder")
      */
-    private $folder;
+    private $scripts;
 
 
 
@@ -83,7 +80,7 @@ class Script
      * Set name
      *
      * @param string $name
-     * @return Script
+     * @return Folder
      */
     public function setName($name)
     {
@@ -103,33 +100,10 @@ class Script
     }
 
     /**
-     * Set content
-     *
-     * @param string $content
-     * @return Script
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
      * Set dateAdd
      *
      * @param \DateTime $dateAdd
-     * @return Script
+     * @return Folder
      */
     public function setDateAdd($dateAdd)
     {
@@ -152,7 +126,7 @@ class Script
      * Set dateModification
      *
      * @param \DateTime $dateModification
-     * @return Script
+     * @return Folder
      */
     public function setDateModification($dateModification)
     {
@@ -175,7 +149,7 @@ class Script
      * Set owner
      *
      * @param \RCloud\Bundle\UserBundle\Entity\User $owner
-     * @return Script
+     * @return Folder
      */
     public function setOwner(\RCloud\Bundle\UserBundle\Entity\User $owner)
     {
@@ -195,26 +169,62 @@ class Script
     }
 
     /**
-     * Set folder
+     * Set parent
      *
-     * @param \RCloud\Bundle\RBundle\Entity\Folder $folder
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $parent
      *
-     * @return Script
+     * @return Folder
      */
-    public function setFolder(\RCloud\Bundle\RBundle\Entity\Folder $folder = null)
+    public function setParent(\RCloud\Bundle\RBundle\Entity\Folder $parent = null)
     {
-        $this->folder = $folder;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get folder
+     * Get parent
      *
      * @return \RCloud\Bundle\RBundle\Entity\Folder
      */
-    public function getFolder()
+    public function getParent()
     {
-        return $this->folder;
+        return $this->parent;
+    }
+
+    /**
+     * Add script
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Script $script
+     *
+     * @return Folder
+     */
+    public function addScript(\RCloud\Bundle\RBundle\Entity\Script $script)
+    {
+        $this->scripts[] = $script;
+        $script->setFolder($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove script
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Script $script
+     */
+    public function removeScript(\RCloud\Bundle\RBundle\Entity\Script $script)
+    {
+        $this->scripts->removeElement($script);
+        $script->setFolder(null);
+    }
+
+    /**
+     * Get scripts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScripts()
+    {
+        return $this->scripts;
     }
 }

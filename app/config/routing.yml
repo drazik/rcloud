@@ -1,6 +1,6 @@
 home:
     pattern: /
-    defaults: { _controller: RCloudUserBundle:Dashboard:show }
+    defaults: { _controller: RCloudRBundle:Folder:list }
 
 r_cloud_r:
     resource: "@RCloudRBundle/Controller/"

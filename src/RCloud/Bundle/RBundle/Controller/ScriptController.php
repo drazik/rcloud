@@ -83,19 +83,23 @@ class ScriptController extends Controller
     public function saveScript(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $folderRepository = $em->getRepository('RCloudRBundle:Folder');
 
         $scriptId = $request->request->get('id');
         $scriptContent = $request->request->get('content');
         $scriptName = $request->request->get('name');
+        $parentId = $request->request->get('parentId');
         $user = $this->get('security.context')->getToken()->getUser();
+        $folder =  $parentId === null ? null : $folderRepository->find($parentId);
 
         $response = array();
 
-        if($scriptId == null) {
+        if ($scriptId == null) {
             $script = new Script();
             $script->setName($scriptName);
             $script->setContent($scriptContent);
             $script->setOwner($user);
+            $script->setFolder($folder);
 
             $em->persist($script);
 
@@ -112,6 +116,8 @@ class ScriptController extends Controller
 
         $response['data']['scriptName'] = $script->getName();
         $response['data']['scriptId'] = $script->getId();
+        $response['data']['editHref'] = $this->generateUrl('show_editor', array('scriptId' => $script->getId()));
+        $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
     }

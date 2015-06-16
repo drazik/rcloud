@@ -2185,6 +2185,28 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
       -ms-flex-direction: column;
           flex-direction: column; }
 
+.breadcrumb {
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #aaa;
+  list-style: none; }
+
+.breadcrumb-item {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #888; }
+  .breadcrumb-item + .breadcrumb-item::before {
+    content: '> ';
+    display: inline-block;
+    color: #333; }
+  .breadcrumb-item a {
+    color: inherit;
+    text-decoration: none; }
+    .breadcrumb-item a:hover {
+      color: #333;
+      text-decoration: underline; }
+
 .button {
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.2);
@@ -2227,6 +2249,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   position: absolute;
   top: 100%;
   right: 0;
+  min-width: 100%;
   display: none;
   margin-top: 0;
   margin-bottom: 0;
@@ -2240,15 +2263,94 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   .is-open .dropdown-list {
     display: block; }
 
-.dropdown-item a {
+.dropdown-item a, .dropdown-item button {
   display: block;
   padding: 0.3rem 0.5rem;
   color: inherit;
   text-decoration: none;
   font-size: 0.8rem; }
-  .dropdown-item a:hover, .dropdown-item a:focus {
+  .dropdown-item a:hover, .dropdown-item a:focus, .dropdown-item button:hover, .dropdown-item button:focus {
     background-color: #3498db;
     color: white; }
+.dropdown-item button {
+  width: 100%;
+  background-color: transparent;
+  border-width: 0;
+  text-align: left; }
+
+.folders {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding-left: 0;
+  list-style: none;
+  -webkit-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap; }
+
+.folder {
+  width: 15%;
+  height: 5rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem; }
+  .folder a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #fff;
+    text-decoration: none;
+    background-color: #3498db; }
+    .folder a:hover, .folder a:focus {
+      outline: 3px solid #aaa; }
+
+.folder-infos {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.folder-name {
+  font-weight: bold; }
+
+.new-folder-form input {
+  display: block;
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid #555; }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6); }
+  .modal.is-open {
+    display: block; }
+
+.modal-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  padding: 2rem;
+  padding-right: 3rem;
+  background-color: #fff;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0;
+  background-color: transparent;
+  border-width: 0; }
 
 .notification {
   position: fixed;

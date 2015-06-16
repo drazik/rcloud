@@ -1,0 +1,29 @@
+.breadcrumb {
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #aaa;
+    list-style: none;
+}
+
+.breadcrumb-item {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #888;
+
+    & + &::before {
+        content: '> ';
+        display: inline-block;
+        color: #333;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+    }
+}

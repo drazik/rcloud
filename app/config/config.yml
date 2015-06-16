@@ -73,6 +73,8 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: RCloud\Bundle\UserBundle\Entity\User
+    group:
+        group_class: RCloud\Bundle\UserBundle\Entity\Group
 
 services:
     twig.extension.twig:

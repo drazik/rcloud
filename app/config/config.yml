@@ -75,6 +75,8 @@ fos_user:
     user_class: RCloud\Bundle\UserBundle\Entity\User
     group:
         group_class: RCloud\Bundle\UserBundle\Entity\Group
+        form:
+            type: rcloud_user_group
 
 services:
     twig.extension.twig:

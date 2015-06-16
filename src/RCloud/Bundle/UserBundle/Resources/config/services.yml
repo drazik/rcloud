@@ -1,0 +1,5 @@
+services:
+    rcloud_user.group.form.type:
+        class: RCloud\Bundle\UserBundle\Form\Type\GroupFormType
+        tags:
+            - { name: form.type, alias: rcloud_user_group }

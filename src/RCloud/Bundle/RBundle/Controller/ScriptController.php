@@ -90,7 +90,7 @@ class ScriptController extends Controller
         $scriptName = $request->request->get('name');
         $parentId = $request->request->get('parentId');
         $user = $this->get('security.context')->getToken()->getUser();
-        $folder = $folderRepository->find($parentId);
+        $folder =  $parentId === null ? null : $folderRepository->find($parentId);
 
         $response = array();
 

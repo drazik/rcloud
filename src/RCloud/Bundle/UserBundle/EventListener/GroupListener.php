@@ -5,26 +5,30 @@
 namespace RCloud\Bundle\UserBundle\EventListener;
 
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\GroupEvent;
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class GroupListener implements EventSubscriberInterface
 {
-    public function __construct()
+    private $securityContext;
+
+    public function __construct(SecurityContext $securityContext)
     {
+        $this->securityContext = $securityContext;
     }
 
     public static function getSubscribedEvents()
     {
         return array(
-            FOSUserEvents::GROUP_CREATE_SUCCESS => 'onGroupCreateSuccess'
+            FOSUserEvents::GROUP_CREATE_INITIALIZE => 'onGroupCreateInitialize'
         );
     }
 
-    public function onGroupCreateSuccess(FormEvent $event)
+    public function onGroupCreateInitialize(GroupEvent $event)
     {
-
     }
 }

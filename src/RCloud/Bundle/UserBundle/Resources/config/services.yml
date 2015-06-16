@@ -3,3 +3,9 @@ services:
         class: RCloud\Bundle\UserBundle\Form\Type\GroupFormType
         tags:
             - { name: form.type, alias: rcloud_user_group }
+
+    rcloud_user.grouplistener:
+        class: RCloud\Bundle\UserBundle\EventListener\GroupListener
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }

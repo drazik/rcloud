@@ -186,19 +186,35 @@ class ScriptController extends Controller
     }
 
     /**
-     * @Route("/script/share", name="script_share")
-     * @Method({"POST"})
+     * @Route("/script/share/{scriptId}", name="script_share")
      */
-    public function shareAction(Request $request)
+    public function shareAction($scriptId,Request $request)
     {
+        $form = $this->createFormBuilder()
+            ->add('user', 'text')
+            ->add('permissions', 'choice', array(
+                'choices' => array('view', 'edit'),
+                'multiple' => true,
+                'expanded' => true
+            ))
+            ->add('save', 'submit')
+            ->getForm();
 
-      $em = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
 
-      $scriptId = $request->request->get('id');
-      $user = $request->request->get('user');
-      $scriptName = $request->request->get('name');
-      $permissions = $request->request->get('permissions');
+        if ($form->isValid()) {
+            // Les données sont un tableau avec les clés "name", "email", et "message"
+            // $data = $form->getData();
+            // $em = $this->getDoctrine()->getManager();
+            //
+            // $scriptId = $request->request->get('id');
+            // $user = $request->request->get('user');
+            // $scriptName = $request->request->get('name');
+            // $permissions = $request->request->get('permissions');
+        }
 
-      return 1;
+        return $this->render('RCloudRBundle:Script:shareForm.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

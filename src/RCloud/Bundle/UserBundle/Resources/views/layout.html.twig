@@ -5,5 +5,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block content %}
-    {% block fos_user_content %}{% endblock fos_user_content %}
+    <div class="row row-padded">
+        <div class="col">
+            {% block fos_user_content %}{% endblock fos_user_content %}
+        </div>
+    </div>
 {% endblock %}

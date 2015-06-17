@@ -28,9 +28,9 @@
                 {{ app.user.username }} <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-list">
-                <li class="dropdown-item"><a href="{{ path('scripts_list') }}">Scripts</a></li>
+                <li class="dropdown-item"><a href="{{ path('home') }}">Scripts</a></li>
+                <li class="dropdown-item"><a href="{{ path('fos_user_group_list') }}">Groupes</a>
                 <li class="dropdown-item"><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
-                <li class="dropdown-item"><a href="#">Préférences</a></li>
                 <li class="dropdown-item"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             </ul>
         </div>

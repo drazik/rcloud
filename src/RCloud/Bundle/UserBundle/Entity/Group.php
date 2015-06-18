@@ -25,6 +25,11 @@ class Group extends BaseGroup
     protected $owner;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $description;
+
+    /**
      * Set owner
      *
      * @param \RCloud\Bundle\UserBundle\Entity\User $owner
@@ -46,5 +51,29 @@ class Group extends BaseGroup
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Group
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

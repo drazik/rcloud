@@ -14,7 +14,7 @@ class GroupFormType extends AbstractType
         $builder->add('owner', 'entity', array(
             'class' => 'RCloudUserBundle:User',
             'property' => 'username'
-        ));
+        ))->add('description');
     }
 
     public function getParent()

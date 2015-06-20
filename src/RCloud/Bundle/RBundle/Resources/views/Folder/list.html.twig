@@ -1,5 +1,18 @@
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
+{% block navigation %}
+    <div class="dropdown">
+        <button class="navigation-item dropdown-toggle" type="button">
+            <i class="fa fa-plus"></i>
+            Nouveau
+        </button>
+        <ul class="dropdown-list">
+            <li class="dropdown-item"><button class="modal-toggle" data-target="#new-script-modal" type="button">Script</button></li>
+            <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
+        </ul>
+    </div>
+{% endblock %}
+
 {% block content %}
 <div class="row row-padded">
     <div class="col">

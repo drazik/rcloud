@@ -1,8 +1,19 @@
+<div>
+    <a href="{{ path('fos_user_group_new') }}">Créer un nouveau groupe</a>
+</div>
 <h2>Vos groupes</h2>
 <div class="fos_user_group_list">
     <ul>
-    {% for group in groups %}
+    {% for group in ownedGroups %}
         <li><a href="{{ path('fos_user_group_show', {'groupName': group.getName()} ) }}">{{ group.getName() }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+<h2>Groupes auxquels vous appartenez</h2>
+<div class="fos_user_group_list">
+    <ul>
+    {% for group in belongToGroups %}
+        <li><a href="{{ path('fos_user_group_show', {'groupName': group.getName()}) }}">{{ group.getName() }}</a></li>
     {% endfor %}
     </ul>
 </div>

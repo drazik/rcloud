@@ -1,0 +1,9 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div>
+    <a href="#">Inviter des utilisateurs à joindre ce groupe</a>
+</div>
+<div class="fos_user_group_show">
+    <p>{{ 'group.show.name'|trans }}: {{ group.getName() }}</p>
+    <p>Description:{{ group.getDescription() }}</p>
+</div>

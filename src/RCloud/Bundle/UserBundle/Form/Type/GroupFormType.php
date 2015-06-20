@@ -11,10 +11,14 @@ class GroupFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('owner', 'entity', array(
+        $builder
+        ->add('description')
+        ->add('owner', 'entity', array(
             'class' => 'RCloudUserBundle:User',
-            'property' => 'username'
-        ))->add('description');
+            'property' => 'username',
+            'disabled' => true
+        ))
+        ;
     }
 
     public function getParent()

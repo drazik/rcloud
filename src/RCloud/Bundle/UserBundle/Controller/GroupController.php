@@ -13,10 +13,12 @@ class GroupController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('RCloudUserBundle:Group');
 
-        $groups = $repository->findBy(array('owner' => $user));
+        $ownedGroups = $repository->findBy(array('owner' => $user));
+        $belongToGroups = [];
 
         return $this->render('FOSUserBundle:Group:list.html.twig', array(
-            'groups' => $groups
+            'ownedGroups' => $ownedGroups,
+            'belongToGroups' => $belongToGroups
         ));
     }
 }

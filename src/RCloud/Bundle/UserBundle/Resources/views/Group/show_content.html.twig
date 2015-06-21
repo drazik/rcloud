@@ -1,9 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div>
-    <a href="#">Inviter des utilisateurs à joindre ce groupe</a>
+    <a href="{{ path('r_cloud_user_group_invite', {'groupName': group.name}) }}">Inviter des utilisateurs à joindre ce groupe</a>
 </div>
 <div class="fos_user_group_show">
-    <p>{{ 'group.show.name'|trans }}: {{ group.getName() }}</p>
-    <p>Description:{{ group.getDescription() }}</p>
+    <p>{{ 'group.show.name'|trans }}: {{ group.name }}</p>
+    <p>Description:{{ group.description }}</p>
 </div>

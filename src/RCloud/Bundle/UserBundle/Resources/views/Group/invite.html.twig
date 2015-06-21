@@ -5,5 +5,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-
+<div class="fos_user_group_invite">
+    <form method="post" action="#">
+        {{ form_widget(form) }}
+    </form>
+</div>
 {% endblock fos_user_content %}

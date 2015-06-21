@@ -32,6 +32,7 @@ class GroupListener implements EventSubscriberInterface
     {
         $group = $event->getGroup();
         $user = $this->securityContext->getToken()->getUser();
+
         $group->setOwner($user);
         $user->addGroup($group);
     }

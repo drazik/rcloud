@@ -31,6 +31,8 @@ class GroupListener implements EventSubscriberInterface
     public function onGroupCreateInitialize(GroupEvent $event)
     {
         $group = $event->getGroup();
-        $group->setOwner($this->securityContext->getToken()->getUser());
+        $user = $this->securityContext->getToken()->getUser();
+        $group->setOwner($user);
+        $user->addGroup($group);
     }
 }

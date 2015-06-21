@@ -26,6 +26,11 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /user/profile
 
+r_clour_user:
+    resource: "@RCloudUserBundle/Controller/"
+    type: annotation
+    prefix: /group
+
 fos_user_group:
     resource: "@FOSUserBundle/Resources/config/routing/group.xml"
     prefix: /group

@@ -36,22 +36,25 @@ class GroupController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
         $groupRepository = $em->getRepository('RCloudUserBundle:Group');
-        $group = $groupRepository->findBy(array('name' => $groupName));
+        $group = $groupRepository->findOneBy(array('name' => $groupName));
 
         $form = $this->createFormBuilder()
-            ->add('user', 'text')
+            ->add('username', 'text')
             ->add('save', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // récupérer le user, lui ajouter le groupe
-            // persister le user
+            $formData = $form->getData();
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->findUserByUsername($formData['username']);
+            $user->addGroup($group);
 
-            return $this->redirectToRoute('fos_user_group_show', array(
-                'groupName' => $groupName
-            ));
+            $em->flush();
+
+            $this->addFlash('success', $user->getUsername() . ' a bien été ajouté au groupe');
+            return $this->redirectToRoute('fos_user_group_show', array('groupName' => $group->getName()));
         }
 
         return array(

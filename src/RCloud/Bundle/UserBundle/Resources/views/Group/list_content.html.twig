@@ -1,6 +1,11 @@
 <div>
     <a href="{{ path('fos_user_group_new') }}">Créer un nouveau groupe</a>
 </div>
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
 <h2>Vos groupes</h2>
 <div class="fos_user_group_list">
     <ul>

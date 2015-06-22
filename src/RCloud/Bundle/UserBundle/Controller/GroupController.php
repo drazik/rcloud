@@ -79,6 +79,11 @@ class GroupController extends BaseController
 
         $user = $this->get('security.context')->getToken()->getUser();
 
+        if ($group->getOwner() === $user) {
+            $this->addFlash('error', 'Impossible de quitter un groupe dont vous êtes le / la propriétaire');
+            return $this->redirectToRoute('fos_user_group_list');
+        }
+
         $form = $this->createFormBuilder()->getForm();
 
         if ($request->getMethod() === 'POST') {

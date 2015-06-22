@@ -19,6 +19,7 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
+use RCloud\Bundle\UserBundle\Entity\User;
 
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
@@ -33,6 +34,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
+
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
@@ -150,6 +152,8 @@ class ScriptController extends Controller
      */
     public function listAction()
     {
+
+        ///////////////
         $user = $this->get('security.context')->getToken()->getUser();
 
         $scripts = $user->getScripts();
@@ -188,12 +192,15 @@ class ScriptController extends Controller
     /**
      * @Route("/script/share/{scriptId}", name="script_share")
      */
-    public function shareAction($scriptId,Request $request)
+    public function shareAction($scriptId, Request $request)
     {
         $form = $this->createFormBuilder()
             ->add('user', 'text')
             ->add('permissions', 'choice', array(
-                'choices' => array('view', 'edit'),
+                'choices' => array(
+                    'view' => 'view',
+                    'edit' => 'edit'
+                ),
                 'multiple' => true,
                 'expanded' => true
             ))
@@ -203,14 +210,52 @@ class ScriptController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // Les données sont un tableau avec les clés "name", "email", et "message"
-            // $data = $form->getData();
-            // $em = $this->getDoctrine()->getManager();
-            //
-            // $scriptId = $request->request->get('id');
-            // $user = $request->request->get('user');
-            // $scriptName = $request->request->get('name');
-            // $permissions = $request->request->get('permissions');
+
+            //Get script
+            $em = $this->getDoctrine()->getManager();
+            $script = $em->getRepository('RCloudRBundle:Script')->find($scriptId);
+
+            // Get data from form
+            $data = $form->getData();
+            $permissions = $data['permissions'];
+
+            $user = $this->get('fos_user.user_manager')->findUserByEmail($data['user']);
+
+
+            // create ACL
+            $aclProvider = $this->get('security.acl.provider');
+
+            $acl = $aclProvider->findAcl(ObjectIdentity::fromDomainObject($script));
+            $securityId = UserSecurityIdentity::fromAccount($user);
+
+            $builder = new MaskBuilder();
+            foreach ($permissions as $key => $value) {
+                $builder->add($value);
+            }
+            $mask = $builder->get();
+
+            $hasPermissions = false;
+            foreach($acl->getObjectAces() as $index=>$ace) {
+                if ($ace->getSecurityIdentity()->equals($securityId)) {
+                    //$ace->setMask($mask);
+                    $acl->updateObjectAce($index, $mask);
+                    $hasPermissions = true;
+                    break;
+                }
+            }
+
+            if (!$hasPermissions) {
+                $acl->insertObjectAce($securityId, $mask);
+            }
+            $aclProvider->updateAcl($acl);
+
+            if ($script->getFolder() === NULL){
+                return $this->redirect($this->generateUrl('folders_list'));
+            }
+            else {
+                return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
+            }
+
         }
 
         return $this->render('RCloudRBundle:Script:shareForm.html.twig', array(

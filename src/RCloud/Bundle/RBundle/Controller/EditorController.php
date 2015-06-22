@@ -19,6 +19,7 @@ class EditorController extends Controller
     public function showAction($scriptId = null)
     {
         $script = null;
+        
 
         if ($scriptId) {
             $user = $this->get('security.context')->getToken()->getUser();

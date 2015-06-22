@@ -29,7 +29,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        window.location.replace('http://localhost:8000/editor/{{script.id}}#&togetherjs={{ script.id }}');
+        window.location.replace(window.location.origin + '/editor/{{script.id}}#&togetherjs={{ script.id }}');
         TogetherJSConfig_toolName = 'Rcloud';
         TogetherJSConfig_suppressJoinConfirmation = true;
         TogetherJSConfig_autoStart = true;

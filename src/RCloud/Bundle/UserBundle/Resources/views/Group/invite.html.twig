@@ -7,6 +7,9 @@
 {% block fos_user_content %}
 <div class="fos_user_group_invite">
     <form method="post" action="#">
+        {% if error %}
+        {{ error }}
+        {% endif %}
         {{ form_widget(form) }}
     </form>
 </div>

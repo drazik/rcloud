@@ -49,16 +49,21 @@ class GroupController extends BaseController
             $formData = $form->getData();
             $userManager = $this->get('fos_user.user_manager');
             $user = $userManager->findUserByUsername($formData['username']);
-            $group->addUser($user);
 
-            $em->flush();
+            if ($user !== null) {
+                $group->addUser($user);
+                $em->flush();
 
-            $this->addFlash('success', $user->getUsername() . ' a bien été ajouté au groupe');
-            return $this->redirectToRoute('fos_user_group_show', array('groupName' => $group->getName()));
+                $this->addFlash('success', $user->getUsername() . ' a bien été ajouté au groupe');
+                return $this->redirectToRoute('fos_user_group_show', array('groupName' => $group->getName()));
+            } else {
+                $error = 'L\'utilisateur ' . $formData['username'] . ' n\'existe pas';
+            }
         }
 
         return array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => isset($error) ? $error : false
         );
     }
 }

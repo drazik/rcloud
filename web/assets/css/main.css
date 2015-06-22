@@ -2334,7 +2334,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     display: block; }
 
 .modal-content {
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   width: 50%;

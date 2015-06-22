@@ -49,7 +49,7 @@ class GroupController extends BaseController
             $formData = $form->getData();
             $userManager = $this->get('fos_user.user_manager');
             $user = $userManager->findUserByUsername($formData['username']);
-            $user->addGroup($group);
+            $group->addUser($user);
 
             $em->flush();
 

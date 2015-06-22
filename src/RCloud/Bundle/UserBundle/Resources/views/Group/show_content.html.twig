@@ -9,4 +9,12 @@
     <p>{{ 'group.show.name'|trans }}: {{ group.name }}</p>
     <p>Propriétaire: {{ group.owner.username }}</p>
     <p>Description: {{ group.description }}</p>
+    {% if group.owner == app.user %}
+    <p>Membres du groupe :</p>
+    <ul>
+        {% for user in group.users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </div>

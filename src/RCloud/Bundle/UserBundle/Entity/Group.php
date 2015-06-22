@@ -30,6 +30,11 @@ class Group extends BaseGroup
     protected $description;
 
     /**
+     * @ORM\ManyToMany(targetEntity="RCloud\Bundle\UserBundle\Entity\User", mappedBy="groups")
+     */
+    protected $users;
+
+    /**
      * Set owner
      *
      * @param \RCloud\Bundle\UserBundle\Entity\User $owner
@@ -75,5 +80,40 @@ class Group extends BaseGroup
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \RCloud\Bundle\UserBundle\Entity\User $user
+     *
+     * @return Group
+     */
+    public function addUser(\RCloud\Bundle\UserBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+        $user->addGroup($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \RCloud\Bundle\UserBundle\Entity\User $user
+     */
+    public function removeUser(\RCloud\Bundle\UserBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

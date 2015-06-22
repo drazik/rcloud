@@ -2,6 +2,7 @@
 
 var $ = require('jquery');
 var arrayToObject = require('../helpers/arrayToObject');
+var getCurrentDate = require('../helpers/getCurrentDate');
 
 function NewScript() {
     this.$form = $('#new-script-form');
@@ -45,7 +46,7 @@ NewScript.prototype.newScript = function(script) {
     $tdName.append($aName);
     $tr.append($tdName);
 
-    var $tdDate = $('<td>' + script.date + '</td>');
+    var $tdDate = $('<td>' + getCurrentDate() + '</td>');
     $tr.append($tdDate);
 
     var $tdEdit = $('<td class="scripts-list-action" />');

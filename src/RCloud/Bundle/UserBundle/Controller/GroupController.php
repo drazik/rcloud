@@ -66,4 +66,35 @@ class GroupController extends BaseController
             'error' => isset($error) ? $error : false
         );
     }
+
+    /**
+     * @Route("/{groupName}/leave", name="r_cloud_user_group_leave")
+     * @Template()
+     */
+    public function leaveAction(Request $request, $groupName)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groupRepository = $em->getRepository('RCloudUserBundle:Group');
+        $group = $groupRepository->findOneBy(array('name' => $groupName));
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $form = $this->createFormBuilder()->getForm();
+
+        if ($request->getMethod() === 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $group->removeUser($user);
+                $em->flush();
+
+                $this->addFlash('success', 'Vous avez quitté le groupe' . $groupName);
+                return $this->redirectToRoute('fos_user_group_list');
+            }
+        }
+
+        return array(
+            'form' => $form->createView()
+        );
+    }
 }

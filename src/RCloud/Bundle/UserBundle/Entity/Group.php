@@ -105,6 +105,7 @@ class Group extends BaseGroup
     public function removeUser(\RCloud\Bundle\UserBundle\Entity\User $user)
     {
         $this->users->removeElement($user);
+        $user->removeGroup($this);
     }
 
     /**

@@ -25,3 +25,20 @@
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.location.replace('http://localhost:8000/editor/{{script.id}}#&togetherjs={{ script.id }}');
+        TogetherJSConfig_toolName = 'Rcloud';
+        TogetherJSConfig_suppressJoinConfirmation = true;
+        TogetherJSConfig_autoStart = true;
+
+        TogetherJSConfig_dontShowClicks = true;
+        TogetherJSConfig_ignoreMessages = true;
+        TogetherJSConfig_suppressInvite = true;
+        TogetherJSConfig_disableWebRTC = true;
+        TogetherJSConfig_getUserName = '{{ app.user.username }}';
+    </script>
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+{% endblock %}

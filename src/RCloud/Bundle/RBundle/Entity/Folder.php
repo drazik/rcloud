@@ -49,9 +49,14 @@ class Folder
     private $owner;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder")
+     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\RBundle\Entity\Folder", inversedBy="folders")
      */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Folder", mappedBy="parent")
+     */
+    private $folders;
 
     /**
      * @ORM\OneToMany(targetEntity="RCloud\Bundle\RBundle\Entity\Script", mappedBy="folder")
@@ -226,5 +231,39 @@ class Folder
     public function getScripts()
     {
         return $this->scripts;
+    }
+
+    /**
+     * Add folder
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $folder
+     *
+     * @return Folder
+     */
+    public function addFolder(\RCloud\Bundle\RBundle\Entity\Folder $folder)
+    {
+        $this->folders[] = $folder;
+
+        return $this;
+    }
+
+    /**
+     * Remove folder
+     *
+     * @param \RCloud\Bundle\RBundle\Entity\Folder $folder
+     */
+    public function removeFolder(\RCloud\Bundle\RBundle\Entity\Folder $folder)
+    {
+        $this->folders->removeElement($folder);
+    }
+
+    /**
+     * Get folders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFolders()
+    {
+        return $this->folders;
     }
 }

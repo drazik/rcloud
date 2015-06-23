@@ -194,8 +194,18 @@ class ScriptController extends Controller
      */
     public function shareAction($scriptId, Request $request)
     {
+
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $groupsCurrentUser = $currentUser->getGroups();
         $form = $this->createFormBuilder()
-            ->add('user', 'text')            
+            ->add('user', 'text', array(
+                'required' => false)) 
+            ->add('group', 'entity', array(
+                'choices'   => $groupsCurrentUser,
+                'required'  => false,
+                'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
+                'property' => 'name'
+            ))        
             ->add('save', 'submit')
             ->getForm();
 
@@ -207,27 +217,48 @@ class ScriptController extends Controller
             $em = $this->getDoctrine()->getManager();
             $script = $em->getRepository('RCloudRBundle:Script')->find($scriptId);
 
+            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
             // Get data from form
             $data = $form->getData();
             
-
-            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
-            $securityId = UserSecurityIdentity::fromAccount($user);
-
-            if ($user === NULL) {
-                $error = "L'utilisateur n'a pas été trouvé";
+            if ($data['user'] === NULL && $data['group'] === NULL) {
+                $error = "Veuillez renseigner un user ou un groupe";
             }
             else {
-                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
-                
+
+                if ($data['user'] != NULL) {
+                    $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+                    $securityId = UserSecurityIdentity::fromAccount($user);
+
+                    if ($user === NULL) {
+                        $error = "L'utilisateur n'a pas été trouvé";
+                    }
+                    else {                        
+                        $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);                
+                    } 
+                } 
+
+                if ($data['group'] != NULL) {
+                    $group = $data['group'];
+                    foreach ($group->getUsers() as $groupUser) {
+                        if ($groupUser != $currentUser) {
+                            $securityId = UserSecurityIdentity::fromAccount($groupUser);
+                            $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);                
+                        }
+
+                    }
+                }
+
+            }
+            if (!isset($error)) {
                 if ($script->getFolder() === NULL){
                     return $this->redirect($this->generateUrl('folders_list'));
                 }
                 else {
                     return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
-                }
-            }         
+                }  
+            } 
+
 
         }
 

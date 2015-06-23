@@ -217,7 +217,6 @@ class ScriptController extends Controller
             $em = $this->getDoctrine()->getManager();
             $script = $em->getRepository('RCloudRBundle:Script')->find($scriptId);
 
-            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
             // Get data from form
             $data = $form->getData();
             
@@ -226,6 +225,7 @@ class ScriptController extends Controller
             }
             else {
 
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
                 if ($data['user'] != NULL) {
                     $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
                     $securityId = UserSecurityIdentity::fromAccount($user);

@@ -34,7 +34,9 @@ class GroupController extends BaseController
         $group = $groupRepository->findOneBy(array('name' => $groupName));
 
         $form = $this->createFormBuilder()
-            ->add('username', 'text')
+            ->add('username', 'text', array(
+                'label' => 'Username ou adresse mail'
+            ))
             ->getForm();
 
         $form->handleRequest($request);
@@ -42,7 +44,7 @@ class GroupController extends BaseController
         if ($form->isValid()) {
             $formData = $form->getData();
             $userManager = $this->get('fos_user.user_manager');
-            $user = $userManager->findUserByUsername($formData['username']);
+            $user = $userManager->findUserByUsernameOrEmail($formData['username']);
 
             if ($user !== null) {
                 $group->addUser($user);

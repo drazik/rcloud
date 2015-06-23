@@ -32,6 +32,8 @@
                     <td class="table-cell-centered">
                         {% if group.owner != app.user %}
                             <a href="{{ path('r_cloud_user_group_leave', {'groupName': group.name}) }}" title="Quitter le groupe"><i class="fa fa-user-times"></i></a>
+                        {% else %}
+                            <a href="{{ path('r_cloud_user_group_invite', {'groupName': group.name}) }}" title="Inviter un utilisateur au groupe"><i class="fa fa-user-plus"></i></a>
                         {% endif %}
                     </td>
                 </tr>

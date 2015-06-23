@@ -21,7 +21,12 @@ class EditorController extends Controller
         $script = null;
         
 
-        if ($scriptId) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('RCloudRBundle:Script');
+
+        $script = $repository->find($scriptId);
+
+        /*if ($scriptId) {
             $user = $this->get('security.context')->getToken()->getUser();
             $scripts = $user->getScripts();
 
@@ -36,7 +41,7 @@ class EditorController extends Controller
             $script = new Script();
             $script->setName('');
             $script->setContent('');
-        }
+        }*/
 
         return array(
             'script' => $script

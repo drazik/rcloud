@@ -1,0 +1,43 @@
+<div>
+    <a class="button button-small" href="{{ path('fos_user_group_new') }}"><i class="fa fa-user-plus"></i> Créer un nouveau groupe</a>
+</div>
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<h2>Groupes auxquels vous appartenez</h2>
+<div class="fos_user_group_list">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom du groupe</th>
+                <th class="table-cell-centered">Propriétaire</th>
+                <th class="table-cell-centered">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>
+                        <a href="{{ path('fos_user_group_show', {'groupName': group.name}) }}">{{ group.name }}</a>
+                    </td>
+                    <td class="table-cell-centered">
+                        {% if group.owner == app.user %}
+                            <i class="fa fa-check" style="color: green;"></i>
+                        {% else %}
+                            <i class="fa fa-times" style="color: red;"></i>
+                        {% endif %}
+                    </td>
+                    <td class="table-cell-centered">
+                        {% if group.owner != app.user %}
+                            <a href="{{ path('r_cloud_user_group_leave', {'groupName': group.name}) }}" title="Quitter le groupe"><i class="fa fa-user-times"></i></a>
+                        {% else %}
+                            <a href="{{ path('r_cloud_user_group_invite', {'groupName': group.name}) }}" title="Inviter un utilisateur au groupe"><i class="fa fa-user-plus"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -29,6 +29,14 @@ class User extends BaseUser
      */
     protected $folders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="RCloud\Bundle\UserBundle\Entity\Group", inversedBy="users")
+     * @ORM\JoinTable(name="rcloud_user_user_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")})
+     */
+    protected $groups;
+
 
     /**
      * Constructor

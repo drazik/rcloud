@@ -9,7 +9,7 @@
                 <tr>
                     <th class="scripts-list-header-title">Titre</th>
                     <th class="scripts-list-header-modification">Modification</th>
-                    <th class="scripts-list-header-actions" colspan="2">Actions</th>
+                    <th class="scripts-list-header-actions" colspan="3">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +26,11 @@
                         <td class="scripts-list-action">
                             <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}">
                                 <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="scripts-list-action">
+                            <a href="{{ path('script_share', {'scriptId': script.id}) }}" title="Partager {{ script.name }}">
+                                <i class="fa fa-share-square-o"></i>
                             </a>
                         </td>
                         <td class="scripts-list-action">

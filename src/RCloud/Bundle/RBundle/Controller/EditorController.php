@@ -19,6 +19,7 @@ class EditorController extends Controller
     public function showAction($scriptId = null)
     {
         $script = null;
+        
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('RCloudRBundle:Script');

@@ -11,6 +11,9 @@
             <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
         </ul>
     </div>
+    {% if currentFolder is not null %}
+        <a class="navigation-item" href="{{ path('folder_share', {'folderId': currentFolder.id}) }}"><i class="fa fa-share"></i> Partager le dossier</a>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -52,7 +55,7 @@
                         <tr>
                             <th class="scripts-list-header-title">Titre</th>
                             <th class="scripts-list-header-modification">Modification</th>
-                            <th class="scripts-list-header-actions" colspan="2">Actions</th>
+                            <th class="scripts-list-header-actions" colspan="3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,6 +75,11 @@
                                     </a>
                                 </td>
                                 <td class="scripts-list-action">
+                                    <a href="{{ path('script_share', {'scriptId': script.id}) }}" title="Partager {{ script.name }}">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </a>
+                                </td>
+                                <td class="scripts-list-action">
                                     <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
@@ -82,6 +90,67 @@
                 </table>
             </div>
         </div>
+
+        {% if sharedFolders or sharedScripts %}
+            <h1>Partagés avec vous</h1>
+
+            <ul class="folders" id="folders-list">
+                {% for folder in sharedFolders %}
+                    <li class="folder">
+                        <a href="{{path("folders_list",{"id" : folder.id})}}">
+                            <ul class="folder-infos">
+                                <li class="folder-name">{{ folder.name }}</li>
+                                <li>0 dossier(s)</li>
+                                <li>{{ folder.scripts|length }} script(s)</li>
+                            </ul>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="row row-padded">
+                <div class="col-8">
+                    <table class="scripts-list">
+                        <thead>
+                            <tr>
+                                <th class="scripts-list-header-title">Titre</th>
+                                <th class="scripts-list-header-modification">Modification</th>
+                                <th class="scripts-list-header-actions" colspan="3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for script in sharedScripts %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}" target="_blank">
+                                            {{ script.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ script.dateModification|localizeddate('medium', 'none') }}
+                                    </td>
+                                    <td class="scripts-list-action">
+                                        <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}" target="_blank">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td class="scripts-list-action">
+                                        <a href="{{ path('script_share', {'scriptId': script.id}) }}" title="Partager {{ script.name }}">
+                                            <i class="fa fa-share-square-o"></i>
+                                        </a>
+                                    </td>
+                                    <td class="scripts-list-action">
+                                        <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/serializer-bundle": "^0.13.0",
-        "kachkaev/php-r": "1.0.*@dev"
+        "kachkaev/php-r": "1.0.*@dev",
+        "oneup/acl-bundle": "~0.10"
     },
     "scripts": {
         "post-install-cmd": [

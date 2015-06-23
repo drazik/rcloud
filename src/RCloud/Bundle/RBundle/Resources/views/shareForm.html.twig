@@ -1,0 +1,9 @@
+{% extends 'RCloudRBundle::layout.html.twig' %}
+
+{% block content %}
+	{% if error %}
+		{{ error }}
+	{% endif %}
+	
+	{{form(form)}}
+{% endblock %}

@@ -12,13 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
+use RCloud\Bundle\UserBundle\Entity\User;
 
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
 use Kachkaev\PHPR\ROutputParser;
+
+
 
 class ScriptController extends Controller
 {
@@ -29,6 +36,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
+
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
@@ -102,17 +110,39 @@ class ScriptController extends Controller
             $script->setFolder($folder);
 
             $em->persist($script);
+            $em->flush();
 
             $response['meta']['code'] = 201;
+
+            // création de l'ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($script);
+            $acl = $aclProvider->createAcl($objectIdentity);
+
+            // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+            // donne accès au propriétaire
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
+            $folderParent = $script->getFolder();
+            if ($folderParent) {
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                $permissionsManager->inheritPermissions($script, $folderParent);
+            }
+
+
         } else {
             $repository = $em->getRepository('RCloudRBundle:Script');
             $script = $repository->find($scriptId);
             $script->setContent($scriptContent);
 
             $response['meta']['code'] = 200;
+
+            $em->flush();
         }
 
-        $em->flush();
 
         $response['data']['scriptName'] = $script->getName();
         $response['data']['scriptId'] = $script->getId();
@@ -120,6 +150,7 @@ class ScriptController extends Controller
         $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
+            
     }
 
 
@@ -131,6 +162,7 @@ class ScriptController extends Controller
      */
     public function listAction()
     {
+       
         $user = $this->get('security.context')->getToken()->getUser();
 
         $scripts = $user->getScripts();
@@ -167,24 +199,50 @@ class ScriptController extends Controller
     }
 
     /**
-     * @Route("/exec-script/", name="exec_script")
-     * @Method({"GET"})
-     * @Template()
+     * @Route("/script/share/{scriptId}", name="script_share")
      */
-    /*public function executeScriptAction()
+    public function shareAction($scriptId, Request $request)
     {
+        $form = $this->createFormBuilder()
+            ->add('user', 'text')            
+            ->add('save', 'submit')
+            ->getForm();
 
-        $r = new RCore(new CommandLineREngine('/usr/bin/R'));
-        $rProcess = $r->createInteractiveProcess();
-        $rProcess->start();
+        $form->handleRequest($request);
 
-        $rOutputParser = new ROutputParser();
-        $rProcess->write('21 + 21');
-        $result = $rProcess->getAllOutput();
+        if ($form->isValid()) {
 
-        echo $result;
+            //Get script
+            $em = $this->getDoctrine()->getManager();
+            $script = $em->getRepository('RCloudRBundle:Script')->find($scriptId);
 
-        exit();
-        return $this->redirect($this->generateUrl('scripts_list'));
-    }*/
+            // Get data from form
+            $data = $form->getData();
+            
+
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+            $securityId = UserSecurityIdentity::fromAccount($user);
+
+            if ($user === NULL) {
+                $error = "L'utilisateur n'a pas été trouvé";
+            }
+            else {
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
+                
+                if ($script->getFolder() === NULL){
+                    return $this->redirect($this->generateUrl('folders_list'));
+                }
+                else {
+                    return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
+                }
+            }         
+
+        }
+
+        return $this->render('RCloudRBundle::shareForm.html.twig', array(
+            'form' => $form->createView(),
+            'error' => isset($error)?$error:false,
+        ));
+    }
 }

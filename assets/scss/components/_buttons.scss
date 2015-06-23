@@ -1,4 +1,5 @@
 .button {
+    display: inline-block;
     padding: 1rem;
     background-color: rgba(255, 255, 255, .2);
     border: 2px solid;
@@ -13,4 +14,9 @@
         background-color: $primary-color;
         color: white;
     }
+}
+
+.button-small {
+    padding: 0.4rem;
+    font-size: 0.8rem;
 }

@@ -16,15 +16,10 @@ class GroupController extends BaseController
     public function listAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('RCloudUserBundle:Group');
-
-        $ownedGroups = $repository->findBy(array('owner' => $user));
-        $belongToGroups = $user->getGroups();
+        $groups = $user->getGroups();
 
         return $this->render('FOSUserBundle:Group:list.html.twig', array(
-            'ownedGroups' => $ownedGroups,
-            'belongToGroups' => $belongToGroups
+            'groups' => $groups
         ));
     }
 

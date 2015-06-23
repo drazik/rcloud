@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
@@ -21,6 +24,8 @@ use RCloud\Bundle\UserBundle\Entity\User;
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
 use Kachkaev\PHPR\ROutputParser;
+
+
 
 class ScriptController extends Controller
 {

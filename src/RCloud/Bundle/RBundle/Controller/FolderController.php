@@ -14,6 +14,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use RCloud\Bundle\RBundle\Entity\Folder;
 use RCloud\Bundle\RBundle\Form\FolderType;
 
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+
 class FolderController extends Controller
 {
     /**
@@ -54,13 +58,30 @@ class FolderController extends Controller
             $breadcrumbItems = array_reverse($breadcrumbItems);
         }
 
-        if ($currentFolder === null) {
+
+        //OLD METHOD
+    /*    if ($currentFolder === null) {
             $currentScripts = $scriptRepository->findBy(array(
                 'folder' => null,
                 'owner' => $user
             ));
         } else {
             $currentScripts = $currentFolder->getScripts();
+        }*/
+
+
+        $aclProvider = $this->get('security.acl.provider');
+
+        $classScript = 'RCloud\Bundle\RBundle\Entity\Script';
+        $objectIdentities = $aclProvider->findObjectIdentitiesForUser($user, MaskBuilder::MASK_OWNER, $classScript);
+        foreach ($objectIdentities as $objectIdentity) {
+            $id = $objectIdentity->getIdentifier(); // this is your database primary key
+            $script = $scriptRepository->findOneById($id); 
+
+
+            if ($script->getFolder() == $currentFolder) {
+                $currentScripts[] = $script;
+            }
         }
 
         return array(
@@ -102,38 +123,5 @@ class FolderController extends Controller
             )
         ));
     }
-
-    /**
-     * oute("/folder/edit/{id}", name="folder_edit")
-     */
-    /*public function saveAction($id = null){
-        //on récupère l'entity manager
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        if ($id == null) {
-            $folder = new Folder;
-        } else {
-            $folder = $em->findOneById($id);
-        }
-
-        $form = $this->createForm(new FolderType, $folder);
-        $request = $this->get('request');
-
-        if($request->getMethod() == 'POST') {
-            $form->bind($request);
-
-            if($form->isValid()) {
-            	$folder->setOwner($user);
-                $em->persist($folder);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));
-            }
-
-        }
-
-        return $this->render('RCloudRBundle:Folder:edit.html.twig', array('form' => $form->createView(), 'folder' => $folder));
-    }*/
 
 }

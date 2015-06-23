@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "149b521a46af496db647f805667ed1d1",
+    "hash": "a3476cf37d0d78944795c7303b5c5229",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1365,6 +1365,73 @@
                 "psr-3"
             ],
             "time": "2015-06-19 13:29:54"
+        },
+        {
+            "name": "oneup/acl-bundle",
+            "version": "v0.12.1",
+            "target-dir": "Oneup/AclBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/1up-lab/OneupAclBundle.git",
+                "reference": "b7c59e353f37d6f71ab82a2d2fecd485a8c3a5ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/1up-lab/OneupAclBundle/zipball/b7c59e353f37d6f71ab82a2d2fecd485a8c3a5ea",
+                "reference": "b7c59e353f37d6f71ab82a2d2fecd485a8c3a5ea",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "~2.2",
+                "doctrine/dbal": "~2.2",
+                "doctrine/doctrine-bundle": "~1.2",
+                "symfony/expression-language": "~2.4",
+                "symfony/framework-bundle": ">=2.2",
+                "symfony/security-bundle": ">=2.2"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2.4",
+                "phpunit/phpunit": "3.7.*",
+                "sensio/framework-extra-bundle": "~2.2",
+                "symfony/browser-kit": "2.*",
+                "symfony/finder": ">=2.0.16,<2.4-dev"
+            },
+            "suggest": {
+                "doctrine/orm": "Allows you to remove Acl entries automatically.",
+                "sensio/framework-extra-bundle": "Allows you to use controller annotations."
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Oneup\\AclBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Schmid",
+                    "email": "js@1up.io",
+                    "homepage": "http://1up.io",
+                    "role": "Developer"
+                },
+                {
+                    "name": "David Greminger",
+                    "email": "dg@1up.io",
+                    "homepage": "http://1up.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The missing link between Symfony`s Acl implementation and your application.",
+            "homepage": "http://1up.io",
+            "keywords": [
+                "Symfony2",
+                "acl",
+                "security"
+            ],
+            "time": "2014-07-07 11:47:57"
         },
         {
             "name": "phpcollection/phpcollection",

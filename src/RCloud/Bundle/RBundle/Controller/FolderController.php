@@ -30,7 +30,7 @@ class FolderController extends Controller
         // Récupération des Folders du user connecté
         $user = $this->get('security.context')->getToken()->getUser();
         $folderRepository = $em->getRepository('RCloudRBundle:Folder');
-        $folders = $folderRepository->getFolders($user, $id);
+        //$folders = $folderRepository->getFolders($user, $id);
 
         $scriptRepository = $em->getRepository('RCloudRBundle:Script');
 
@@ -58,37 +58,24 @@ class FolderController extends Controller
             $breadcrumbItems = array_reverse($breadcrumbItems);
         }
 
-
-        //OLD METHOD
-    /*    if ($currentFolder === null) {
-            $currentScripts = $scriptRepository->findBy(array(
-                'folder' => null,
-                'owner' => $user
-            ));
-        } else {
-            $currentScripts = $currentFolder->getScripts();
-        }*/
-
-
         $aclProvider = $this->get('security.acl.provider');
 
-        $classScript = 'RCloud\Bundle\RBundle\Entity\Script';
-        $objectIdentities = $aclProvider->findObjectIdentitiesForUser($user, MaskBuilder::MASK_OWNER, $classScript);
-        foreach ($objectIdentities as $objectIdentity) {
-            $id = $objectIdentity->getIdentifier(); // this is your database primary key
-            $script = $scriptRepository->findOneById($id); 
-
-
-            if ($script->getFolder() == $currentFolder) {
-                $currentScripts[] = $script;
-            }
-        }
+        //Get items owned by user
+        $currentScripts = $this->listOwnedItems($user, 'RCloud\Bundle\RBundle\Entity\Script', $scriptRepository, $currentFolder);
+        $folders = $this->listOwnedItems($user, 'RCloud\Bundle\RBundle\Entity\Folder', $folderRepository, $currentFolder);
+        
+        //Get items shared with user
+        $sharedScripts = $this->listSharedItems($user, 'RCloud\Bundle\RBundle\Entity\Script', $scriptRepository, $currentFolder);
+        $sharedFolders = $this->listSharedItems($user, 'RCloud\Bundle\RBundle\Entity\Folder', $folderRepository, $currentFolder);
+        
 
         return array(
-            'folders' => $folders,
+            'folders' => isset($folders)?$folders:false,
             'currentFolder' => $currentFolder,
-            'currentScripts' => $currentScripts,
-            'breadcrumbItems' => $breadcrumbItems
+            'currentScripts' => isset($currentScripts)?$currentScripts:false,
+            'breadcrumbItems' => $breadcrumbItems,
+            'sharedScripts' => isset($sharedScripts)?$sharedScripts:false,            
+            'sharedFolders' => isset($sharedFolders)?$sharedFolders:false,
         );
     }
 
@@ -114,6 +101,18 @@ class FolderController extends Controller
         $em->persist($newFolder);
         $em->flush();
 
+        // création de l'ACL
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentity = ObjectIdentity::fromDomainObject($newFolder);
+        $acl = $aclProvider->createAcl($objectIdentity);
+
+        // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+        // donne accès au propriétaire
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $aclProvider->updateAcl($acl);
+
         return new JsonResponse(array(
             'meta' => array('code' => 201),
             'data' => array(
@@ -124,4 +123,132 @@ class FolderController extends Controller
         ));
     }
 
+    /**
+     * @Route("folder/share/{folderId}", name="folder_share")
+     */
+    public function shareAction($folderId, Request $request) {
+        $form = $this->createFormBuilder()
+            ->add('user', 'text')
+            ->add('permissions', 'choice', array(
+                'choices' => array(
+                    'view' => 'view',
+                    'edit' => 'edit'
+                ),
+                'multiple' => true,
+                'expanded' => true
+            ))
+            ->add('save', 'submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            //Get script
+            $em = $this->getDoctrine()->getManager();
+            $folder = $em->getRepository('RCloudRBundle:Folder')->find($folderId);
+
+            // Get data from form
+            $data = $form->getData();
+            $permissions = $data['permissions'];
+
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
+
+            if ($user === NULL) {
+                $error = "L'utilisateur n'a pas été trouvé";
+            }
+            else {
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                $this->shareFolder($folder, $user, $permissions, $permissionsManager);
+
+                return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));                
+            }         
+
+        }
+
+        return $this->render('RCloudRBundle::shareForm.html.twig', array(
+            'form' => $form->createView(),
+            'error' => isset($error)?$error:false,
+        ));
+    }
+
+    private function shareFolder($currentFolder, $user, $permissions, $permissionsManager) {
+        $permissionsManager->changePermissions($currentFolder, $user, $permissions);
+
+        if($currentFolder->getScripts()) {
+            foreach ($currentFolder->getScripts() as $script) {
+                $permissionsManager->changePermissions($script, $user, $permissions);
+            }
+        }
+
+        if($currentFolder->getFolders()) {
+            foreach ($currentFolder->getFolders() as $folder) {
+                $this->shareFolder($folder, $user, $permissions, $permissionsManager);
+            }
+        }
+    }
+
+    private function listSharedItems($user, $class, $repository, $currentFolder) {
+        $currentItems = array();
+        $securityContext = $this->get('security.context');
+
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentities = $aclProvider->findObjectIdentitiesForUser($user, MaskBuilder::MASK_VIEW, $class);
+
+        foreach ($objectIdentities as $objectIdentity) {
+            $id = $objectIdentity->getIdentifier(); // this is your database primary key
+            $item = $repository->findOneById($id); 
+
+            if ($securityContext->isGranted('OWNER', $item) === false) {    
+                if ($class == 'RCloud\Bundle\RBundle\Entity\Script') {
+                    $folderParent = $item->getFolder();
+                    if ($item->getFolder() == $currentFolder ||                         
+                        $currentFolder == null && $folderParent != null && $securityContext->isGranted('VIEW', $folderParent) === false) {
+                        $currentItems[] = $item;
+                    }
+                }
+                else if ($class == 'RCloud\Bundle\RBundle\Entity\Folder') {
+                    if ($item->getParent() == $currentFolder) {
+                        $currentItems[] = $item;
+                    }
+                } 
+            }
+            
+        }
+
+        return $currentItems;
+
+    }
+
+
+    private function listOwnedItems($user, $class, $repository, $currentFolder) {
+        $currentItems = array();
+        $securityContext = $this->get('security.context');
+
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentities = $aclProvider->findObjectIdentitiesForUser($user, MaskBuilder::MASK_OWNER, $class);
+
+        foreach ($objectIdentities as $objectIdentity) {
+            $id = $objectIdentity->getIdentifier(); // this is your database primary key
+            $item = $repository->findOneById($id); 
+
+
+            
+           if ($class == 'RCloud\Bundle\RBundle\Entity\Script') {
+                if ($item->getFolder() == $currentFolder) {
+                    $currentItems[] = $item;
+                }
+            }
+            else if ($class == 'RCloud\Bundle\RBundle\Entity\Folder') {
+                if ($item->getParent() == $currentFolder) {
+                    $currentItems[] = $item;
+                }
+            } 
+            
+
+        }
+
+        return $currentItems;
+
+    }
 }

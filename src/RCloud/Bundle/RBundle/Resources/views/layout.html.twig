@@ -10,18 +10,7 @@
             <img src="{{ asset('assets/img/logo.png') }}" alt="RCloud" />
         </a>
         <nav class="navigation">
-        {% block navigation %}
-            <div class="dropdown">
-                <button class="navigation-item dropdown-toggle" type="button">
-                    <i class="fa fa-plus"></i>
-                    Nouveau
-                </button>
-                <ul class="dropdown-list">
-                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-script-modal" type="button">Script</button></li>
-                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
-                </ul>
-            </div>
-        {% endblock %}
+        {% block navigation %}{% endblock %}
         </nav>
         <div class="header-right dropdown">
             <button class="navigation-item dropdown-toggle" type="button">

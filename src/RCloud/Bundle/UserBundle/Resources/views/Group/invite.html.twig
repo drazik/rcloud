@@ -5,12 +5,14 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<div class="fos_user_group_invite">
-    <form method="post" action="#">
-        {% if error %}
-        {{ error }}
-        {% endif %}
-        {{ form_widget(form) }}
-    </form>
-</div>
+<h2>Ajouter un utilisateur à {{ group.name }}</h2>
+<form class="form" method="post" action="#">
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    {{ form_widget(form) }}
+    <div class="form-actions">
+        <button class="button button-small"><i class="fa fa-user-plus"></i> Ajouter</button>
+    </div>
+</form>
 {% endblock fos_user_content %}

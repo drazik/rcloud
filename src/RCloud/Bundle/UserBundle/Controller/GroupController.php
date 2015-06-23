@@ -35,7 +35,6 @@ class GroupController extends BaseController
 
         $form = $this->createFormBuilder()
             ->add('username', 'text')
-            ->add('save', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
@@ -57,6 +56,7 @@ class GroupController extends BaseController
         }
 
         return array(
+            'group' => $group,
             'form' => $form->createView(),
             'error' => isset($error) ? $error : false
         );

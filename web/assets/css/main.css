@@ -2165,8 +2165,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   padding-top: 0.3rem;
   padding-bottom: 0.3rem; }
   .header-logo img {
-    height: 100%;
-    width: auto;
+    height: 37px;
+    width: 58px;
     vertical-align: bottom; }
 
 .header-right {

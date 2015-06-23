@@ -22,7 +22,7 @@ class FolderController extends Controller
      */
     public function listAction($id = null)
     {
-        $em = $this->getDoctrine()->getManager();
+         $em = $this->getDoctrine()->getManager();
         // Récupération des Folders du user connecté
         $user = $this->get('security.context')->getToken()->getUser();
         $folderRepository = $em->getRepository('RCloudRBundle:Folder');

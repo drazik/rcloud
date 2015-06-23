@@ -13,9 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
@@ -152,8 +149,7 @@ class ScriptController extends Controller
      */
     public function listAction()
     {
-
-        ///////////////
+       
         $user = $this->get('security.context')->getToken()->getUser();
 
         $scripts = $user->getScripts();
@@ -219,47 +215,28 @@ class ScriptController extends Controller
             $data = $form->getData();
             $permissions = $data['permissions'];
 
-            $user = $this->get('fos_user.user_manager')->findUserByEmail($data['user']);
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
 
-
-            // create ACL
-            $aclProvider = $this->get('security.acl.provider');
-
-            $acl = $aclProvider->findAcl(ObjectIdentity::fromDomainObject($script));
-            $securityId = UserSecurityIdentity::fromAccount($user);
-
-            $builder = new MaskBuilder();
-            foreach ($permissions as $key => $value) {
-                $builder->add($value);
-            }
-            $mask = $builder->get();
-
-            $hasPermissions = false;
-            foreach($acl->getObjectAces() as $index=>$ace) {
-                if ($ace->getSecurityIdentity()->equals($securityId)) {
-                    //$ace->setMask($mask);
-                    $acl->updateObjectAce($index, $mask);
-                    $hasPermissions = true;
-                    break;
-                }
-            }
-
-            if (!$hasPermissions) {
-                $acl->insertObjectAce($securityId, $mask);
-            }
-            $aclProvider->updateAcl($acl);
-
-            if ($script->getFolder() === NULL){
-                return $this->redirect($this->generateUrl('folders_list'));
+            if ($user === NULL) {
+                $error = "L'utilisateur n'a pas été trouvé";
             }
             else {
-                return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
-            }
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                $permissionsManager->changePermissions($script, $user, $permissions);
+                
+                if ($script->getFolder() === NULL){
+                    return $this->redirect($this->generateUrl('folders_list'));
+                }
+                else {
+                    return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
+                }
+            }         
 
         }
 
-        return $this->render('RCloudRBundle:Script:shareForm.html.twig', array(
+        return $this->render('RCloudRBundle::shareForm.html.twig', array(
             'form' => $form->createView(),
+            'error' => isset($error)?$error:false,
         ));
     }
 }

@@ -126,7 +126,7 @@ class FolderController extends Controller
     public function shareAction($folderId, Request $request) {
         $currentUser = $this->get('security.context')->getToken()->getUser();
         $groupsCurrentUser = $currentUser->getGroups();
-        
+
         $form = $this->createFormBuilder()
             ->add('user', 'text', array(
                 'required' => false)) 
@@ -149,21 +149,6 @@ class FolderController extends Controller
 
             // Get data from form
             $data = $form->getData();
-
-          /*  $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
-
-            if ($user === NULL) {
-                $error = "L'utilisateur n'a pas été trouvé";
-            }
-            else {
-                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $this->shareFolder($folder, $user, $permissionsManager);
-
-                return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));                
-            } */ 
-
-
-            /////// NEW
 
             if ($data['user'] === NULL && $data['group'] === NULL) {
                 $error = "Veuillez renseigner un user ou un groupe";

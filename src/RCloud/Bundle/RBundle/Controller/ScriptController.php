@@ -147,10 +147,11 @@ class ScriptController extends Controller
         $response['data']['scriptName'] = $script->getName();
         $response['data']['scriptId'] = $script->getId();
         $response['data']['editHref'] = $this->generateUrl('show_editor', array('scriptId' => $script->getId()));
+        $response['data']['shareHref'] = $this->generateUrl('script_share', array('scriptId' => $script->getId()));
         $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
-            
+
     }
 
 
@@ -162,7 +163,7 @@ class ScriptController extends Controller
      */
     public function listAction()
     {
-       
+
         $user = $this->get('security.context')->getToken()->getUser();
 
         $scripts = $user->getScripts();
@@ -204,7 +205,7 @@ class ScriptController extends Controller
     public function shareAction($scriptId, Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('user', 'text')            
+            ->add('user', 'text')
             ->add('save', 'submit')
             ->getForm();
 
@@ -218,9 +219,9 @@ class ScriptController extends Controller
 
             // Get data from form
             $data = $form->getData();
-            
 
-            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
             $securityId = UserSecurityIdentity::fromAccount($user);
 
             if ($user === NULL) {
@@ -229,14 +230,14 @@ class ScriptController extends Controller
             else {
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
                 $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
-                
+
                 if ($script->getFolder() === NULL){
                     return $this->redirect($this->generateUrl('folders_list'));
                 }
                 else {
                     return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
                 }
-            }         
+            }
 
         }
 

@@ -55,6 +55,12 @@ NewScript.prototype.newScript = function(script) {
     $tdEdit.append($aEdit);
     $tr.append($tdEdit);
 
+    var $tdShare = $('<td class="scripts-list-action" />');
+    var $aShare = $('<a><i class="fa fa-share-square-o"></i></a>');
+    $aShare.attr('href', script.shareHref);
+    $tdShare.append($aShare);
+    $tr.append($tdShare);
+
     var $tdRemove = $('<td class="scripts-list-action" />');
     var $aRemove = $('<a><i class="fa fa-trash-o"></i></a>');
     $aRemove.attr('href', script.removeHref);

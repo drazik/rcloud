@@ -138,7 +138,6 @@ class ScriptController extends Controller
         $response['data']['scriptName'] = $script->getName();
         $response['data']['scriptId'] = $script->getId();
         $response['data']['editHref'] = $this->generateUrl('show_editor', array('scriptId' => $script->getId()));
-        $response['data']['shareHref'] = $this->generateUrl('script_share', array('scriptId' => $script->getId()));
         $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
@@ -220,24 +219,13 @@ class ScriptController extends Controller
 
             // Get data from form
             $data = $form->getData();
-<<<<<<< HEAD
 
             if ($data['user'] === NULL && $data['group'] === NULL) {
                 $error = "Veuillez renseigner un user ou un groupe";
-=======
-
-
-            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
-            $securityId = UserSecurityIdentity::fromAccount($user);
-
-            if ($user === NULL) {
-                $error = "L'utilisateur n'a pas été trouvé";
->>>>>>> master
             }
             else {
 
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-<<<<<<< HEAD
                 if ($data['user'] != NULL) {
                     $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
                     $securityId = UserSecurityIdentity::fromAccount($user);
@@ -263,23 +251,14 @@ class ScriptController extends Controller
 
             }
             if (!isset($error)) {
-=======
-                $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
-
->>>>>>> master
                 if ($script->getFolder() === NULL){
                     return $this->redirect($this->generateUrl('folders_list'));
                 }
                 else {
                     return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
-<<<<<<< HEAD
                 }
             }
 
-=======
-                }
-            }
->>>>>>> master
 
         }
 

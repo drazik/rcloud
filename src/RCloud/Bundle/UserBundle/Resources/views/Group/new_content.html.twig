@@ -1,13 +1,14 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_group_new') }}" {{ form_enctype(form) }} method="POST" class="fos_user_group_new">
+<h2>Création d'un groupe</h2>
+<form class="form" action="{{ path('fos_user_group_new') }}" {{ form_enctype(form) }} method="POST" class="fos_user_group_new">
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
     <div class="visually-hidden">
         {{ form_widget(form.owner) }}
     </div>
     {{ form_rest(form) }}
-    <div>
-        <input type="submit" value="{{ 'group.new.submit'|trans }}" />
+    <div class="form-actions">
+        <button class="button button-small" type="submit"><i class="fa fa-plus"></i> {{ 'group.new.submit'|trans }}</button>
     </div>
 </form>

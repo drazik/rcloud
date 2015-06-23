@@ -2338,6 +2338,14 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   padding: 0.3rem;
   border: 1px solid #555; }
 
+.group-name {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #999; }
+
+.group-description {
+  font-weight: normal;
+  font-size: 0.9rem; }
+
 .modal {
   display: none;
   position: fixed;

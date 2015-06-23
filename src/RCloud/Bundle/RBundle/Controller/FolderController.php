@@ -113,6 +113,13 @@ class FolderController extends Controller
         $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
         $aclProvider->updateAcl($acl);
 
+
+        $folderParent = $newFolder->getParent();
+        if ($folderParent) {
+            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+            $permissionsManager->inheritPermissions($newFolder, $folderParent);
+        }
+
         return new JsonResponse(array(
             'meta' => array('code' => 201),
             'data' => array(
@@ -150,7 +157,7 @@ class FolderController extends Controller
             }
             else {
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $this->shareFolder($folder, $user, MaskBuilder::MASK_EDIT, $permissionsManager);
+                $this->shareFolder($folder, $user, $permissionsManager);
 
                 return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));                
             }         
@@ -164,7 +171,7 @@ class FolderController extends Controller
     }
 
     private function shareFolder($currentFolder, $user, $permissionsManager) {
-        
+
         $securityId = UserSecurityIdentity::fromAccount($user);
         $permissionsManager->changePermissions($currentFolder, $securityId, MaskBuilder::MASK_EDIT);
 

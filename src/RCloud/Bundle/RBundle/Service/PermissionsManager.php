@@ -34,4 +34,13 @@ class PermissionsManager {
 
         $this->aclProvider->updateAcl($acl);
 	}
+
+    public function inheritPermissions($object, $parent) {
+        $acl = $this->aclProvider->findAcl(ObjectIdentity::fromDomainObject($parent));
+        
+        foreach($acl->getObjectAces() as $ace) {
+            $this->changePermissions($object, $ace->getSecurityIdentity(), $ace->getMask());
+        }
+
+    }
 }

@@ -126,6 +126,13 @@ class ScriptController extends Controller
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
 
+            $folderParent = $script->getFolder();
+            if ($folderParent) {
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                $permissionsManager->inheritPermissions($script, $folderParent);
+            }
+
+
         } else {
             $repository = $em->getRepository('RCloudRBundle:Script');
             $script = $repository->find($scriptId);
@@ -143,6 +150,7 @@ class ScriptController extends Controller
         $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
+            
     }
 
 

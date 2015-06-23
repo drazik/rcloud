@@ -11,16 +11,6 @@
         </a>
         <nav class="navigation">
         {% block navigation %}
-            <div class="dropdown">
-                <button class="navigation-item dropdown-toggle" type="button">
-                    <i class="fa fa-plus"></i>
-                    Nouveau
-                </button>
-                <ul class="dropdown-list">
-                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-script-modal" type="button">Script</button></li>
-                    <li class="dropdown-item"><button class="modal-toggle" data-target="#new-folder-modal" type="button">Dossier</button></li>
-                </ul>
-            </div>
         {% endblock %}
         </nav>
         <div class="header-right dropdown">
@@ -28,9 +18,9 @@
                 {{ app.user.username }} <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-list">
-                <li class="dropdown-item"><a href="{{ path('scripts_list') }}">Scripts</a></li>
+                <li class="dropdown-item"><a href="{{ path('home') }}">Scripts</a></li>
+                <li class="dropdown-item"><a href="{{ path('fos_user_group_list') }}">Groupes</a>
                 <li class="dropdown-item"><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
-                <li class="dropdown-item"><a href="#">Préférences</a></li>
                 <li class="dropdown-item"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             </ul>
         </div>

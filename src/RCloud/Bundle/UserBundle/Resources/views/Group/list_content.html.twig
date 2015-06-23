@@ -1,0 +1,27 @@
+<div>
+    <a href="{{ path('fos_user_group_new') }}">Créer un nouveau groupe</a>
+</div>
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<h2>Vos groupes</h2>
+<div class="fos_user_group_list">
+    <ul>
+    {% for group in ownedGroups %}
+        <li><a href="{{ path('fos_user_group_show', {'groupName': group.name} ) }}">{{ group.name }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+<h2>Groupes auxquels vous appartenez</h2>
+<div class="fos_user_group_list">
+    <ul>
+    {% for group in belongToGroups %}
+        <li>
+            <a href="{{ path('fos_user_group_show', {'groupName': group.name}) }}">{{ group.name }}</a>
+            <a href="{{ path('r_cloud_user_group_leave', {'groupName': group.name}) }}"><i class="fa fa-trash"></i></a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>

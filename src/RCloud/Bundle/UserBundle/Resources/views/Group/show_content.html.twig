@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if group.owner == app.user %}
+<div>
+    <a href="{{ path('r_cloud_user_group_invite', {'groupName': group.name}) }}">Ajouter un utilisateur à ce groupe</a>
+</div>
+{% endif %}
+<div class="fos_user_group_show">
+    <p>{{ 'group.show.name'|trans }}: {{ group.name }}</p>
+    <p>Propriétaire: {{ group.owner.username }}</p>
+    <p>Description: {{ group.description }}</p>
+    {% if group.owner == app.user %}
+    <p>Membres du groupe :</p>
+    <ul>
+        {% for user in group.users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>

@@ -1,0 +1,15 @@
+{# src/RCloud/Bundle/UserBundle/Resources/views/Group/leave.html.twig #}
+
+{% extends 'RCloudUserBundle::layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+<div class="fos_user_group_leave">
+    <p>Êtes-vous certain(e) de vouloir quitter ce groupe ?</p>
+    <form method="post" action="">
+        {{ form_widget(form) }}
+        <button type="submit">Oui</button>
+    </form>
+</div>
+{% endblock fos_user_content %}

@@ -129,14 +129,6 @@ class FolderController extends Controller
     public function shareAction($folderId, Request $request) {
         $form = $this->createFormBuilder()
             ->add('user', 'text')
-            ->add('permissions', 'choice', array(
-                'choices' => array(
-                    'view' => 'view',
-                    'edit' => 'edit'
-                ),
-                'multiple' => true,
-                'expanded' => true
-            ))
             ->add('save', 'submit')
             ->getForm();
 
@@ -150,7 +142,6 @@ class FolderController extends Controller
 
             // Get data from form
             $data = $form->getData();
-            $permissions = $data['permissions'];
 
             $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
 
@@ -159,7 +150,7 @@ class FolderController extends Controller
             }
             else {
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $this->shareFolder($folder, $user, $permissions, $permissionsManager);
+                $this->shareFolder($folder, $user, MaskBuilder::MASK_EDIT, $permissionsManager);
 
                 return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));                
             }         
@@ -172,18 +163,20 @@ class FolderController extends Controller
         ));
     }
 
-    private function shareFolder($currentFolder, $user, $permissions, $permissionsManager) {
-        $permissionsManager->changePermissions($currentFolder, $user, $permissions);
+    private function shareFolder($currentFolder, $user, $permissionsManager) {
+        
+        $securityId = UserSecurityIdentity::fromAccount($user);
+        $permissionsManager->changePermissions($currentFolder, $securityId, MaskBuilder::MASK_EDIT);
 
         if($currentFolder->getScripts()) {
             foreach ($currentFolder->getScripts() as $script) {
-                $permissionsManager->changePermissions($script, $user, $permissions);
+                $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
             }
         }
 
         if($currentFolder->getFolders()) {
             foreach ($currentFolder->getFolders() as $folder) {
-                $this->shareFolder($folder, $user, $permissions, $permissionsManager);
+                $this->shareFolder($folder, $user, MaskBuilder::MASK_EDIT, $permissionsManager);
             }
         }
     }

@@ -196,15 +196,7 @@ class ScriptController extends Controller
     public function shareAction($scriptId, Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('user', 'text')
-            ->add('permissions', 'choice', array(
-                'choices' => array(
-                    'view' => 'view',
-                    'edit' => 'edit'
-                ),
-                'multiple' => true,
-                'expanded' => true
-            ))
+            ->add('user', 'text')            
             ->add('save', 'submit')
             ->getForm();
 
@@ -218,16 +210,17 @@ class ScriptController extends Controller
 
             // Get data from form
             $data = $form->getData();
-            $permissions = $data['permissions'];
+            
 
-            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+            $securityId = UserSecurityIdentity::fromAccount($user);
 
             if ($user === NULL) {
                 $error = "L'utilisateur n'a pas été trouvé";
             }
             else {
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $permissionsManager->changePermissions($script, $user, $permissions);
+                $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
                 
                 if ($script->getFolder() === NULL){
                     return $this->redirect($this->generateUrl('folders_list'));

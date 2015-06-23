@@ -15,16 +15,9 @@ class PermissionsManager {
 		$this->aclProvider = $aclProvider;
 	}	
 
-	public function changePermissions($object, $user, array $permissions) {
+	public function changePermissions($object, $securityId, $mask) {
 
 	    $acl = $this->aclProvider->findAcl(ObjectIdentity::fromDomainObject($object));
-        $securityId = UserSecurityIdentity::fromAccount($user);
-
-        $builder = new MaskBuilder();
-        foreach ($permissions as $key => $value) {
-            $builder->add($value);
-        }
-        $mask = $builder->get();
 
         $hasPermissions = false;
         foreach($acl->getObjectAces() as $index=>$ace) {

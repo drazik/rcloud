@@ -43,4 +43,17 @@ class PermissionsManager {
         }
 
     }
+
+    public function setOwnerPermissions($object, $user) {
+        // création de l'ACL
+        $objectIdentity = ObjectIdentity::fromDomainObject($object);
+        $acl = $this->aclProvider->createAcl($objectIdentity);
+
+        // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+        // donne accès au propriétaire
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $this->aclProvider->updateAcl($acl);
+    }
 }

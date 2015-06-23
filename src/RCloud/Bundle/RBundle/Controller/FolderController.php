@@ -101,22 +101,12 @@ class FolderController extends Controller
         $em->persist($newFolder);
         $em->flush();
 
-        // création de l'ACL
-        $aclProvider = $this->get('security.acl.provider');
-        $objectIdentity = ObjectIdentity::fromDomainObject($newFolder);
-        $acl = $aclProvider->createAcl($objectIdentity);
-
-        // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
-        $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-        // donne accès au propriétaire
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-        $aclProvider->updateAcl($acl);
-
+       
+        $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+        $permissionsManager->setOwnerPermissions($newFolder, $user);
 
         $folderParent = $newFolder->getParent();
         if ($folderParent) {
-            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
             $permissionsManager->inheritPermissions($newFolder, $folderParent);
         }
 
@@ -134,8 +124,18 @@ class FolderController extends Controller
      * @Route("folder/share/{folderId}", name="folder_share")
      */
     public function shareAction($folderId, Request $request) {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $groupsCurrentUser = $currentUser->getGroups();
+
         $form = $this->createFormBuilder()
-            ->add('user', 'text')
+            ->add('user', 'text', array(
+                'required' => false)) 
+            ->add('group', 'entity', array(
+                'choices'   => $groupsCurrentUser,
+                'required'  => false,
+                'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
+                'property' => 'name'
+            ))       
             ->add('save', 'submit')
             ->getForm();
 
@@ -150,17 +150,39 @@ class FolderController extends Controller
             // Get data from form
             $data = $form->getData();
 
-            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
-
-            if ($user === NULL) {
-                $error = "L'utilisateur n'a pas été trouvé";
+            if ($data['user'] === NULL && $data['group'] === NULL) {
+                $error = "Veuillez renseigner un user ou un groupe";
             }
             else {
-                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
-                $this->shareFolder($folder, $user, $permissionsManager);
 
-                return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));                
-            }         
+                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+                if ($data['user'] != NULL) {
+                    $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+                    $securityId = UserSecurityIdentity::fromAccount($user);
+
+                    if ($user === NULL) {
+                        $error = "L'utilisateur n'a pas été trouvé";
+                    }
+                    else {                        
+                        $this->shareFolder($folder, $user, $permissionsManager);               
+                    } 
+                } 
+
+                if ($data['group'] != NULL) {
+                    $group = $data['group'];
+                    foreach ($group->getUsers() as $groupUser) {
+                        if ($groupUser != $currentUser) {
+                            $this->shareFolder($folder, $groupUser, $permissionsManager);                
+                        }
+
+                    }
+                }
+
+            }
+            if (!isset($error)) {
+                return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));
+                
+            }        
 
         }
 

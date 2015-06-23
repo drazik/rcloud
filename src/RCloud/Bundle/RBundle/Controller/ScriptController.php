@@ -114,21 +114,12 @@ class ScriptController extends Controller
 
             $response['meta']['code'] = 201;
 
-            // création de l'ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($script);
-            $acl = $aclProvider->createAcl($objectIdentity);
 
-            // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-            // donne accès au propriétaire
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
+            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+            $permissionsManager->setOwnerPermissions($script, $user);
 
             $folderParent = $script->getFolder();
             if ($folderParent) {
-                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
                 $permissionsManager->inheritPermissions($script, $folderParent);
             }
 
@@ -204,8 +195,18 @@ class ScriptController extends Controller
      */
     public function shareAction($scriptId, Request $request)
     {
+
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $groupsCurrentUser = $currentUser->getGroups();
         $form = $this->createFormBuilder()
-            ->add('user', 'text')
+            ->add('user', 'text', array(
+                'required' => false))
+            ->add('group', 'entity', array(
+                'choices'   => $groupsCurrentUser,
+                'required'  => false,
+                'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
+                'property' => 'name'
+            ))
             ->add('save', 'submit')
             ->getForm();
 
@@ -219,6 +220,11 @@ class ScriptController extends Controller
 
             // Get data from form
             $data = $form->getData();
+<<<<<<< HEAD
+
+            if ($data['user'] === NULL && $data['group'] === NULL) {
+                $error = "Veuillez renseigner un user ou un groupe";
+=======
 
 
             $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
@@ -226,18 +232,54 @@ class ScriptController extends Controller
 
             if ($user === NULL) {
                 $error = "L'utilisateur n'a pas été trouvé";
+>>>>>>> master
             }
             else {
+
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+<<<<<<< HEAD
+                if ($data['user'] != NULL) {
+                    $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
+                    $securityId = UserSecurityIdentity::fromAccount($user);
+
+                    if ($user === NULL) {
+                        $error = "L'utilisateur n'a pas été trouvé";
+                    }
+                    else {
+                        $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
+                    }
+                }
+
+                if ($data['group'] != NULL) {
+                    $group = $data['group'];
+                    foreach ($group->getUsers() as $groupUser) {
+                        if ($groupUser != $currentUser) {
+                            $securityId = UserSecurityIdentity::fromAccount($groupUser);
+                            $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
+                        }
+
+                    }
+                }
+
+            }
+            if (!isset($error)) {
+=======
                 $permissionsManager->changePermissions($script, $securityId, MaskBuilder::MASK_EDIT);
 
+>>>>>>> master
                 if ($script->getFolder() === NULL){
                     return $this->redirect($this->generateUrl('folders_list'));
                 }
                 else {
                     return $this->redirect($this->generateUrl('folders_list', array('id' => $script->getFolder()->getId())));
+<<<<<<< HEAD
                 }
             }
+
+=======
+                }
+            }
+>>>>>>> master
 
         }
 

@@ -114,21 +114,12 @@ class ScriptController extends Controller
 
             $response['meta']['code'] = 201;
 
-            // création de l'ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($script);
-            $acl = $aclProvider->createAcl($objectIdentity);
-
-            // retrouve l'identifiant de sécurité de l'utilisateur actuellement connecté
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-            // donne accès au propriétaire
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
+            
+            $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
+            $permissionsManager->setOwnerPermissions($script, $user);
 
             $folderParent = $script->getFolder();
             if ($folderParent) {
-                $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
                 $permissionsManager->inheritPermissions($script, $folderParent);
             }
 

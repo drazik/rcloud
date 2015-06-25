@@ -179,6 +179,11 @@ class ScriptController extends Controller
             // On définit un message flash
             $this->get('session')->getFlashBag()->add('error', 'Ce script n\'existe pas');
         } else {
+            //supprime tous les acls pour le script
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($script);
+            $aclProvider->deleteAcl($objectIdentity);
+
             $em->remove($script);
             $em->flush();
 
@@ -186,7 +191,7 @@ class ScriptController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Script bien supprimé');
         }
 
-        return $this->redirect($this->generateUrl('scripts_list'));
+        return $this->redirect($this->generateUrl('folders_list'));
     }
 
     /**

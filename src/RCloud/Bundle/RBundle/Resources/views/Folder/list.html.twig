@@ -115,7 +115,7 @@
                             <tr>
                                 <th class="scripts-list-header-title">Titre</th>
                                 <th class="scripts-list-header-modification">Modification</th>
-                                <th class="scripts-list-header-actions" colspan="3">Actions</th>
+                                <th class="scripts-list-header-actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,17 +133,7 @@
                                         <a href="{{ path('show_editor', {'scriptId': script.id}) }}" title="Editer {{ script.name }}" target="_blank">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    </td>
-                                    <td class="scripts-list-action">
-                                        <a href="{{ path('script_share', {'scriptId': script.id}) }}" title="Partager {{ script.name }}">
-                                            <i class="fa fa-share-square-o"></i>
-                                        </a>
-                                    </td>
-                                    <td class="scripts-list-action">
-                                        <a href="{{ path('script_remove', {'scriptId': script.id}) }}" title="Supprimer {{ script.name }}">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
-                                    </td>
+                                    </td>                                   
                                 </tr>
                             {% endfor %}
                         </tbody>

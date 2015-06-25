@@ -204,12 +204,15 @@ class ScriptController extends Controller
         $groupsCurrentUser = $currentUser->getGroups();
         $form = $this->createFormBuilder()
             ->add('user', 'text', array(
-                'required' => false))
+                'required' => false,
+                'label' => 'Username ou adresse mail'
+            ))
             ->add('group', 'entity', array(
                 'choices'   => $groupsCurrentUser,
                 'required'  => false,
                 'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
-                'property' => 'name'
+                'property' => 'name',
+                'label' => 'Groupe'
             ))
             ->getForm();
 

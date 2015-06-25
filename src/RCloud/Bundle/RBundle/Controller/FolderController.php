@@ -17,6 +17,7 @@ use RCloud\Bundle\RBundle\Form\FolderType;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FolderController extends Controller
 {
@@ -26,7 +27,8 @@ class FolderController extends Controller
      */
     public function listAction($id = null)
     {
-         $em = $this->getDoctrine()->getManager();
+
+        $em = $this->getDoctrine()->getManager();
         // Récupération des Folders du user connecté
         $user = $this->get('security.context')->getToken()->getUser();
         $folderRepository = $em->getRepository('RCloudRBundle:Folder');
@@ -36,6 +38,14 @@ class FolderController extends Controller
 
         // Le Folder courant est-il la racine (null) ou un Folder existant ?
         $currentFolder = $id === null ? null : $folderRepository->find($id);
+
+
+        if ($currentFolder) {
+            $securityContext = $this->get('security.context');
+            if ($securityContext->isGranted('EDIT', $currentFolder) === false ) { 
+                throw new AccessDeniedException("Oups, vous n'êtes pas autorisé à acceder à ce dossier");
+            }
+        }
 
         // Initialisation des objets du breadcrumb
         $breadcrumbItems = array();

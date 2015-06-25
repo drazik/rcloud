@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use RCloud\Bundle\RBundle\Entity\Script;
 
@@ -18,7 +19,7 @@ class EditorController extends Controller
      */
     public function showAction($scriptId = null)
     {
-        $script = null;
+        
         
 
         $em = $this->getDoctrine()->getManager();
@@ -26,22 +27,12 @@ class EditorController extends Controller
 
         $script = $repository->find($scriptId);
 
-        /*if ($scriptId) {
-            $user = $this->get('security.context')->getToken()->getUser();
-            $scripts = $user->getScripts();
-
-            $script = $scripts->filter(function($entry) use ($scriptId) {
-                return $entry->getId() == $scriptId;
-            });
-
-            $script = $script->first();
+        if ($script) {
+            $securityContext = $this->get('security.context');
+            if ($securityContext->isGranted('EDIT', $script) === false ) { 
+                throw new AccessDeniedException("Oups, vous n'êtes pas autorisé à accéder à ce script");
+            }
         }
-
-        if ($script === null) {
-            $script = new Script();
-            $script->setName('');
-            $script->setContent('');
-        }*/
 
         return array(
             'script' => $script

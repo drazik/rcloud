@@ -211,7 +211,6 @@ class ScriptController extends Controller
                 'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
                 'property' => 'name'
             ))
-            ->add('save', 'submit')
             ->getForm();
 
         $form->handleRequest($request);

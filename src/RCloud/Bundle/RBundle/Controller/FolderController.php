@@ -42,7 +42,7 @@ class FolderController extends Controller
 
         if ($currentFolder) {
             $securityContext = $this->get('security.context');
-            if ($securityContext->isGranted('EDIT', $currentFolder) === false ) { 
+            if ($securityContext->isGranted('EDIT', $currentFolder) === false ) {
                 throw new AccessDeniedException("Oups, vous n'êtes pas autorisé à acceder à ce dossier");
             }
         }
@@ -73,18 +73,18 @@ class FolderController extends Controller
         //Get items owned by user
         $currentScripts = $this->listOwnedItems($user, 'RCloud\Bundle\RBundle\Entity\Script', $scriptRepository, $currentFolder);
         $folders = $this->listOwnedItems($user, 'RCloud\Bundle\RBundle\Entity\Folder', $folderRepository, $currentFolder);
-        
+
         //Get items shared with user
         $sharedScripts = $this->listSharedItems($user, 'RCloud\Bundle\RBundle\Entity\Script', $scriptRepository, $currentFolder);
         $sharedFolders = $this->listSharedItems($user, 'RCloud\Bundle\RBundle\Entity\Folder', $folderRepository, $currentFolder);
-        
+
 
         return array(
             'folders' => isset($folders)?$folders:false,
             'currentFolder' => $currentFolder,
             'currentScripts' => isset($currentScripts)?$currentScripts:false,
             'breadcrumbItems' => $breadcrumbItems,
-            'sharedScripts' => isset($sharedScripts)?$sharedScripts:false,            
+            'sharedScripts' => isset($sharedScripts)?$sharedScripts:false,
             'sharedFolders' => isset($sharedFolders)?$sharedFolders:false,
         );
     }
@@ -111,7 +111,7 @@ class FolderController extends Controller
         $em->persist($newFolder);
         $em->flush();
 
-       
+
         $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
         $permissionsManager->setOwnerPermissions($newFolder, $user);
 
@@ -139,14 +139,13 @@ class FolderController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('user', 'text', array(
-                'required' => false)) 
+                'required' => false))
             ->add('group', 'entity', array(
                 'choices'   => $groupsCurrentUser,
                 'required'  => false,
                 'class' => 'RCloud\Bundle\UserBundle\Entity\Group',
                 'property' => 'name'
-            ))       
-            ->add('save', 'submit')
+            ))
             ->getForm();
 
         $form->handleRequest($request);
@@ -167,22 +166,22 @@ class FolderController extends Controller
 
                 $permissionsManager = $this->get('r_cloud_r.permissionsmanager');
                 if ($data['user'] != NULL) {
-                    $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);            
+                    $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($data['user']);
                     $securityId = UserSecurityIdentity::fromAccount($user);
 
                     if ($user === NULL) {
                         $error = "L'utilisateur n'a pas été trouvé";
                     }
-                    else {                        
-                        $this->shareFolder($folder, $user, $permissionsManager);               
-                    } 
-                } 
+                    else {
+                        $this->shareFolder($folder, $user, $permissionsManager);
+                    }
+                }
 
                 if ($data['group'] != NULL) {
                     $group = $data['group'];
                     foreach ($group->getUsers() as $groupUser) {
                         if ($groupUser != $currentUser) {
-                            $this->shareFolder($folder, $groupUser, $permissionsManager);                
+                            $this->shareFolder($folder, $groupUser, $permissionsManager);
                         }
 
                     }
@@ -191,8 +190,8 @@ class FolderController extends Controller
             }
             if (!isset($error)) {
                 return $this->redirect($this->generateUrl('folders_list', array('id' => $folder->getId())));
-                
-            }        
+
+            }
 
         }
 
@@ -229,12 +228,12 @@ class FolderController extends Controller
 
         foreach ($objectIdentities as $objectIdentity) {
             $id = $objectIdentity->getIdentifier(); // this is your database primary key
-            $item = $repository->findOneById($id); 
+            $item = $repository->findOneById($id);
 
-            if ($securityContext->isGranted('OWNER', $item) === false) {    
+            if ($securityContext->isGranted('OWNER', $item) === false) {
                 if ($class == 'RCloud\Bundle\RBundle\Entity\Script') {
                     $folderParent = $item->getFolder();
-                    if ($item->getFolder() == $currentFolder ||                         
+                    if ($item->getFolder() == $currentFolder ||
                         $currentFolder == null && $folderParent != null && $securityContext->isGranted('VIEW', $folderParent) === false) {
                         $currentItems[] = $item;
                     }
@@ -243,9 +242,9 @@ class FolderController extends Controller
                     if ($item->getParent() == $currentFolder) {
                         $currentItems[] = $item;
                     }
-                } 
+                }
             }
-            
+
         }
 
         return $currentItems;
@@ -262,10 +261,10 @@ class FolderController extends Controller
 
         foreach ($objectIdentities as $objectIdentity) {
             $id = $objectIdentity->getIdentifier(); // this is your database primary key
-            $item = $repository->findOneById($id); 
+            $item = $repository->findOneById($id);
 
 
-            
+
            if ($class == 'RCloud\Bundle\RBundle\Entity\Script') {
                 if ($item->getFolder() == $currentFolder) {
                     $currentItems[] = $item;
@@ -275,8 +274,8 @@ class FolderController extends Controller
                 if ($item->getParent() == $currentFolder) {
                     $currentItems[] = $item;
                 }
-            } 
-            
+            }
+
 
         }
 

@@ -1,9 +1,18 @@
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block content %}
-	{% if error %}
-		{{ error }}
-	{% endif %}
-	
-	{{form(form)}}
+<div class="row row-padded">
+    <div class="col">
+        <h2>Partager une ressource</h2>
+        <form class="form" method="post">
+        {% if error %}
+            {{ error }}
+        {% endif %}
+            {{ form_widget(form) }}
+            <div class="form-actions">
+                <button class="button button-small"><i class="fa fa-share"></i> Partager</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

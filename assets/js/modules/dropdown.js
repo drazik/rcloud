@@ -33,7 +33,7 @@ function clearDropdowns(e) {
         var $this = $(this);
         var dropdown = $this.data('dropdown');
 
-        if (e && this === e.target.parentNode) {
+        if (e && (this === e.target.parentNode || this === e.target.parentNode.parentNode)) {
             return;
         }
 

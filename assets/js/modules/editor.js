@@ -31,6 +31,7 @@ Editor.prototype.initialize = function() {
 
     var $editorScript = this.$container.find('#editor-script');
     this.script = JSON.parse($editorScript.val());
+    this.script.owner = null;
     $editorScript.remove();
 };
 
@@ -70,6 +71,8 @@ Editor.prototype.save = function(event) {
             return;
         }
     }
+
+    console.log(this.script);
 
     $.ajax({
         dataType: 'json',

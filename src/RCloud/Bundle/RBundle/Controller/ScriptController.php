@@ -140,6 +140,7 @@ class ScriptController extends Controller
         $response['data']['scriptId'] = $script->getId();
         $response['data']['editHref'] = $this->generateUrl('show_editor', array('scriptId' => $script->getId()));
         $response['data']['removeHref'] = $this->generateUrl('script_remove', array('scriptId' => $script->getId()));
+        $response['data']['shareHref'] = $this->generateUrl('script_share', array('scriptId' => $script->getId()));
 
         return new JsonResponse($response);
 

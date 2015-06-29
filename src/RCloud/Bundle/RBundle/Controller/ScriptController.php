@@ -131,6 +131,7 @@ class ScriptController extends Controller
 
             $response['meta']['code'] = 200;
 
+            $em->persist($script);
             $em->flush();
         }
 
